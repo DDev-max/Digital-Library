@@ -1,4 +1,6 @@
 export function BSellerSlider() {
+    
+
     return(
         <section className="slider">
             <h2>Best Sellers</h2>
