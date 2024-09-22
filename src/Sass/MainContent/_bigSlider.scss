@@ -2,19 +2,19 @@
 .bigSlider{
     border: 3px solid red;
 
-    &__contImg{
+    &_contImg{
       position: relative;
     }
 
-    &__h2{
+    &_h2{
       background-color: darkgoldenrod;
     }
 
-    &__Img{
+    &_Img{
       width: 100%;
     }
 
-    &__footer{
+    &_footer{
       background-color: darkred;
       width: 100%;
       display: flex;
@@ -23,7 +23,7 @@
       bottom: 0;
     }
     
-    &__imgNumber{
+    &_imgNumber{
       opacity: .5;
       width: 1rem;
       height: 1rem;

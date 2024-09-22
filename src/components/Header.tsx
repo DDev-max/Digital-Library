@@ -5,7 +5,7 @@ import { UserSVG } from "../svg/UserSVG";
 export function Header() {
     return(
         <header className="header">
-            <h1 className="header__h1">Library</h1>
+            <h1 className="header_h1">Library</h1>
 
             <search>
                 <form>

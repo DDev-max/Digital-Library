@@ -1,0 +1,13 @@
+.VerticalSctn{
+    display: flex;
+    gap: 1rem;
+
+    &_Article{
+        text-align: center;
+        flex: 1;
+    }
+
+    &_Img{
+        max-width: 100%;
+    }
+}

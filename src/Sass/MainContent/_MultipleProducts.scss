@@ -1,0 +1,13 @@
+.MultipleProducts{
+    background-color: rebeccapurple;
+
+    &_Grid{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    &_Img{
+        width: 90%;
+    }
+}

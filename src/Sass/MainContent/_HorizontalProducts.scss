@@ -1,0 +1,20 @@
+.horizontalSctn{
+    background-color: darkcyan;
+    display: flex;
+    justify-content: space-between;
+
+    &_Img{
+        width: 10rem;
+    }
+
+    &_Article{
+        max-width: 100%;
+        max-height: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &_Article:nth-of-type(2){
+        flex-direction: row-reverse;
+    }
+}
