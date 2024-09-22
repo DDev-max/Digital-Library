@@ -1,0 +1,40 @@
+
+.bigSlider{
+    border: 3px solid red;
+
+    &__contImg{
+      position: relative;
+    }
+
+    &__h2{
+      background-color: darkgoldenrod;
+    }
+
+    &__Img{
+      width: 100%;
+    }
+
+    &__footer{
+      background-color: darkred;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      bottom: 0;
+    }
+    
+    &__imgNumber{
+      opacity: .5;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      border: .15rem solid;
+
+    }
+
+  }
+
+  .imgNumber--selected{
+    background-color: rgb(97, 97, 97);
+  }
+  

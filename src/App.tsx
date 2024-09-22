@@ -1,5 +1,4 @@
-import './App.css'
-import { Filters } from './components/Main/FIlters'
+import "./Sass/styles.scss"
 import { Header } from './components/Header'
 import { MainContent } from './components/MainContent'
 

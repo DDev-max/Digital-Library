@@ -1,0 +1,15 @@
+.slider{
+
+    &__img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    
+    &_contImgs {
+        display: flex;
+        gap: .5rem;
+        height: 10rem;
+        overflow-x: auto;
+    
+    }
+}
