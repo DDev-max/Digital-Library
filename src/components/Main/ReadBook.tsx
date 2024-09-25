@@ -1,28 +1,33 @@
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
+import { urlConversion } from "../../Services/urlConversion"
 
 export function ReadBook() {
-    const bookName = useParams()
-    const URL = "https://baconipsum.com/api/?type=all-meat&paras=10&format=json"
+
+    const urlTitle = useParams()
+    
+    const URLorem = "https://baconipsum.com/api/?type=all-meat&paras=10&format=json"
 
     const {data} = useQuery<string[]>({
-        queryKey: ["LoremIpsumm", URL],
+        queryKey: ["LoremIpsumm", URLorem],
         queryFn: async () => {
-            const response = await fetch(URL)
+            const response = await fetch(URLorem)
             const format = await response.json()
             console.log(format);
-            
 
             return format
         }
     })
 
+    
+    const bookName = urlConversion({title: urlTitle.title ?? "", fromURL: true})
+    
     return(
         <>
-            <h1>{bookName.title}</h1>
-           {data?.map(elmnt=>{
+            <h1>{bookName}</h1>
+           {data?.map((elmnt, index)=>{
             return(
-                <p>{elmnt}</p>
+                <p key={index}>{elmnt}</p>
             )
            })}
             

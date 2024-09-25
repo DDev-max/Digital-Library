@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { BookProp } from "../../types"
+import { urlConversion } from "../../Services/urlConversion"
 
 export function BSellerSlider({books}: BookProp) {
     
@@ -11,9 +12,15 @@ export function BSellerSlider({books}: BookProp) {
                 {books?.map(elmnt=>{
                     const info= elmnt.volumeInfo
 
+                    const bookLink = urlConversion({title: info.title})
+
+                    console.log(bookLink);
+                    
+
                     return(
+                        
                         //CAMBIAR EL ENLACE A UNO MAS LINDO PARA EL SEO
-                        <Link to={info.title} key={info.title}>
+                        <Link to={bookLink} key={info.title}>
                             <img 
                             src={info.imageLinks.smallThumbnail} 
                             alt={`The book cover of "${info.title}"`} />

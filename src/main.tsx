@@ -7,7 +7,14 @@ import "./Sass/styles.scss"
 import { Header } from './components/Header'
 import { ReadBook } from './components/Main/ReadBook'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+   defaultOptions: {
+      queries: {
+         refetchOnWindowFocus: false
+      }
+   }
+})
+
 
 const router = createBrowserRouter([
    {
