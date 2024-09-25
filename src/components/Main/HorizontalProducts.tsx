@@ -9,7 +9,7 @@ export function HorizontalProducts({books}: BookProp) {
                 const info = elmnt.volumeInfo
 
                 return(
-                    <article  className="horizontalSctn_Article"> 
+                    <article key={info.title} className="horizontalSctn_Article"> 
                         <img className="horizontalSctn_Img" src={info.imageLinks.smallThumbnail} alt={info.title} />
                         <div>
                             <h2>{info.title}</h2>

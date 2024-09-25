@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { BookProp } from "../../types"
 
 export function BSellerSlider({books}: BookProp) {
@@ -11,10 +12,14 @@ export function BSellerSlider({books}: BookProp) {
                     const info= elmnt.volumeInfo
 
                     return(
-                        <a href="#">
-                            <img key={info.title} src={info.imageLinks.smallThumbnail} alt={`The book cover of "${info.title}"`} />
+                        //CAMBIAR EL ENLACE A UNO MAS LINDO PARA EL SEO
+                        <Link to={info.title} key={info.title}>
+                            <img 
+                            src={info.imageLinks.smallThumbnail} 
+                            alt={`The book cover of "${info.title}"`} />
+
                             <h3>{info.title}</h3>
-                        </a>
+                        </Link>
                         
                     )
                 })}

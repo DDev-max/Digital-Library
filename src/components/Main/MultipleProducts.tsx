@@ -9,7 +9,7 @@ export function MultipleProducts({books}:BookProp) {
                 {books?.map(elmnt=>{
                     const info= elmnt.volumeInfo
                     return(
-                        <article>
+                        <article key={info.title}>
                             <h3>{info.title}</h3>
                             <img className="MultipleProducts_Img" src={info.imageLinks.smallThumbnail} alt={`The book cover of "${info.title}"`}/>
                         </article>

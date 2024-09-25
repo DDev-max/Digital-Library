@@ -1,15 +1,24 @@
-import "./Sass/styles.scss"
-import { Header } from './components/Header'
-import { MainContent } from './components/MainContent'
+// import { createBrowserRouter, RouterProvider } from "react-router-dom"
+// import "./Sass/styles.scss"
+// import { Header } from './components/Header'
+// import { MainContent } from './components/MainContent'
 
-function App() {
+// export const  router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <MainContent/>,
+//     errorElement: <p>No hay nada papu</p>
+//   }
+// ])
 
-  return (
-    <>
-        <Header/>
-        <MainContent/>
-    </>
-  )
-}
+// function App() {
 
-export default App
+//   return (
+//     <RouterProvider router={router}>
+//         <Header/>
+//         <MainContent/>
+//     </RouterProvider>
+//   )
+// }
+
+// export default App
