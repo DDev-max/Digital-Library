@@ -1,23 +1,18 @@
-export function VerticalProducts() {
+import { BookProp } from "../../types";
+
+export function VerticalProducts({books}:BookProp) {
     return(
         <section className="VerticalSctn">
-            <article className="VerticalSctn_Article">
-                <img className="VerticalSctn_Img" src="https://th.bing.com/th/id/OIP.9hyEQuoVUyn_JR-XBmblbAHaE8?rs=1&pid=ImgDetMain" alt="" />
-                <h2>Lorem ipsum dolor sit amet.</h2>
-                <button>Buy Now</button>
-            </article>
-
-            <article className="VerticalSctn_Article">
-                <img className="VerticalSctn_Img" src="https://th.bing.com/th/id/OIP.9hyEQuoVUyn_JR-XBmblbAHaE8?rs=1&pid=ImgDetMain" alt="" />
-                <h2>Lorem ipsum dolor sit amet.</h2>
-                <button>Buy Now</button>
-            </article>
-
-            <article className="VerticalSctn_Article">
-                <img className="VerticalSctn_Img" src="https://th.bing.com/th/id/OIP.9hyEQuoVUyn_JR-XBmblbAHaE8?rs=1&pid=ImgDetMain" alt="" />
-                <h2>Lorem ipsum dolor sit amet.</h2>
-                <button>Buy Now</button>
-            </article>
+            {books?.map(elmnt=>{
+                const info = elmnt.volumeInfo
+                return(
+                    <article className="VerticalSctn_Article">
+                        <img className="VerticalSctn_Img" src={info.imageLinks.smallThumbnail} alt={`The book cover of "${info.title}"`} />
+                        <h2>{info.title}</h2>
+                        <button>Button</button>
+                    </article>
+                )
+            })}
         </section>
     )
 }

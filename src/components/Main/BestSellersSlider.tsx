@@ -1,17 +1,24 @@
-export function BSellerSlider() {
+import { BookProp } from "../../types"
+
+export function BSellerSlider({books}: BookProp) {
     
 
     return(
         <section className="slider">
             <h2>Best Sellers</h2>
-            <article className="slider_contImgs">
-                    <img className="slider_img" src="https://th.bing.com/th/id/OIP.9hyEQuoVUyn_JR-XBmblbAHaE8?rs=1&pid=ImgDetMain" alt="" />
-                    <img className="slider_img" src="https://th.bing.com/th/id/OIP.9hyEQuoVUyn_JR-XBmblbAHaE8?rs=1&pid=ImgDetMain" alt="" />
-                    <img className="slider_img" src="https://th.bing.com/th/id/OIP.9hyEQuoVUyn_JR-XBmblbAHaE8?rs=1&pid=ImgDetMain" alt="" />
-                    <img className="slider_img" src="https://th.bing.com/th/id/OIP.9hyEQuoVUyn_JR-XBmblbAHaE8?rs=1&pid=ImgDetMain" alt="" />
-                    <img className="slider_img" src="https://th.bing.com/th/id/OIP.9hyEQuoVUyn_JR-XBmblbAHaE8?rs=1&pid=ImgDetMain" alt="" />
-                    <img className="slider_img" src="https://th.bing.com/th/id/OIP.9hyEQuoVUyn_JR-XBmblbAHaE8?rs=1&pid=ImgDetMain" alt="" />
-            </article>
+            <div className="slider_contImgs">
+                {books?.map(elmnt=>{
+                    const info= elmnt.volumeInfo
+
+                    return(
+                        <a href="#">
+                            <img key={info.title} src={info.imageLinks.smallThumbnail} alt={`The book cover of "${info.title}"`} />
+                            <h3>{info.title}</h3>
+                        </a>
+                        
+                    )
+                })}
+            </div>
         </section>
     )
 }
