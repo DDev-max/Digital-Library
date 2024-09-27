@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
 import { urlConversion } from "../../Services/urlConversion"
+import { ContxtMenu } from "../ContxtMenu"
 
 export function ReadBook() {
     const urlTitle = useParams()
@@ -44,6 +45,7 @@ export function ReadBook() {
 
     return(
         <main>
+            <ContxtMenu/>
             <h1>{bookName}</h1>
            {data?.map((elmnt, pIndex)=>{
             return(

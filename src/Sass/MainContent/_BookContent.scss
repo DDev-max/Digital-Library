@@ -1,3 +1,41 @@
+$highlightColors: (
+    "first" : red,
+    "second": blue,
+    "third" : violet,
+    "fourth": orange,
+);
+
 .highlighted{
     background-color: blue;
 }
+
+.contextMenu{
+    position: absolute;
+    bottom: 0;
+    width: 8rem;
+    height: 8rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: rgb(167, 196, 209);
+
+    &_ColorsCont{
+        display: flex;
+        justify-content: space-around;
+    }
+
+    &_color{
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        border: 2px solid black;
+    }
+
+    @each $modifier, $color in $highlightColors{
+        &_color--#{$modifier}{
+            background-color: $color;
+        }
+    }
+
+}
+
+
