@@ -1,9 +1,23 @@
 $highlightColors: (
-    "first" : red,
-    "second": blue,
-    "third" : violet,
-    "fourth": orange,
+    "first" : (
+        bgColor: red,
+        txtColor: white
+    ),
+    "second": (
+        bgColor: blue,
+        txtColor: white
+    ),
+    "third" : (
+        bgColor: green,
+        txtColor: white
+    ),
+    "fourth": (
+        bgColor: orange,
+        txtColor: black
+    )
 );
+
+
 
 .highlighted{
     background-color: blue;
@@ -30,9 +44,10 @@ $highlightColors: (
         border: 2px solid black;
     }
 
-    @each $modifier, $color in $highlightColors{
+    @each $modifier, $properties in $highlightColors{
         &_color--#{$modifier}{
-            background-color: $color;
+            background-color: map-get($properties, bgColor);
+            color: map-get($properties, txtColor )
         }
     }
 

@@ -24,21 +24,21 @@ export function ReadBook() {
     const bookName = urlConversion({title: urlTitle.title ?? "", fromURL: true})
     
 
-    function handleSelect() {
+    // function handleSelect() {
 
-        const wSelect =  window.getSelection()
-        const userSelection = wSelect?.toString()
+    //     const wSelect =  window.getSelection()
+    //     const userSelection = wSelect?.toString()
 
-        if (userSelection && userSelection.length >0) {
-            const range = wSelect?.getRangeAt(0)
-            const span =  document.createElement("span")
-            span.className = "highlighted"
-            range?.surroundContents(span)
-            wSelect?.removeAllRanges()
-        }
+    //     if (userSelection && userSelection.length >0) {
+    //         const range = wSelect?.getRangeAt(0)
+    //         const span =  document.createElement("span")
+    //         span.className = "highlighted"
+    //         range?.surroundContents(span)
+    //         wSelect?.removeAllRanges()
+    //     }
 
 
-    }
+    // }
 
 
 
@@ -49,7 +49,7 @@ export function ReadBook() {
             <h1>{bookName}</h1>
            {data?.map((elmnt, pIndex)=>{
             return(
-                <p  onMouseUp={()=> handleSelect()}  key={pIndex}>
+                <p  key={pIndex}>
                     {elmnt}
                 </p>
             )
