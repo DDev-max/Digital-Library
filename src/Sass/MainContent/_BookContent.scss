@@ -17,6 +17,14 @@ $highlightColors: (
     )
 );
 
+@mixin colorBtn($size, $bgColor, $padding){
+    background-color: $bgColor;
+    width: $size;
+    height: $size;
+    padding: $padding;
+    border-radius: 50%;
+    border: 2px solid black;
+}
 
 
 .highlighted{
@@ -37,10 +45,17 @@ $highlightColors: (
     }
 
     &_color{
-        width: 1.5rem;
-        height: 1.5rem;
-        border-radius: 50%;
-        border: 2px solid black;
+        @include colorBtn(1.5rem, transparent, 0)
+    }
+
+    &_unselectSVG{
+        @include colorBtn(1.2rem, transparent, .1rem)
+
+    }
+
+    &_unselectBtn{
+        @include colorBtn(1.65rem, transparent ,0 );
+        border: none;
     }
 
     @each $modifier, $properties in $highlightColors{

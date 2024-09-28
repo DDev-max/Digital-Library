@@ -1,0 +1,1 @@
+export const menuSize: number = 160
