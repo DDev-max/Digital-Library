@@ -24,8 +24,7 @@ $highlightColors: (
 }
 
 .contextMenu{
-    position: absolute;
-    bottom: 0;
+    position: fixed;
     width: 8rem;
     height: 8rem;
     padding: 1rem;
