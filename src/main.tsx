@@ -6,6 +6,7 @@ import { MainContent } from './components/MainContent'
 import "./Sass/styles.scss"
 import { Header } from './components/Header'
 import { ReadBook } from './components/Main/ReadBook'
+import { HighlightsProvider } from './components/HighlightsProvider'
 
 const queryClient = new QueryClient({
    defaultOptions: {
@@ -35,8 +36,14 @@ const router = createBrowserRouter([
  ])
 
 
+
+
+
+
 createRoot(document.getElementById('root')!).render(
    <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+      <HighlightsProvider>
+         <RouterProvider router={router} />
+      </HighlightsProvider>
    </QueryClientProvider>
 )

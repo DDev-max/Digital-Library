@@ -5,35 +5,21 @@ import { BigSlider } from "./Main/BigSlider";
 import { HorizontalProducts } from "./Main/HorizontalProducts";
 import { MultipleProducts } from "./Main/MultipleProducts";
 import { VerticalProducts } from "./Main/VerticalProducts";
-import { BooksAPI, Item } from "../types";
+import {Item } from "../types";
 import {Pruebas} from "./Prueba"
+import { API_URL } from "../consts";
+import { fetchBooks } from "../Services/fetchBooks";
 
 export function MainContent() {
     const PRUEBAS = !true
-
-    const fields = "title,publishedDate,imageLinks,authors,categories"
-    const API_URL=  `https://www.googleapis.com/books/v1/volumes?q=subject:fiction&fields=items(volumeInfo(${fields}))&maxResults=20`
-
 
     //Se esta asignando dos veces el tipo
     //Añadir errores con OOP
     //Poner srcset a las imgs
     const {data} = useQuery<Item[]>({
         queryKey: ["books", API_URL],
-
         //Separar function:
-        queryFn: async ()=>{
-
-            const response = await fetch(API_URL);
-            const format: BooksAPI = await response.json();
-
-            // console.log(format);
-            // console.log("Fetcheado");
-            
-
-            return format.items
-
-        }
+        queryFn: fetchBooks
     })
 
 

@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AudioSVG } from "../svg/AudioSVG";
 import { CopySVG } from "../svg/CopySVG";
 import { DictionarySVG } from "../svg/DictionarySVG";
 import { SearchSVG } from "../svg/SearchSVG";
-import {menuSize} from "../consts.ts"
+import { menuSize} from "../consts.ts"
 import { UnselectSVG } from "../svg/UnselectSVG.tsx";
+import { HighlightedCntxt } from "../contextAPI.tsx";
+
 
 export function ContxtMenu() {
-    const [position, setPosition] =  useState({})
-    const [visibility, setVisibility] = useState(false)
+    const [position, setPosition] =  useState({}) 
+    const [visibility, setVisibility] = useState(false)//QUITAR Y ENVEZ DE ESO RETORNAR DISPLAY NONE?
+
+    const {highlightedContent, setHighlightedContent} = useContext(HighlightedCntxt)
 
     //HACER QUE SE PUEDAN SUBRAYAR VARIOS PARRAFOS A LA VEZ
 
 
-
-    //eventos:
+    //events handler:
     useEffect(()=>{
         const hideContextMenu = (e: Event)=>{
             const eTarget = e.target as HTMLElement
@@ -65,40 +68,48 @@ export function ContxtMenu() {
 
 
     function highlightColor(e: React.MouseEvent<HTMLButtonElement>) {
-        const wSelect = window.getSelection();
-        const userSelection = wSelect?.toString();
-    
-        if (userSelection && userSelection.length > 0) {
-            const eTarget = e.target as HTMLElement;
-            const range = wSelect?.getRangeAt(0);
-    
-            const selectionCopy = range?.cloneContents();
-            if (selectionCopy) {
-                const highlightedTxts = selectionCopy.querySelectorAll('span[class^="contextMenu_color--"]')
-                
-    
-                highlightedTxts.forEach(element => {
-                    const parent = element.parentNode;
-                    while (element.firstChild) {
-                        parent?.insertBefore(element.firstChild, element);
-                    }
-                    parent?.removeChild(element)
-                })
-    
+        const noHTMLTxt:string[] = []
 
-                range?.deleteContents();
-    
-                const span = document.createElement("span");
-                span.className = eTarget.classList[1];
-                span.appendChild(selectionCopy);
-    
-                range?.insertNode(span);
-            }
-    
-            wSelect?.removeAllRanges();
-        }
-    
-        setVisibility(false);
+        highlightedContent.forEach(elmnt=>{
+            const tempElement = document.createElement("p")
+            tempElement.innerHTML = elmnt
+            if (!tempElement.textContent) return
+        
+            noHTMLTxt.push(tempElement.textContent)
+        })
+
+
+        const eTarget = e.target as HTMLElement
+
+        const wSelect = window.getSelection()
+        const range = wSelect?.getRangeAt(0)
+        const start = range?.startOffset
+        const end = range?.endOffset
+
+        const parentElement = range?.startContainer.parentElement?.parentElement
+        const paragraphIndex = parentElement?.getAttribute("data-index")
+
+        const selectedParagraph = noHTMLTxt[Number(paragraphIndex)]
+        
+        const userSelection = selectedParagraph.slice(start, end)
+
+        const firstPart = selectedParagraph.slice(0, start)
+        const lastPart = selectedParagraph.slice(end)
+
+        console.log(firstPart);
+        console.log(userSelection);
+        console.log(lastPart);
+
+        const textHighlighted = `<p>${firstPart}<span class="${eTarget.classList[1]}">${userSelection}</span>${lastPart}</p>`
+
+        console.log(textHighlighted);
+        
+
+        const newContent = [...highlightedContent]
+        newContent[Number(paragraphIndex)] = textHighlighted
+
+        setHighlightedContent(newContent)
+        
     }
     
 
@@ -133,10 +144,7 @@ export function ContxtMenu() {
 
 
 
-
-
-
-// function highlightColor(e) {
+// function highlightColor(e: React.MouseEvent<HTMLButtonElement>) {
 //     const wSelect = window.getSelection();
 //     const userSelection = wSelect?.toString();
 
@@ -144,27 +152,27 @@ export function ContxtMenu() {
 //         const eTarget = e.target as HTMLElement;
 //         const range = wSelect?.getRangeAt(0);
 
-//         if (!range) return; 
+//         const selectionCopy = range?.cloneContents();
+//         if (selectionCopy) {
+//             const highlightedTxts = selectionCopy.querySelectorAll('span[class^="contextMenu_color--"]')
+            
 
-//         const copyElement = range.cloneContents();
-//         const highlightedTxts = copyElement?.querySelectorAll('span[class^="contextMenu_color--"]');
-
-//         if (highlightedTxts?.length > 0) {
-//             highlightedTxts.forEach(elmnt => {
-//                 while (elmnt.firstChild) {
-//                     elmnt.parentNode?.insertBefore(elmnt.firstChild, elmnt);
+//             highlightedTxts.forEach(element => {
+//                 const parent = element.parentNode;
+//                 while (element.firstChild) {
+//                     parent?.insertBefore(element.firstChild, element);
 //                 }
-//                 elmnt.remove();
-//             });
+//                 parent?.removeChild(element)
+//             })
 
 
-//             range.deleteContents();
-//             range.insertNode(copyElement);
-//         } else {
+//             range?.deleteContents();
 
 //             const span = document.createElement("span");
 //             span.className = eTarget.classList[1];
-//             range.surroundContents(span);
+//             span.appendChild(selectionCopy);
+
+//             range?.insertNode(span);
 //         }
 
 //         wSelect?.removeAllRanges();
