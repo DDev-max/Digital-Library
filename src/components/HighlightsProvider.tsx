@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 import { fetchLorem } from "../Services/fetchLorem"
 
 export function HighlightsProvider({children}: {children :ReactNode}) {
-   
+
     const [highlightedContent, setHighlightedContent] = useState<string[]>([])
  
     const {data} = useQuery<string[]>({
@@ -15,14 +15,14 @@ export function HighlightsProvider({children}: {children :ReactNode}) {
  
    useEffect(()=>{
     if (data) {
-      const htmlData: string[] = []
+      // const htmlData: string[] = []
 
-      data.forEach(elmnt=>{
-         htmlData.push(`<p>${elmnt}</p>`)
-      })
+      // data.forEach(elmnt=>{
+      //    htmlData.push(`<p>${elmnt}</p>`)
+      // })
 
          
-      setHighlightedContent(htmlData)       
+      setHighlightedContent(data)       
        
       }
     

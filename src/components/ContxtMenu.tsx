@@ -66,49 +66,77 @@ export function ContxtMenu() {
     }, [])
 
 
+    //CAMBIAR ESTO: 'Number(paragraphIndex)' por condicional
+
 
     function highlightColor(e: React.MouseEvent<HTMLButtonElement>) {
-        const noHTMLTxt:string[] = []
-
-        highlightedContent.forEach(elmnt=>{
-            const tempElement = document.createElement("p")
-            tempElement.innerHTML = elmnt
-            if (!tempElement.textContent) return
-        
-            noHTMLTxt.push(tempElement.textContent)
-        })
 
 
         const eTarget = e.target as HTMLElement
-
+        // const spanOpen = /<span class="contextMenu_color--\w+">/g
+        // const spanClose = /<\/span>/g
+        const dblSpaceDot = /\. {2}/g
         const wSelect = window.getSelection()
         const range = wSelect?.getRangeAt(0)
-        const start = range?.startOffset
-        const end = range?.endOffset
-
-        const parentElement = range?.startContainer.parentElement?.parentElement
-        const paragraphIndex = parentElement?.getAttribute("data-index")
-
-        const selectedParagraph = noHTMLTxt[Number(paragraphIndex)]
+        const userSeleccion =  wSelect?.toString()
         
-        const userSelection = selectedParagraph.slice(start, end)
-
-        const firstPart = selectedParagraph.slice(0, start)
-        const lastPart = selectedParagraph.slice(end)
-
-        console.log(firstPart);
-        console.log(userSelection);
-        console.log(lastPart);
-
-        const textHighlighted = `<p>${firstPart}<span class="${eTarget.classList[1]}">${userSelection}</span>${lastPart}</p>`
-
-        console.log(textHighlighted);
+        const paragraphIdx = range?.startContainer.parentElement?.getAttribute('data-index')
         
 
-        const newContent = [...highlightedContent]
-        newContent[Number(paragraphIndex)] = textHighlighted
+        //Double space is added after dot for some reason
+        const selectedParagraph = highlightedContent[Number(paragraphIdx)].replace(dblSpaceDot, ". ")
 
-        setHighlightedContent(newContent)
+        //Encontrar cuantas frases/palabras repetidas hay en el parrafo de la seleccion
+
+        if (!userSeleccion) return
+
+
+        //Buscar cual palabra repetida en especifico fue la seleccionada
+
+        const selectionRanges = `${range?.startOffset},${range?.endOffset}`
+        const noHTML = range?.startContainer.textContent
+
+        
+        let nMatchToSearch = 1
+        let textIdxStart = noHTML?.indexOf(userSeleccion) || -1
+        if (!textIdxStart) return
+        
+        while (textIdxStart !== -1) {
+            const textIdxEnd  = textIdxStart + userSeleccion.length
+            const textIdx = `${textIdxStart},${textIdxEnd}`
+
+            if (selectionRanges == textIdx) break
+
+            textIdxStart= noHTML?.indexOf(userSeleccion, textIdxStart + 1) || -1
+
+            nMatchToSearch++
+        }
+
+
+        // Encontrar el indice de una frase / palabra repetida en especifico
+        let currentMacth = 0
+        let innerHTMLStartIdx = 0
+
+        while ((innerHTMLStartIdx =  selectedParagraph.indexOf(userSeleccion, innerHTMLStartIdx)) !== -1) {
+            currentMacth++
+            if (currentMacth === nMatchToSearch ) {
+                break
+            }
+
+            innerHTMLStartIdx += userSeleccion.length
+        }
+
+        const innerHTMLEndIdx = innerHTMLStartIdx + userSeleccion.length
+
+        if (innerHTMLStartIdx == -1) return
+        const firstPart = selectedParagraph.slice(0, innerHTMLStartIdx)
+        const lastPart  = selectedParagraph.slice(innerHTMLEndIdx)
+        const stateCopy = [...highlightedContent]
+        stateCopy[Number(paragraphIdx)] = `${firstPart}<span class="${eTarget.classList[1]}">${userSeleccion}</span>${lastPart}`
+
+        setHighlightedContent(stateCopy)
+
+
         
     }
     
@@ -141,42 +169,3 @@ export function ContxtMenu() {
         </section>
     )
 }
-
-
-
-// function highlightColor(e: React.MouseEvent<HTMLButtonElement>) {
-//     const wSelect = window.getSelection();
-//     const userSelection = wSelect?.toString();
-
-//     if (userSelection && userSelection.length > 0) {
-//         const eTarget = e.target as HTMLElement;
-//         const range = wSelect?.getRangeAt(0);
-
-//         const selectionCopy = range?.cloneContents();
-//         if (selectionCopy) {
-//             const highlightedTxts = selectionCopy.querySelectorAll('span[class^="contextMenu_color--"]')
-            
-
-//             highlightedTxts.forEach(element => {
-//                 const parent = element.parentNode;
-//                 while (element.firstChild) {
-//                     parent?.insertBefore(element.firstChild, element);
-//                 }
-//                 parent?.removeChild(element)
-//             })
-
-
-//             range?.deleteContents();
-
-//             const span = document.createElement("span");
-//             span.className = eTarget.classList[1];
-//             span.appendChild(selectionCopy);
-
-//             range?.insertNode(span);
-//         }
-
-//         wSelect?.removeAllRanges();
-//     }
-
-//     setVisibility(false);
-// }
