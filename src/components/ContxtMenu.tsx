@@ -128,7 +128,24 @@ export function ContxtMenu() {
 
         const innerHTMLEndIdx = innerHTMLStartIdx + userSeleccion.length
 
-        if (innerHTMLStartIdx == -1) return
+
+        /*
+            Quiero encontrar el indice de una cadena de texto dentro de un parrafo, el cual incluye la cadena de texto, pero dentro de ella puede incluir una palabra en particular.
+
+
+            Quiero buscar el indice de la cadena de texto "hola, que tal" dentro de un parrafo,  el cual contiene a la cadena de texto pero puede que tenga la la frase "soy Juan" dentro de ella en cualquier posicion, por ejemplo "hola, soy Juan que tal" o "hola, que tal soy Juan" o cualquier otra variacion posible. Como puedo realizar eso en JavaScript?
+
+
+            Regex en javascript para buscar una cadena de texto que puede contener una palabra en especifico en cualquier posicion de la cadena de texto
+        */
+        if (innerHTMLStartIdx == -1) {
+            console.log(innerHTMLStartIdx)
+            console.log(userSeleccion)
+            console.log(selectedParagraph);
+            
+            
+            return
+        }
         const firstPart = selectedParagraph.slice(0, innerHTMLStartIdx)
         const lastPart  = selectedParagraph.slice(innerHTMLEndIdx)
         const stateCopy = [...highlightedContent]
@@ -169,3 +186,50 @@ export function ContxtMenu() {
         </section>
     )
 }
+
+
+/**
+ 
+const texto = "hola bonito mundo";
+const regex = /(?:bonito\s+)?hola(?:\s+bonito)?(?:\s+mundo)?/i;
+
+// Prueba
+if (regex.test(texto)) {
+    console.log("Coincide");
+} else {
+    console.log("No coincide");
+}
+
+
+
+ */
+
+
+/*
+
+
+
+const palabraOpcional = "bonito";
+
+ESCAPADA: HACER QUE INTERPRETE TAL COMO ESTA Y NO LO INTERPRETE COMO REGEX
+
+const palabraEscapada = palabraOpcional.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const regex = new RegExp(`(?:${palabraEscapada}\\s+)?hola(?:\\s+${palabraEscapada})?(?:\\s+mundo)?`, 'i');
+
+const textos = [
+    "hola mundo",
+    "hola bonito mundo",
+    "bonito hola mundo",
+    "hola bonito bonito mundo",
+    "hola",
+    "mundo bonito hola"
+];
+
+textos.forEach(t => {
+    console.log(`${t} => ${regex.test(t) ? "Coincide" : "No coincide"}`);
+});
+
+
+
+ */
