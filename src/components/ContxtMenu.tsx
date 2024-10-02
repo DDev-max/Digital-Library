@@ -69,89 +69,194 @@ export function ContxtMenu() {
     //CAMBIAR ESTO: 'Number(paragraphIndex)' por condicional
 
 
+    //HAY ERROR CUANDO SE SELECCIONA FRAGMENTOS DE FRASES REPETIDAS 2-10-24
     function highlightColor(e: React.MouseEvent<HTMLButtonElement>) {
 
-
         const eTarget = e.target as HTMLElement
-        // const spanOpen = /<span class="contextMenu_color--\w+">/g
-        // const spanClose = /<\/span>/g
-        const dblSpaceDot = /\. {2}/g
         const wSelect = window.getSelection()
         const range = wSelect?.getRangeAt(0)
         const userSeleccion =  wSelect?.toString()
+
+        const spanOpenTag = `<span class="${eTarget.classList[1]}">`
+        const spanCloseTag = "</span>"
+        const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/
+        const spanCloseRegex = /<\/span>/g //QUITAR LA "g" ?
+
         
+        const dblSpaceDot = /\. {2}/g
+
         const paragraphIdx = range?.startContainer.parentElement?.getAttribute('data-index')
-        
 
         //Double space is added after dot for some reason
         const selectedParagraph = highlightedContent[Number(paragraphIdx)].replace(dblSpaceDot, ". ")
 
-        //Encontrar cuantas frases/palabras repetidas hay en el parrafo de la seleccion
 
-        if (!userSeleccion) return
+        function getInnerHtmlIndex() {
+            if (!userSeleccion) return
+            //Encontrar cuantas frases/palabras repetidas hay en el parrafo de la seleccion
 
+            //Buscar cual palabra repetida en especifico fue la seleccionada
 
-        //Buscar cual palabra repetida en especifico fue la seleccionada
+            const selectionRanges = `${range?.startOffset},${range?.endOffset}`  //ejemplo: "0,12"
+            const noHTML = range?.startContainer.textContent 
 
-        const selectionRanges = `${range?.startOffset},${range?.endOffset}`
-        const noHTML = range?.startContainer.textContent
+            
+            /**
+             Se busca la seleccion del usuario dentro del texto plano. Si se encuentra dicha seleccion dentro del parrafo y no coincide con los indices seleccionados por el usuario, significa que la seleccion esta repetida dentro del parrafo, por lo tanto se le suma un numero mas a la variable de numero de coincidencias a buscar. Entonces en el texto con innerHTML se busca la coincidencia a partir de la cantidad de frases repetidas.
+             */
+            let nMatchToSearch = 1
+            let textIdxStart = noHTML?.indexOf(userSeleccion) || -1
+            if (!textIdxStart) return
+            
+            while (textIdxStart !== -1) {
+                const textIdxEnd  = textIdxStart + userSeleccion.length
+                const textIdx = `${textIdxStart},${textIdxEnd}`
 
-        
-        let nMatchToSearch = 1
-        let textIdxStart = noHTML?.indexOf(userSeleccion) || -1
-        if (!textIdxStart) return
-        
-        while (textIdxStart !== -1) {
-            const textIdxEnd  = textIdxStart + userSeleccion.length
-            const textIdx = `${textIdxStart},${textIdxEnd}`
+                if (selectionRanges == textIdx) break
 
-            if (selectionRanges == textIdx) break
+                textIdxStart= noHTML?.indexOf(userSeleccion, textIdxStart + 1) || -1
 
-            textIdxStart= noHTML?.indexOf(userSeleccion, textIdxStart + 1) || -1
-
-            nMatchToSearch++
-        }
-
-
-        // Encontrar el indice de una frase / palabra repetida en especifico
-        let currentMacth = 0
-        let innerHTMLStartIdx = 0
-
-        while ((innerHTMLStartIdx =  selectedParagraph.indexOf(userSeleccion, innerHTMLStartIdx)) !== -1) {
-            currentMacth++
-            if (currentMacth === nMatchToSearch ) {
-                break
+                nMatchToSearch++
             }
 
-            innerHTMLStartIdx += userSeleccion.length
+
+            // Encontrar el indice de una frase / palabra (repetida o no) en especifico
+            let currentMacth = 0
+            let innerHTMLStartIdx = 0
+
+            while ((innerHTMLStartIdx =  selectedParagraph.indexOf(userSeleccion, innerHTMLStartIdx)) !== -1) {
+                currentMacth++
+                if (currentMacth === nMatchToSearch ) {
+                    break
+                }
+
+                innerHTMLStartIdx += userSeleccion.length
+            }
+
+            const innerHTMLEndIdx = innerHTMLStartIdx + userSeleccion.length
+
+            return {innerHTMLStartIdx, innerHTMLEndIdx}
         }
+      
 
-        const innerHTMLEndIdx = innerHTMLStartIdx + userSeleccion.length
-
-
-        /*
-            Quiero encontrar el indice de una cadena de texto dentro de un parrafo, el cual incluye la cadena de texto, pero dentro de ella puede incluir una palabra en particular.
+        //CAMBIAR EL TS DE ESTA LINEA "getInnerHtmlIndex() ?? {}"
+        const {innerHTMLStartIdx, innerHTMLEndIdx} = getInnerHtmlIndex() ?? {}
 
 
-            Quiero buscar el indice de la cadena de texto "hola, que tal" dentro de un parrafo,  el cual contiene a la cadena de texto pero puede que tenga la la frase "soy Juan" dentro de ella en cualquier posicion, por ejemplo "hola, soy Juan que tal" o "hola, que tal soy Juan" o cualquier otra variacion posible. Como puedo realizar eso en JavaScript?
-
-
-            Regex en javascript para buscar una cadena de texto que puede contener una palabra en especifico en cualquier posicion de la cadena de texto
-        */
+        //si no lo encuentra, es por que el texto seleccionado ya contiene texto subrayado
         if (innerHTMLStartIdx == -1) {
-            console.log(innerHTMLStartIdx)
             console.log(userSeleccion)
-            console.log(selectedParagraph);
+
+
+            if (!userSeleccion) return
+            for (let i = 0; i <= userSeleccion.length; i++) {
+                const selectionFirstPart = userSeleccion.slice(0, i);
+                const selectionLastPart = userSeleccion.slice(i);
+            
+                const textSpanOpenRegex = new RegExp(`${selectionFirstPart}${spanOpenRegex.source}${selectionLastPart}`)
+                const textSpanCloseRegex = new RegExp(`${selectionFirstPart}${spanCloseRegex.source}${selectionLastPart}`)
+            
+                const hasSpanOpen = textSpanOpenRegex.exec(selectedParagraph)
+                const hasSpanClose = textSpanCloseRegex.exec(selectedParagraph)
+                
+
+
+
+                if (hasSpanOpen) {
+                    console.log("hay apertura");
+                    
+                    const htmlSelectionStart = hasSpanOpen.index
+                    const htmlSelectionEnd = htmlSelectionStart + hasSpanOpen[0].length
+
+                    const htmlSelection = selectedParagraph.slice(htmlSelectionStart, htmlSelectionEnd)
+
+                    const searchSpan = spanOpenRegex.exec(htmlSelection)
+                    if (!searchSpan) return
+
+                    const presentSpan = htmlSelection.slice(searchSpan?.index, searchSpan?.index + searchSpan?.[0].length)
+
+                    
+
+                    const noOpenTag = htmlSelection.replace(spanOpenRegex, "")
+
+                    const newHighlight = `${spanOpenTag}${noOpenTag}${spanCloseTag}`
+
+                    
+                    const firstPart = selectedParagraph.slice(0, htmlSelectionStart)
+                    const lastPart= selectedParagraph.slice(htmlSelectionEnd)
+                    
+                    const newHtml = firstPart+newHighlight+presentSpan+lastPart
+
+                    const stateCopy = [...highlightedContent]
+                    stateCopy[Number(paragraphIdx)] = newHtml
+
+                    setHighlightedContent(stateCopy)
+
+                }
+
+                if (hasSpanClose) {
+                    console.log("hay cierre");
+
+                    const htmlSelectionStart = hasSpanClose.index
+
+                    const htmlSelectionEnd = htmlSelectionStart + hasSpanClose[0].length
+
+                    const htmlSelection = selectedParagraph.slice(htmlSelectionStart, htmlSelectionEnd)
+
+                    const noSpanClose = htmlSelection.replace(spanCloseTag, "")
+
+                    const firstPart = selectedParagraph.slice(0, htmlSelectionStart)
+
+                    const lastPart = selectedParagraph.slice(htmlSelectionEnd)
+
+                    const newHMTL = firstPart+spanCloseTag+spanOpenTag+noSpanClose+spanCloseTag+lastPart
+
+                    const stateCopy = [...highlightedContent]
+                    stateCopy[Number(paragraphIdx)] = newHMTL
+                    setHighlightedContent(stateCopy)
+                    
+                    
+                }
+                
+
+                //  BUSCAR EL INDICE DEL PRIMER ELEMENTO SELECCIONADO DENTRO DEL TEXTO PLANO Y BUSCAR LA REPETICION(igual que la funcion "getInnerHtmlIndex") y a partir de ello buscoel ultimo elemento seleccionado. CON TODO ESO OBTENGO LA SELECCION DEL HTML
+
+                //LUEGO ELIMINAR LAS SPAN DENTRO DE EL Y ENVOLVERLAS EN UNA SOLA
+
+
+            }
             
             
+            
+
             return
         }
+
+        //finalmente se divide el texto
         const firstPart = selectedParagraph.slice(0, innerHTMLStartIdx)
         const lastPart  = selectedParagraph.slice(innerHTMLEndIdx)
         const stateCopy = [...highlightedContent]
         stateCopy[Number(paragraphIdx)] = `${firstPart}<span class="${eTarget.classList[1]}">${userSeleccion}</span>${lastPart}`
 
         setHighlightedContent(stateCopy)
+
+
+//INSERTAR EN CADA INDICE DE LA PALABRA CON UN BUCCLE LA ETIQUETA SPAN Y HACER IINCLUDES O  MATCH OSEA :
+
+// sXXXaludos, saXXXludos, salXXXudos, saluXXXdos, etc ...
+            /*
+                Buscar el indice de "lder. Ground r"
+
+                En el texto: "shoulder. G<span class="contextMenu_color--first">round round short ribs ham cupim chuck pork chop alcatra landjaege</span>r shank "
+            
+
+
+                -Detectar si contiene una span dentro.
+                -Si tiene la de cierre, entonces devuelvo la seleccion del usuario con la etiqueta de cierre de primero, y despues la seleccion con el texto subrayado.
+                -Si es la de apertura, devuelvo el texto subrayado primero y la etiqueta de apertura al final
+                -Si contiene tanto apertura como cierre, las elimino y devuelo la seleccion del usuario subrayada
+
+            */
 
 
         
@@ -205,6 +310,8 @@ if (regex.test(texto)) {
  */
 
 
+
+
 /*
 
 
@@ -212,7 +319,6 @@ if (regex.test(texto)) {
 const palabraOpcional = "bonito";
 
 ESCAPADA: HACER QUE INTERPRETE TAL COMO ESTA Y NO LO INTERPRETE COMO REGEX
-
 const palabraEscapada = palabraOpcional.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const regex = new RegExp(`(?:${palabraEscapada}\\s+)?hola(?:\\s+${palabraEscapada})?(?:\\s+mundo)?`, 'i');
