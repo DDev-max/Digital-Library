@@ -20,5 +20,10 @@ export interface ImageLinks {
 }
 
 export interface BookProp{
-    books: Item[] | undefined
+    books: Item[] | undefined;
+}
+
+export interface SVGProps{
+    onMouseDown?: (event: MouseEventHandler<SVGSVGElement>) => void
+    
 }

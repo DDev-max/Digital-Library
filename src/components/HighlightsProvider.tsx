@@ -7,7 +7,9 @@ import { fetchLorem } from "../Services/fetchLorem"
 export function HighlightsProvider({children}: {children :ReactNode}) {
 
     const [highlightedContent, setHighlightedContent] = useState<string[]>([])
- 
+    const [alert, setAlert] = useState("")
+
+
     const {data} = useQuery<string[]>({
        queryKey: ["LoremIpsumm", URLorem],
        queryFn: fetchLorem
@@ -30,7 +32,7 @@ export function HighlightsProvider({children}: {children :ReactNode}) {
  
  
     return(
-       <HighlightedCntxt.Provider value={{highlightedContent, setHighlightedContent}}>
+       <HighlightedCntxt.Provider value={{highlightedContent, setHighlightedContent, alert, setAlert}}>
           {children}
        </HighlightedCntxt.Provider>
     )

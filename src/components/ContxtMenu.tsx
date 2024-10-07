@@ -11,8 +11,8 @@ import { HighlightedCntxt } from "../contextAPI.tsx";
 export function ContxtMenu() {
     const [position, setPosition] =  useState({}) 
     const [visibility, setVisibility] = useState(false)//QUITAR Y ENVEZ DE ESO RETORNAR DISPLAY NONE?
-
-    const {highlightedContent, setHighlightedContent} = useContext(HighlightedCntxt)
+    
+    const {highlightedContent, setHighlightedContent, setAlert} = useContext(HighlightedCntxt)
 
     //HACER QUE SE PUEDAN SUBRAYAR VARIOS PARRAFOS A LA VEZ
 
@@ -69,7 +69,8 @@ export function ContxtMenu() {
     //CAMBIAR ESTO: 'Number(paragraphIndex)' por condicional
 
 
-    function highlightColor(e: React.MouseEvent<HTMLButtonElement>) {
+    function highlightColor(e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+) {
 
 
         const eTarget = e.target as HTMLElement
@@ -158,6 +159,38 @@ export function ContxtMenu() {
     }
     
 
+    function copyTxt() {
+        const seleccion = window.getSelection()?.toString();
+        if (!seleccion) return
+
+        navigator.clipboard.writeText(seleccion)
+            .then(()=> {
+                setAlert("Text Copied")
+                setTimeout(() => {
+                    setAlert("")
+                }, 2000);
+            })
+/*
+
+
+Error aqui:
+      navigator.clipboard.writeText(seleccion)
+            .then(setAlert("Copied text"))
+
+Argument of type 'void' is not assignable to parameter of type '((value: void) => void | PromiseLike<void>) | null | undefined'.ts(2345)
+
+*/
+            
+
+    }
+
+    function googleSearch() {
+        const seleccion = window.getSelection()?.toString()
+        
+        const url = `https://www.google.com/search?q=${seleccion}`
+        window.open(url)
+        
+    }
 
 
     function removeHighlight() {
@@ -179,10 +212,10 @@ export function ContxtMenu() {
                 </button>
                 
             </div>
-            <CopySVG/>
+            <CopySVG onMouseDown={copyTxt}/>
             <AudioSVG/>
             <DictionarySVG/>
-            <SearchSVG/>
+            <SearchSVG onMouseDown={googleSearch}/>
         </section>
     )
 }
