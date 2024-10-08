@@ -3,6 +3,7 @@ import { urlConversion } from "../../Services/urlConversion"
 import { ContxtMenu } from "../ContxtMenu"
 import { useContext } from "react"
 import { HighlightedCntxt } from "../../contextAPI"
+import { Alert } from "../Alert"
 
 export function ReadBook() {
     const urlTitle = useParams()
@@ -27,6 +28,8 @@ export function ReadBook() {
                 })}
             </div>
             
+            <Alert/>
+
         </main>
     )
 }

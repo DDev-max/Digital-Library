@@ -21,7 +21,7 @@ const router = createBrowserRouter([
    {
      path: "/",
      element: <Header/>,
-     errorElement: <p>No hay nada papu</p>,
+     errorElement: <p>No hay nada</p>,
      children: [
       {
          index: true,
