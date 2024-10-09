@@ -27,3 +27,38 @@ export interface SVGProps{
     onMouseDown?: (event: MouseEventHandler<SVGSVGElement>) => void
     
 }
+
+
+interface extendHighlightProps{
+    selectedParagraph: string
+    spanOpenTag: string
+    spanCloseTag: string
+}
+
+export interface HighlightStart extends extendHighlightProps{
+    hasSpanOpen: RegExpExecArray | null
+    spanOpenRegex: RegExp
+}
+
+export interface HighlightEnd extends extendHighlightProps{
+    hasSpanClose: RegExpExecArray | null
+}
+
+export interface StartEndProps{
+    plainText: string
+    range: Range | undefined
+    userSeleccion: string
+    spanOpenTag: string
+    spanCloseTag: string
+}
+
+export interface CopyTxProps{
+    setAlert: React.Dispatch<React.SetStateAction<string>>
+}
+
+export interface HtmlFunctionProps{
+    userSeleccion: string
+    range: Range | undefined
+    plainText: string
+    selectedParagraph: string
+}

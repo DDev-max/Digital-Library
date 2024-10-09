@@ -9,4 +9,6 @@ export const URLorem = "https://baconipsum.com/api/?type=all-meat&paras=10&forma
 export const pTagLength = 3
 
 export const spanWithClassAtt = 15
-export const spanCloseLength = 7
+
+
+//buscar cuales no estoy usando

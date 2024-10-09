@@ -6,6 +6,13 @@ import { SearchSVG } from "../svg/SearchSVG";
 import { menuSize} from "../consts.ts"
 import { UnselectSVG } from "../svg/UnselectSVG.tsx";
 import { HighlightedCntxt } from "../contextAPI.tsx";
+import { getInnerHtmlIndex } from "../Services/getInnerHtmlIndex.tsx";
+import { extendHighlightStart } from "../Services/extendHighlightStart.tsx";
+import { extendHighlightEnd } from "../Services/extendHighlightEnd.tsx";
+import { extendStartEnd } from "../Services/extendStartEnd.tsx";
+import { copyTxt } from "../Services/copyTxt.tsx";
+import { googleSearch } from "../Services/googleSearch.tsx";
+const spanCloseTag = "</span>"
 
 
 export function ContxtMenu() {
@@ -16,12 +23,12 @@ export function ContxtMenu() {
 
     //HACER QUE SE PUEDAN SUBRAYAR VARIOS PARRAFOS A LA VEZ
 
-
     //events handler:
     useEffect(()=>{
         const hideContextMenu = (e: Event)=>{
             const eTarget = e.target as HTMLElement
                         
+            // para pasignarle la misma funcion a ambos eventos (ver los eventos añadidos)
             if (e.type === "scroll") setVisibility(false) 
 
             if (typeof eTarget.className === "string" && !eTarget.className.includes("contextMenu")) {
@@ -51,13 +58,13 @@ export function ContxtMenu() {
 
 
 
-
         document.addEventListener("click", hideContextMenu)
-        document.addEventListener("contextmenu", moveContextMenu)
         document.addEventListener("scroll", hideContextMenu)
+        document.addEventListener("contextmenu", moveContextMenu)
 
         return ()=> {
             document.removeEventListener("click", hideContextMenu)
+            document.removeEventListener("scroll", hideContextMenu)
             document.removeEventListener("contextmenu", moveContextMenu)
         }
 
@@ -75,80 +82,36 @@ export function ContxtMenu() {
         const eTarget = e.target as HTMLElement
         const wSelect = window.getSelection()
         const range = wSelect?.getRangeAt(0)
-        const userSeleccion =  wSelect?.toString()
+        const userSeleccion =  wSelect?.toString() || ""
+        const plainText = range?.commonAncestorContainer.textContent || ""     
 
         const spanOpenTag = `<span class="${eTarget.classList[1]}">`
-        const spanCloseTag = "</span>"
         const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/
-        const spanCloseRegex = /<\/span>/g //QUITAR LA "g" ?
-
-        
+        // const fullSpanRegex = /<span class="contextMenu_color--(first|second|third|fourth)">|<\/span>/g
+        const spanCloseRegex = /<\/span>/g          //QUITAR LA "g" ?
         const dblSpaceDot = /\. {2}/g
 
-        const paragraphIdx = range?.startContainer.parentElement?.getAttribute('data-index')
+        const paragraphIdx = range?.startContainer.parentElement?.getAttribute('data-index') || ""
+        if (paragraphIdx === undefined || paragraphIdx === null || isNaN(Number(paragraphIdx))) return;
 
         //Double space is added after dot for some reason
         const selectedParagraph = highlightedContent[Number(paragraphIdx)].replace(dblSpaceDot, ". ")
 
-
-        function getInnerHtmlIndex() {
-            if (!userSeleccion) return
-            //Encontrar cuantas frases/palabras repetidas hay en el parrafo de la seleccion
-
-            //Buscar cual palabra repetida en especifico fue la seleccionada
-
-            const selectionRanges = `${range?.startOffset},${range?.endOffset}`  //ejemplo: "0,12"
-            const noHTML = range?.startContainer.textContent 
-
-            
-            /**
-             Se busca la seleccion del usuario dentro del texto plano. Si se encuentra dicha seleccion dentro del parrafo y no coincide con los indices seleccionados por el usuario, significa que la seleccion esta repetida dentro del parrafo, por lo tanto se le suma un numero mas a la variable de numero de coincidencias a buscar. Entonces en el texto con innerHTML se busca la coincidencia a partir de la cantidad de frases repetidas.
-             */
-            let nMatchToSearch = 1
-            let textIdxStart = noHTML?.indexOf(userSeleccion) || -1
-            if (!textIdxStart) return
-            
-            while (textIdxStart !== -1) {
-                const textIdxEnd  = textIdxStart + userSeleccion.length
-                const textIdx = `${textIdxStart},${textIdxEnd}`
-
-                if (selectionRanges == textIdx) break
-
-                textIdxStart= noHTML?.indexOf(userSeleccion, textIdxStart + 1) || -1
-
-                nMatchToSearch++
-            }
-
-
-            // Encontrar el indice de una frase / palabra (repetida o no) en especifico
-            let currentMacth = 0
-            let innerHTMLStartIdx = 0
-
-            while ((innerHTMLStartIdx =  selectedParagraph.indexOf(userSeleccion, innerHTMLStartIdx)) !== -1) {
-                currentMacth++
-                if (currentMacth === nMatchToSearch ) {
-                    break
-                }
-
-                innerHTMLStartIdx += userSeleccion.length
-            }
-
-            const innerHTMLEndIdx = innerHTMLStartIdx + userSeleccion.length
-
-            return {innerHTMLStartIdx, innerHTMLEndIdx}
-        }
       
 
         //CAMBIAR EL TS DE ESTA LINEA "getInnerHtmlIndex() ?? {}"
-        const {innerHTMLStartIdx, innerHTMLEndIdx} = getInnerHtmlIndex() ?? {}
+        const {innerHTMLStartIdx, innerHTMLEndIdx} = getInnerHtmlIndex({plainText,range,selectedParagraph, userSeleccion}) ?? {}
 
+        // -------- 👆 ERROR DE SELECCION DE AQUI PARA ARRIBA 👆
 
         //si no lo encuentra, es por que el texto seleccionado ya contiene texto subrayado
         if (innerHTMLStartIdx == -1) {
-            console.log(userSeleccion)
-
+            console.log("Ya hay texto subrayado");
+            
 
             if (!userSeleccion) return
+
+            let bothTags = true
             for (let i = 0; i <= userSeleccion.length; i++) {
                 const selectionFirstPart = userSeleccion.slice(0, i);
                 const selectionLastPart = userSeleccion.slice(i);
@@ -157,73 +120,56 @@ export function ContxtMenu() {
                 const textSpanCloseRegex = new RegExp(`${selectionFirstPart}${spanCloseRegex.source}${selectionLastPart}`)
             
                 const hasSpanOpen = textSpanOpenRegex.exec(selectedParagraph)
-                const hasSpanClose = textSpanCloseRegex.exec(selectedParagraph)
+                const hasSpanClose = textSpanCloseRegex.exec(selectedParagraph)                
+
+
+                if (hasSpanOpen) {        
+                    
+                    const  newHtml = extendHighlightStart({hasSpanOpen, selectedParagraph,spanCloseTag,spanOpenRegex,spanOpenTag})
+                    if (!newHtml) return
+
+
+                    const stateCopy = [...highlightedContent]
+                    stateCopy[Number(paragraphIdx)] = newHtml
                 
+                    setHighlightedContent(stateCopy)
+
+                    bothTags = false
 
 
+                    break
 
-                if (hasSpanOpen) {
-                    console.log("hay apertura");
-                    
-                    const htmlSelectionStart = hasSpanOpen.index
-                    const htmlSelectionEnd = htmlSelectionStart + hasSpanOpen[0].length
+                }else if (hasSpanClose) {
 
-                    const htmlSelection = selectedParagraph.slice(htmlSelectionStart, htmlSelectionEnd)
-
-                    const searchSpan = spanOpenRegex.exec(htmlSelection)
-                    if (!searchSpan) return
-
-                    const presentSpan = htmlSelection.slice(searchSpan?.index, searchSpan?.index + searchSpan?.[0].length)
-
-                    
-
-                    const noOpenTag = htmlSelection.replace(spanOpenRegex, "")
-
-                    const newHighlight = `${spanOpenTag}${noOpenTag}${spanCloseTag}`
-
-                    
-                    const firstPart = selectedParagraph.slice(0, htmlSelectionStart)
-                    const lastPart= selectedParagraph.slice(htmlSelectionEnd)
-                    
-                    const newHtml = firstPart+newHighlight+presentSpan+lastPart
+                    const newHtml = extendHighlightEnd({hasSpanClose,selectedParagraph,spanCloseTag,spanOpenTag})
+                    if (!newHtml) return
 
                     const stateCopy = [...highlightedContent]
                     stateCopy[Number(paragraphIdx)] = newHtml
 
                     setHighlightedContent(stateCopy)
+                    bothTags = false
 
-                }
-
-                if (hasSpanClose) {
-                    console.log("hay cierre");
-
-                    const htmlSelectionStart = hasSpanClose.index
-
-                    const htmlSelectionEnd = htmlSelectionStart + hasSpanClose[0].length
-
-                    const htmlSelection = selectedParagraph.slice(htmlSelectionStart, htmlSelectionEnd)
-
-                    const noSpanClose = htmlSelection.replace(spanCloseTag, "")
-
-                    const firstPart = selectedParagraph.slice(0, htmlSelectionStart)
-
-                    const lastPart = selectedParagraph.slice(htmlSelectionEnd)
-
-                    const newHMTL = firstPart+spanCloseTag+spanOpenTag+noSpanClose+spanCloseTag+lastPart
-
-                    const stateCopy = [...highlightedContent]
-                    stateCopy[Number(paragraphIdx)] = newHMTL
-                    setHighlightedContent(stateCopy)
+                    break
                     
                     
-                }
+                } 
+
+
+            }
+
+            if (bothTags){                
+
+                // MOSTRAR MENSAJE DE QUE LO DESUBRAYE ANTES
+
+                // const newHighlight = extendStartEnd({plainText,range,spanCloseTag,spanOpenTag,userSeleccion})
+                // if (!newHighlight) return
+
+
+                // const stateCopy = [...highlightedContent]
+                // stateCopy[Number(paragraphIdx)] = newHighlight
+                // setHighlightedContent(stateCopy)
                 
-
-                //  BUSCAR EL INDICE DEL PRIMER ELEMENTO SELECCIONADO DENTRO DEL TEXTO PLANO Y BUSCAR LA REPETICION(igual que la funcion "getInnerHtmlIndex") y a partir de ello buscoel ultimo elemento seleccionado. CON TODO ESO OBTENGO LA SELECCION DEL HTML
-
-                //LUEGO ELIMINAR LAS SPAN DENTRO DE EL Y ENVOLVERLAS EN UNA SOLA
-
-
             }
             
             
@@ -236,6 +182,7 @@ export function ContxtMenu() {
         const firstPart = selectedParagraph.slice(0, innerHTMLStartIdx)
         const lastPart  = selectedParagraph.slice(innerHTMLEndIdx)
         const stateCopy = [...highlightedContent]
+        
         stateCopy[Number(paragraphIdx)] = `${firstPart}<span class="${eTarget.classList[1]}">${userSeleccion}</span>${lastPart}`
 
         setHighlightedContent(stateCopy)
@@ -244,41 +191,82 @@ export function ContxtMenu() {
     }
     
 
-    function copyTxt() {
-        const seleccion = window.getSelection()?.toString();
-        if (!seleccion) return
 
-        navigator.clipboard.writeText(seleccion)
-            .then(()=> {
-                setAlert("Text Copied")
-                setTimeout(() => {
-                    setAlert("")
-                }, 2000);
-            })
-/*
+    function removeHighlight() {        
+        console.log("remove Highlight");
+        
+
+        //SE REPITE MUCHO CODIGO
+        const range = window.getSelection()?.getRangeAt(0)
+        const toRemoveTxt = range?.startContainer.nextSibling?.textContent ?? range?.startContainer.textContent
+        if (!toRemoveTxt) return
+
+        const classToSearch =range?.startContainer?.nextSibling?.className ?? range?.startContainer.parentElement?.className
+
+        const spanOpenToSearch = `<span class="${classToSearch}">`
+
+        const toSearch = spanOpenToSearch+toRemoveTxt+spanCloseTag
+        
+        const paragraph= range?.startContainer.parentElement?.closest("p")
+
+        const paragraphIdx = paragraph?.getAttribute('data-index') || ""
+
+        const firstIdx = highlightedContent[Number(paragraphIdx)].indexOf(toSearch)
+        const lastIdx =  highlightedContent[Number(paragraphIdx)].lastIndexOf(toSearch)
+
+        if (firstIdx === -1) return
+
+        //Si la palabra esta repetida
+        if (firstIdx !== lastIdx){
+            let fullPreviousContent = ""
+            let currentElmnt = range?.commonAncestorContainer.parentElement?.previousSibling
+
+            while (currentElmnt) {
+                fullPreviousContent = currentElmnt.textContent + fullPreviousContent
+
+                currentElmnt = currentElmnt.previousSibling
+            }
 
 
-Error aqui:
-      navigator.clipboard.writeText(seleccion)
-            .then(setAlert("Copied text"))
+            let nOcurrences = 1
+            let fullPreviousIdx = fullPreviousContent.indexOf(toRemoveTxt)
 
-Argument of type 'void' is not assignable to parameter of type '((value: void) => void | PromiseLike<void>) | null | undefined'.ts(2345)
+            while (fullPreviousIdx !== -1) {
+                fullPreviousIdx = fullPreviousContent.indexOf(toRemoveTxt, fullPreviousIdx + 1)
+                nOcurrences++
+            }
 
-*/
+            let currentWord= 1
+            let realIdx= highlightedContent[Number(paragraphIdx)].indexOf(toRemoveTxt)
+
+            while (currentWord !== nOcurrences) {
+                realIdx= highlightedContent[Number(paragraphIdx)].indexOf(toRemoveTxt, realIdx + 1)
+
+                currentWord++
+            }
+        
+
+            const firsPart = highlightedContent[Number(paragraphIdx)].slice(0, realIdx - spanOpenToSearch.length)
+
+            const lastPart = highlightedContent[Number(paragraphIdx)].slice(realIdx + toRemoveTxt.length + spanCloseTag.length)
+
+            const copy = [...highlightedContent]
+            copy[Number(paragraphIdx)] = firsPart+toRemoveTxt+lastPart
+
+            setHighlightedContent(copy)   
+            return  
             
-
-    }
-
-    function googleSearch() {
-        const seleccion = window.getSelection()?.toString()
+        }
         
-        const url = `https://www.google.com/search?q=${seleccion}`
-        window.open(url)
+
+        const firsPart = highlightedContent[Number(paragraphIdx)].slice(0, firstIdx)
+        const lastPart = highlightedContent[Number(paragraphIdx)].slice(firstIdx+ spanOpenToSearch.length + toRemoveTxt?.length)
+
+
         
-    }
-
-
-    function removeHighlight() {
+        const copy = [...highlightedContent]
+        copy[Number(paragraphIdx)] = firsPart+toRemoveTxt+lastPart
+        setHighlightedContent(copy)
         
     }
 
@@ -297,58 +285,10 @@ Argument of type 'void' is not assignable to parameter of type '((value: void) =
                 </button>
                 
             </div>
-            <CopySVG onMouseDown={copyTxt}/>
+            <CopySVG onMouseDown={()=>{copyTxt({setAlert})}}/>
             <AudioSVG/>
             <DictionarySVG/>
             <SearchSVG onMouseDown={googleSearch}/>
         </section>
     )
 }
-
-
-/**
- 
-const texto = "hola bonito mundo";
-const regex = /(?:bonito\s+)?hola(?:\s+bonito)?(?:\s+mundo)?/i;
-
-// Prueba
-if (regex.test(texto)) {
-    console.log("Coincide");
-} else {
-    console.log("No coincide");
-}
-
-
-
- */
-
-
-
-
-/*
-
-
-
-const palabraOpcional = "bonito";
-
-ESCAPADA: HACER QUE INTERPRETE TAL COMO ESTA Y NO LO INTERPRETE COMO REGEX
-const palabraEscapada = palabraOpcional.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-const regex = new RegExp(`(?:${palabraEscapada}\\s+)?hola(?:\\s+${palabraEscapada})?(?:\\s+mundo)?`, 'i');
-
-const textos = [
-    "hola mundo",
-    "hola bonito mundo",
-    "bonito hola mundo",
-    "hola bonito bonito mundo",
-    "hola",
-    "mundo bonito hola"
-];
-
-textos.forEach(t => {
-    console.log(`${t} => ${regex.test(t) ? "Coincide" : "No coincide"}`);
-});
-
-
-
- */
