@@ -6,14 +6,16 @@ import { SearchSVG } from "../svg/SearchSVG";
 import { menuSize} from "../consts.ts"
 import { UnselectSVG } from "../svg/UnselectSVG.tsx";
 import { HighlightedCntxt } from "../contextAPI.tsx";
-import { getInnerHtmlIndex } from "../Services/getInnerHtmlIndex.tsx";
-import { extendHighlightStart } from "../Services/extendHighlightStart.tsx";
-import { extendHighlightEnd } from "../Services/extendHighlightEnd.tsx";
-import { extendStartEnd } from "../Services/extendStartEnd.tsx";
+import { highlightPlainText } from "../Services/Highlight/highlightPlainText.tsx";
+import { extendHighlightStart } from "../Services/Highlight/extendHighlightStart.tsx";
+import { extendHighlightEnd } from "../Services/Highlight/extendHighlightEnd.tsx";
+// import { extendStartEnd } from "../Services/extendStartEnd.tsx";
 import { copyTxt } from "../Services/copyTxt.tsx";
 import { googleSearch } from "../Services/googleSearch.tsx";
-const spanCloseTag = "</span>"
 
+
+
+const spanCloseTag = "</span>"
 
 export function ContxtMenu() {
     const [position, setPosition] =  useState({}) 
@@ -83,35 +85,35 @@ export function ContxtMenu() {
         const wSelect = window.getSelection()
         const range = wSelect?.getRangeAt(0)
         const userSeleccion =  wSelect?.toString() || ""
-        const plainText = range?.commonAncestorContainer.textContent || ""     
+        // const plainText = range?.commonAncestorContainer.textContent || ""     
+
+        //USAR CLOSEST?
+        const plainText = range?.commonAncestorContainer.parentElement?.textContent
 
         const spanOpenTag = `<span class="${eTarget.classList[1]}">`
         const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/
         // const fullSpanRegex = /<span class="contextMenu_color--(first|second|third|fourth)">|<\/span>/g
         const spanCloseRegex = /<\/span>/g          //QUITAR LA "g" ?
-        const dblSpaceDot = /\. {2}/g
-
+        
         const paragraphIdx = range?.startContainer.parentElement?.getAttribute('data-index') || ""
         if (paragraphIdx === undefined || paragraphIdx === null || isNaN(Number(paragraphIdx))) return;
 
-        //Double space is added after dot for some reason
-        const selectedParagraph = highlightedContent[Number(paragraphIdx)].replace(dblSpaceDot, ". ")
-
+        const selectedParagraph = highlightedContent[Number(paragraphIdx)]
       
 
-        //CAMBIAR EL TS DE ESTA LINEA "getInnerHtmlIndex() ?? {}"
-        const {innerHTMLStartIdx, innerHTMLEndIdx} = getInnerHtmlIndex({plainText,range,selectedParagraph, userSeleccion}) ?? {}
+        const newHtml = highlightPlainText({userSeleccion ,range, spanOpenTag, spanCloseTag,  htmlContent: selectedParagraph})
 
-        // -------- 👆 ERROR DE SELECCION DE AQUI PARA ARRIBA 👆
 
-        //si no lo encuentra, es por que el texto seleccionado ya contiene texto subrayado
-        if (innerHTMLStartIdx == -1) {
+
+
+        if (!newHtml) {
             console.log("Ya hay texto subrayado");
             
 
             if (!userSeleccion) return
 
             let bothTags = true
+
             for (let i = 0; i <= userSeleccion.length; i++) {
                 const selectionFirstPart = userSeleccion.slice(0, i);
                 const selectionLastPart = userSeleccion.slice(i);
@@ -178,15 +180,11 @@ export function ContxtMenu() {
             return
         }
 
-        //finalmente se divide el texto
-        const firstPart = selectedParagraph.slice(0, innerHTMLStartIdx)
-        const lastPart  = selectedParagraph.slice(innerHTMLEndIdx)
-        const stateCopy = [...highlightedContent]
-        
-        stateCopy[Number(paragraphIdx)] = `${firstPart}<span class="${eTarget.classList[1]}">${userSeleccion}</span>${lastPart}`
 
-        setHighlightedContent(stateCopy)
+        const copy = [...highlightedContent]
+        copy[Number(paragraphIdx)] = newHtml
 
+        setHighlightedContent(copy)
 
     }
     

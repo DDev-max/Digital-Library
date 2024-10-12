@@ -1,4 +1,4 @@
-import { HighlightStart } from "../types"
+import { HighlightStart } from "../../types"
 
 
 export function extendHighlightStart({hasSpanOpen,selectedParagraph,spanCloseTag,spanOpenRegex,spanOpenTag}:HighlightStart){

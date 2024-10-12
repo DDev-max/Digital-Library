@@ -1,4 +1,4 @@
-import { HighlightEnd } from "../types"
+import { HighlightEnd } from "../../types"
 
 export function extendHighlightEnd({hasSpanClose, selectedParagraph, spanCloseTag,spanOpenTag}:HighlightEnd){
     const htmlSelectionStart = hasSpanClose!.index
