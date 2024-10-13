@@ -85,25 +85,24 @@ export function ContxtMenu() {
         const wSelect = window.getSelection()
         const range = wSelect?.getRangeAt(0)
         const userSeleccion =  wSelect?.toString() || ""
-        // const plainText = range?.commonAncestorContainer.textContent || ""     
-
-        //USAR CLOSEST?
-        const plainText = range?.commonAncestorContainer.parentElement?.textContent
 
         const spanOpenTag = `<span class="${eTarget.classList[1]}">`
         const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/
-        // const fullSpanRegex = /<span class="contextMenu_color--(first|second|third|fourth)">|<\/span>/g
         const spanCloseRegex = /<\/span>/g          //QUITAR LA "g" ?
         
-        const paragraphIdx = range?.startContainer.parentElement?.getAttribute('data-index') || ""
-        if (paragraphIdx === undefined || paragraphIdx === null || isNaN(Number(paragraphIdx))) return;
+        // const paragraphIdx = range?.startContainer.parentElement?.getAttribute('data-index')
+
+        const paragraphIdx = range?.commonAncestorContainer.nodeName === "#text"
+        ? range.commonAncestorContainer.parentElement?.closest('p')?.getAttribute('data-index')
+        : range?.commonAncestorContainer?.getAttribute('data-index');
+    
+        
+
+        if (paragraphIdx === undefined || paragraphIdx === null || isNaN(Number(paragraphIdx))) return; //HACERLO EN UNA?
 
         const selectedParagraph = highlightedContent[Number(paragraphIdx)]
-      
 
         const newHtml = highlightPlainText({userSeleccion ,range, spanOpenTag, spanCloseTag,  htmlContent: selectedParagraph})
-
-
 
 
         if (!newHtml) {
@@ -163,14 +162,6 @@ export function ContxtMenu() {
             if (bothTags){                
 
                 // MOSTRAR MENSAJE DE QUE LO DESUBRAYE ANTES
-
-                // const newHighlight = extendStartEnd({plainText,range,spanCloseTag,spanOpenTag,userSeleccion})
-                // if (!newHighlight) return
-
-
-                // const stateCopy = [...highlightedContent]
-                // stateCopy[Number(paragraphIdx)] = newHighlight
-                // setHighlightedContent(stateCopy)
                 
             }
             

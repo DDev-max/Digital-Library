@@ -13,7 +13,7 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
     tempDiv.innerHTML = htmlContent
 
     const fullPlainTxt = tempDiv.textContent
-    if (!fullPlainTxt || !range) return
+    if (!fullPlainTxt || !range ) return
 
     let rangeStart =  range.startOffset
     let previous = range.commonAncestorContainer.previousSibling
@@ -29,11 +29,11 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
         rangeStart += fullPreviousContent.length
     }
     
-    
-
 
     let currentIdxPlainTxt = fullPlainTxt.indexOf(userSeleccion)
     let nMatchPlainTxt = 1 
+
+    if (currentIdxPlainTxt === -1) return
     
     while (currentIdxPlainTxt !== rangeStart) {
         nMatchPlainTxt++
@@ -47,7 +47,10 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
 
     let currentIdxHtml = htmlContent.indexOf(userSeleccion)
     let nMatchHtml = 1
+
+    if (currentIdxHtml === -1) return
     
+
     while (nMatchHtml !== nMatchPlainTxt) {
         nMatchHtml++
         
