@@ -90,8 +90,6 @@ export function ContxtMenu() {
         const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/
         const spanCloseRegex = /<\/span>/g          //QUITAR LA "g" ?
         
-        // const paragraphIdx = range?.startContainer.parentElement?.getAttribute('data-index')
-
         const paragraphIdx = range?.commonAncestorContainer.nodeName === "#text"
         ? range.commonAncestorContainer.parentElement?.closest('p')?.getAttribute('data-index')
         : range?.commonAncestorContainer?.getAttribute('data-index');
@@ -105,6 +103,7 @@ export function ContxtMenu() {
         const newHtml = highlightPlainText({userSeleccion ,range, spanOpenTag, spanCloseTag,  htmlContent: selectedParagraph})
 
 
+        //ERROR AL MARCAR DOS SEGUIDOS => QUITAR EL PRIMERO => EXTIENDO EL PRINCIPIO DEL SEGUNDO
         if (!newHtml) {
             console.log("Ya hay texto subrayado");
             
@@ -125,7 +124,9 @@ export function ContxtMenu() {
 
 
                 if (hasSpanOpen) {        
+                    console.log("Hay span open");
                     
+
                     const  newHtml = extendHighlightStart({hasSpanOpen, selectedParagraph,spanCloseTag,spanOpenRegex,spanOpenTag})
                     if (!newHtml) return
 
@@ -141,6 +142,8 @@ export function ContxtMenu() {
                     break
 
                 }else if (hasSpanClose) {
+                    console.log("Hay span close");
+                    
 
                     const newHtml = extendHighlightEnd({hasSpanClose,selectedParagraph,spanCloseTag,spanOpenTag})
                     if (!newHtml) return
@@ -160,7 +163,8 @@ export function ContxtMenu() {
             }
 
             if (bothTags){                
-
+                console.log("Hay both tags");
+                
                 // MOSTRAR MENSAJE DE QUE LO DESUBRAYE ANTES
                 
             }
@@ -187,7 +191,10 @@ export function ContxtMenu() {
 
         //SE REPITE MUCHO CODIGO
         const range = window.getSelection()?.getRangeAt(0)
+
         const toRemoveTxt = range?.startContainer.nextSibling?.textContent ?? range?.startContainer.textContent
+        
+        
         if (!toRemoveTxt) return
 
         const classToSearch =range?.startContainer?.nextSibling?.className ?? range?.startContainer.parentElement?.className
@@ -202,6 +209,7 @@ export function ContxtMenu() {
 
         const firstIdx = highlightedContent[Number(paragraphIdx)].indexOf(toSearch)
         const lastIdx =  highlightedContent[Number(paragraphIdx)].lastIndexOf(toSearch)
+
 
         if (firstIdx === -1) return
 
@@ -239,6 +247,11 @@ export function ContxtMenu() {
 
             const lastPart = highlightedContent[Number(paragraphIdx)].slice(realIdx + toRemoveTxt.length + spanCloseTag.length)
 
+            console.log(firsPart);
+            console.log(toRemoveTxt);
+            console.log(lastPart);
+
+
             const copy = [...highlightedContent]
             copy[Number(paragraphIdx)] = firsPart+toRemoveTxt+lastPart
 
@@ -249,8 +262,7 @@ export function ContxtMenu() {
         
 
         const firsPart = highlightedContent[Number(paragraphIdx)].slice(0, firstIdx)
-        const lastPart = highlightedContent[Number(paragraphIdx)].slice(firstIdx+ spanOpenToSearch.length + toRemoveTxt?.length)
-
+        const lastPart = highlightedContent[Number(paragraphIdx)].slice(firstIdx+ spanOpenToSearch.length + toRemoveTxt?.length + spanCloseTag.length)
 
         
         const copy = [...highlightedContent]
