@@ -88,30 +88,27 @@ export function ContxtMenu() {
 
         const spanOpenTag = `<span class="${eTarget.classList[1]}">`
         const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/
-        const spanCloseRegex = /<\/span>/g          //QUITAR LA "g" ?
+        const spanCloseRegex = /<\/span>/g      //QUITAR LA "g" ?
         
         const paragraphIdx = range?.commonAncestorContainer.nodeName === "#text"
         ? range.commonAncestorContainer.parentElement?.closest('p')?.getAttribute('data-index')
         : range?.commonAncestorContainer?.getAttribute('data-index');
-    
         
-
-        if (paragraphIdx === undefined || paragraphIdx === null || isNaN(Number(paragraphIdx))) return; //HACERLO EN UNA?
 
         const selectedParagraph = highlightedContent[Number(paragraphIdx)]
 
         const newHtml = highlightPlainText({userSeleccion ,range, spanOpenTag, spanCloseTag,  htmlContent: selectedParagraph})
 
 
-        //ERROR AL MARCAR DOS SEGUIDOS => QUITAR EL PRIMERO => EXTIENDO EL PRINCIPIO DEL SEGUNDO
-        if (!newHtml) {
+        console.log("antes del if");
+        
+        //SI NO DEVUELVE NUEVO HTML, ES POR QUE SE SELECCIONO TEXTO QUE YA ESTA SUBRAYADO CON TEXTO PLANO
+        if (!newHtml && paragraphIdx) {
             console.log("Ya hay texto subrayado");
             
-
             if (!userSeleccion) return
 
             let bothTags = true
-
             for (let i = 0; i <= userSeleccion.length; i++) {
                 const selectionFirstPart = userSeleccion.slice(0, i);
                 const selectionLastPart = userSeleccion.slice(i);
@@ -137,8 +134,6 @@ export function ContxtMenu() {
                     setHighlightedContent(stateCopy)
 
                     bothTags = false
-
-
                     break
 
                 }else if (hasSpanClose) {
@@ -152,6 +147,7 @@ export function ContxtMenu() {
                     stateCopy[Number(paragraphIdx)] = newHtml
 
                     setHighlightedContent(stateCopy)
+
                     bothTags = false
 
                     break
@@ -162,17 +158,32 @@ export function ContxtMenu() {
 
             }
 
-            if (bothTags){                
-                console.log("Hay both tags");
-                
-                // MOSTRAR MENSAJE DE QUE LO DESUBRAYE ANTES
-                
+            if (bothTags) {
+                const paragraphNoHighlight = removeHighlight(true)
+
+                const highlighted = highlightPlainText({htmlContent: paragraphNoHighlight,range,spanCloseTag,spanOpenTag, userSeleccion})
+        
+                const copy = [...highlightedContent]
+                copy[Number(paragraphIdx)] = highlighted
+
+                setHighlightedContent(copy)
+
+                return
+        
             }
-            
-            
-            
 
             return
+        }
+
+
+        //Si se seleccionan dos parrafos a la vez
+        if (range?.startContainer !== range?.endContainer){                
+            setAlert("Please select one paragraph at a time")
+            
+            setTimeout(() => {
+                setAlert("")
+            }, 2000);
+            return        
         }
 
 
@@ -185,10 +196,10 @@ export function ContxtMenu() {
     
 
 
-    function removeHighlight() {        
-        console.log("remove Highlight");
-        
+    function removeHighlight(fromHighlight) {        
 
+        console.log("se va a remover");
+        
         //SE REPITE MUCHO CODIGO
         const range = window.getSelection()?.getRangeAt(0)
 
@@ -267,7 +278,17 @@ export function ContxtMenu() {
         
         const copy = [...highlightedContent]
         copy[Number(paragraphIdx)] = firsPart+toRemoveTxt+lastPart
+
+        
+
+        if (fromHighlight) {
+            console.log("fromHighlight, se retorna");
+            
+            return firsPart+toRemoveTxt+lastPart
+        }
+
         setHighlightedContent(copy)
+        console.log("Fin de remove");
         
     }
 
@@ -281,7 +302,7 @@ export function ContxtMenu() {
                 <button onClick={(e)=> highlightColor(e)} className="contextMenu_color contextMenu_color--third"></button>
                 <button onClick={(e)=> highlightColor(e)} className="contextMenu_color contextMenu_color--fourth"></button>
 
-                <button onClick={removeHighlight} className="contextMenu_unselectBtn">
+                <button onClick={()=>{removeHighlight(false)}} className="contextMenu_unselectBtn">
                     <UnselectSVG className="contextMenu_unselectSVG"/>
                 </button>
                 

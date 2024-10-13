@@ -9,10 +9,13 @@ export interface Pinga{
 
 export function highlightPlainText({range, htmlContent, userSeleccion, spanCloseTag,spanOpenTag}:Pinga) {
 
+    
+
     const tempDiv = document.createElement("div")
     tempDiv.innerHTML = htmlContent
 
     const fullPlainTxt = tempDiv.textContent
+    
     if (!fullPlainTxt || !range ) return
 
     let rangeStart =  range.startOffset
@@ -33,6 +36,8 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
     let currentIdxPlainTxt = fullPlainTxt.indexOf(userSeleccion)
     let nMatchPlainTxt = 1 
 
+
+    
     if (currentIdxPlainTxt === -1) return
     
     while (currentIdxPlainTxt !== rangeStart) {
@@ -46,9 +51,14 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
     
 
     let currentIdxHtml = htmlContent.indexOf(userSeleccion)
+    
+    
     let nMatchHtml = 1
 
+    // console.log(currentIdxHtml);
     if (currentIdxHtml === -1) return
+    
+
     
 
     while (nMatchHtml !== nMatchPlainTxt) {
@@ -66,6 +76,9 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
     
     
     const newHighlight = firstPart + spanHighlight + lastPart
+    
+    
+    
 
     return newHighlight
 
