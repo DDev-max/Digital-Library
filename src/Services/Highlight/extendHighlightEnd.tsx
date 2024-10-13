@@ -1,6 +1,7 @@
 import { HighlightEnd } from "../../types"
 
-export function extendHighlightEnd({hasSpanClose, selectedParagraph, spanCloseTag,spanOpenTag}:HighlightEnd){
+export function extendHighlightEnd({hasSpanClose, selectedParagraph, spanCloseTag,spanOpenTag, spanOpenRegex}:HighlightEnd){
+
     const htmlSelectionStart = hasSpanClose!.index
 
     const htmlSelectionEnd = htmlSelectionStart + hasSpanClose![0].length
@@ -13,7 +14,18 @@ export function extendHighlightEnd({hasSpanClose, selectedParagraph, spanCloseTa
 
     const lastPart = selectedParagraph.slice(htmlSelectionEnd)
 
-    const newHMTL = firstPart+spanCloseTag+spanOpenTag+noSpanClose+spanCloseTag+lastPart
+    const existingSpanOpen = spanOpenRegex.exec(firstPart)
+
+
+    const newHMTL = existingSpanOpen[0] == spanOpenTag
+    ? firstPart+noSpanClose+spanCloseTag+lastPart
+    : firstPart+spanCloseTag+spanOpenTag+noSpanClose+spanCloseTag+lastPart
+
+
+//HACERLE LO MISMO AL START 👆 ?
+    
+
+//ERROR: 
 
     return newHMTL
 }

@@ -1,15 +1,13 @@
-//OG TXT:
-
 /*
 
-T-bone ball tip sausage bacon venison pork belly. T-bone jowl kevin spare ribs ham hock porchetta. Pancetta sausage chislic tri-tip shoulder. Biltong tri-tip sirloin, filet mignon pig pork belly shank pork loin. Pork frankfurter ham, tenderloin pork loin shoulder brisket pork chop hamburger. Chuck shoulder short ribs boudin.
+FULL
+
+Flank kevin pork belly jowl, porchetta sirloin turducken chuck rump pork chop capicola tri-tip short loin biltong prosciutto.  Ball tip cupim prosciutto shank andouille pig, corned beef spare ribs cow ribeye rump chuck doner jerky.  Venison pastrami burgdoggen rump spare ribs brisket.  Pig bresaola fatback shoulder jowl ham hock.  Ham hock kevin tongue pork belly cow porchetta ground round.  Fatback cow turducken chicken turkey salami flank buffalo meatloaf frankfurter hamburger pig pork.  Rump alcatra kielbasa fatback landjaeger turkey flank shankle pastrami.
 
 
+NO ENCONTRO:
 
-<p data-index="2">T-bone ball tip sausage bacon venison <span class="contextMenu_color--first"><span class="contextMenu_color--first">pork </span></span>belly. T-bone jowl kevin spare ribs ham hock porchetta. Pancetta sausage chislic tri-tip shoulder. Biltong tri-tip sirloin, filet mignon pig <span class="contextMenu_color--first">pork </span>belly shank <span class="contextMenu_color--first">pork </span>loin. Pork frankfurter ham, tenderloin pork loin shoulder brisket pork chop hamburger. Chuck shoulder short ribs boudin.</p>
+fatback shoulder jowl 
 
 
-HIGHLIGHTING SECOND 'pork' = se quita el TERCER 'pork'
 */
-
-

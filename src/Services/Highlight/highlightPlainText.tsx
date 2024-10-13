@@ -8,8 +8,9 @@ export interface Pinga{
 }
 
 export function highlightPlainText({range, htmlContent, userSeleccion, spanCloseTag,spanOpenTag}:Pinga) {
-
     
+    //ERROR: SELECCIONO ==> EXTIENDO AL FINAL ==> NESTING
+    //HAY QUE HACER QUE EL EXTEND LO EXTIENDA Y NO AÑADA DOBLE
 
     const tempDiv = document.createElement("div")
     tempDiv.innerHTML = htmlContent
@@ -19,7 +20,7 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
     if (!fullPlainTxt || !range ) return
 
     let rangeStart =  range.startOffset
-    let previous = range.commonAncestorContainer.previousSibling
+    let previous = range.startContainer.previousSibling
     let fullPreviousContent = ""
 
     while (previous) {
@@ -40,23 +41,41 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
     
     if (currentIdxPlainTxt === -1) return
     
-    while (currentIdxPlainTxt !== rangeStart) {
+    
+    
+
+    while (currentIdxPlainTxt !== rangeStart) {        
+
         nMatchPlainTxt++
         
         currentIdxPlainTxt = fullPlainTxt?.indexOf(userSeleccion, currentIdxPlainTxt + 1)
+
+        
         if (currentIdxPlainTxt === -1) return
 
     }
     
     
 
+
     let currentIdxHtml = htmlContent.indexOf(userSeleccion)
     
     
     let nMatchHtml = 1
 
-    // console.log(currentIdxHtml);
-    if (currentIdxHtml === -1) return
+    console.log(currentIdxHtml);
+    console.log(htmlContent);
+    
+    if (currentIdxHtml === -1) {
+        console.log("No encontrado");
+        console.log(userSeleccion);
+        console.log(htmlContent);
+        
+        
+
+        return
+        
+    }
     
 
     
@@ -76,6 +95,11 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
     
     
     const newHighlight = firstPart + spanHighlight + lastPart
+    
+    // console.log(firstPart);
+    // console.log(spanHighlight);
+    // console.log(lastPart);
+    
     
     
     

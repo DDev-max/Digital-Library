@@ -23,7 +23,6 @@ export function ContxtMenu() {
     
     const {highlightedContent, setHighlightedContent, setAlert} = useContext(HighlightedCntxt)
 
-    //HACER QUE SE PUEDAN SUBRAYAR VARIOS PARRAFOS A LA VEZ
 
     //events handler:
     useEffect(()=>{
@@ -78,7 +77,6 @@ export function ContxtMenu() {
     //CAMBIAR ESTO: 'Number(paragraphIndex)' por condicional
 
 
-    //HAY ERROR CUANDO SE SELECCIONA FRAGMENTOS DE FRASES REPETIDAS 2-10-24
     function highlightColor(e: React.MouseEvent<HTMLButtonElement>) {
 
         const eTarget = e.target as HTMLElement
@@ -99,12 +97,9 @@ export function ContxtMenu() {
 
         const newHtml = highlightPlainText({userSeleccion ,range, spanOpenTag, spanCloseTag,  htmlContent: selectedParagraph})
 
-
-        console.log("antes del if");
         
         //SI NO DEVUELVE NUEVO HTML, ES POR QUE SE SELECCIONO TEXTO QUE YA ESTA SUBRAYADO CON TEXTO PLANO
         if (!newHtml && paragraphIdx) {
-            console.log("Ya hay texto subrayado");
             
             if (!userSeleccion) return
 
@@ -136,11 +131,10 @@ export function ContxtMenu() {
                     bothTags = false
                     break
 
-                }else if (hasSpanClose) {
-                    console.log("Hay span close");
-                    
+                }else if (hasSpanClose) {                    
 
-                    const newHtml = extendHighlightEnd({hasSpanClose,selectedParagraph,spanCloseTag,spanOpenTag})
+
+                    const newHtml = extendHighlightEnd({hasSpanClose,selectedParagraph,spanCloseTag,spanOpenTag, spanOpenRegex})
                     if (!newHtml) return
 
                     const stateCopy = [...highlightedContent]
@@ -160,9 +154,12 @@ export function ContxtMenu() {
 
             if (bothTags) {
                 const paragraphNoHighlight = removeHighlight(true)
-
+                console.log("removido");
+                
+                
                 const highlighted = highlightPlainText({htmlContent: paragraphNoHighlight,range,spanCloseTag,spanOpenTag, userSeleccion})
         
+                
                 const copy = [...highlightedContent]
                 copy[Number(paragraphIdx)] = highlighted
 
@@ -187,6 +184,7 @@ export function ContxtMenu() {
         }
 
 
+        //PONER QUE SI SE DEVUELVE UN TXTCONTENT DIFERENTE, RETURN
         const copy = [...highlightedContent]
         copy[Number(paragraphIdx)] = newHtml
 
@@ -197,8 +195,6 @@ export function ContxtMenu() {
 
 
     function removeHighlight(fromHighlight) {        
-
-        console.log("se va a remover");
         
         //SE REPITE MUCHO CODIGO
         const range = window.getSelection()?.getRangeAt(0)
@@ -231,7 +227,6 @@ export function ContxtMenu() {
 
             while (currentElmnt) {
                 fullPreviousContent = currentElmnt.textContent + fullPreviousContent
-
                 currentElmnt = currentElmnt.previousSibling
             }
 
@@ -271,6 +266,7 @@ export function ContxtMenu() {
             
         }
         
+        //HACER FUNCION QUE OBTENGA EL CONTENIDO ANTERIOR (PREVIOUS SIBLING)
 
         const firsPart = highlightedContent[Number(paragraphIdx)].slice(0, firstIdx)
         const lastPart = highlightedContent[Number(paragraphIdx)].slice(firstIdx+ spanOpenToSearch.length + toRemoveTxt?.length + spanCloseTag.length)
@@ -282,14 +278,10 @@ export function ContxtMenu() {
         
 
         if (fromHighlight) {
-            console.log("fromHighlight, se retorna");
-            
             return firsPart+toRemoveTxt+lastPart
         }
 
         setHighlightedContent(copy)
-        console.log("Fin de remove");
-        
     }
 
     return(

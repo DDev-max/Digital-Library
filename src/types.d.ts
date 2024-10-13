@@ -42,6 +42,7 @@ export interface HighlightStart extends extendHighlightProps{
 
 export interface HighlightEnd extends extendHighlightProps{
     hasSpanClose: RegExpExecArray | null
+    spanOpenRegex: RegExp
 }
 
 export interface StartEndProps{
