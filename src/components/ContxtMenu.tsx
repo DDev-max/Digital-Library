@@ -9,13 +9,17 @@ import { HighlightedCntxt } from "../contextAPI.tsx";
 import { highlightPlainText } from "../Services/Highlight/highlightPlainText.tsx";
 import { extendHighlightStart } from "../Services/Highlight/extendHighlightStart.tsx";
 import { extendHighlightEnd } from "../Services/Highlight/extendHighlightEnd.tsx";
-// import { extendStartEnd } from "../Services/extendStartEnd.tsx";
 import { copyTxt } from "../Services/copyTxt.tsx";
 import { googleSearch } from "../Services/googleSearch.tsx";
+import { getPreviousContent } from "../Services/getPreviousContent.tsx";
 
 
 
 const spanCloseTag = "</span>"
+
+//ERROR AL SELECCIONAR ESPACIOS EN BLANCO POCAS LETRAS O ESPACIOS EN BLANCO " "
+//Ocurre cuando solo se selecciona una letra y esa letra justo coincide con la etiqueta span
+
 
 export function ContxtMenu() {
     const [position, setPosition] =  useState({}) 
@@ -74,35 +78,52 @@ export function ContxtMenu() {
     }, [])
 
 
-    //CAMBIAR ESTO: 'Number(paragraphIndex)' por condicional
-
 
     function highlightColor(e: React.MouseEvent<HTMLButtonElement>) {
 
         const eTarget = e.target as HTMLElement
         const wSelect = window.getSelection()
         const range = wSelect?.getRangeAt(0)
-        const userSeleccion =  wSelect?.toString() || ""
+        const userSeleccion =  wSelect?.toString()
+        if (!userSeleccion) return
 
         const spanOpenTag = `<span class="${eTarget.classList[1]}">`
-        const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/
-        const spanCloseRegex = /<\/span>/g      //QUITAR LA "g" ?
-        
+        const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/g
+        const spanCloseRegex = /<\/span>/g
+
+        const emptySpanRegex = /<span class="contextMenu_color--(first|second|third|fourth)"><\/span>/g
+
+
         const paragraphIdx = range?.commonAncestorContainer.nodeName === "#text"
-        ? range.commonAncestorContainer.parentElement?.closest('p')?.getAttribute('data-index')
-        : range?.commonAncestorContainer?.getAttribute('data-index');
+        ? Number(range.commonAncestorContainer.parentElement?.closest('p')?.getAttribute('data-index'))
+        : Number((range?.commonAncestorContainer as HTMLElement).getAttribute('data-index'))
         
 
-        const selectedParagraph = highlightedContent[Number(paragraphIdx)]
+        //Si se seleccionan dos parrafos a la vez
+        if ((range?.commonAncestorContainer as HTMLElement).className == "paragraphsContainer" ){     
+            console.log("Dentro de dos parrafos");
+                       
+            setAlert("Please select one paragraph at a time")
+            
+            setTimeout(() => {
+                setAlert("")
+            }, 2000);
+            return        
+        }
 
-        const newHtml = highlightPlainText({userSeleccion ,range, spanOpenTag, spanCloseTag,  htmlContent: selectedParagraph})
+        const selectedParagraph = highlightedContent[paragraphIdx]
+
+        const tempDiv = document.createElement("div")
+        tempDiv.innerHTML = selectedParagraph
+
+        const fullPlainTxt = tempDiv.textContent
+
+        let newHtml = highlightPlainText({userSeleccion ,range, spanOpenTag, spanCloseTag,  htmlContent: selectedParagraph, fullPlainTxt})
 
         
         //SI NO DEVUELVE NUEVO HTML, ES POR QUE SE SELECCIONO TEXTO QUE YA ESTA SUBRAYADO CON TEXTO PLANO
-        if (!newHtml && paragraphIdx) {
+        if (!newHtml && !isNaN(paragraphIdx)) {
             
-            if (!userSeleccion) return
-
             let bothTags = true
             for (let i = 0; i <= userSeleccion.length; i++) {
                 const selectionFirstPart = userSeleccion.slice(0, i);
@@ -114,97 +135,74 @@ export function ContxtMenu() {
                 const hasSpanOpen = textSpanOpenRegex.exec(selectedParagraph)
                 const hasSpanClose = textSpanCloseRegex.exec(selectedParagraph)                
 
-
-                if (hasSpanOpen) {        
-                    console.log("Hay span open");
+                if (hasSpanOpen || hasSpanClose) {  
                     
 
-                    const  newHtml = extendHighlightStart({hasSpanOpen, selectedParagraph,spanCloseTag,spanOpenRegex,spanOpenTag})
-                    if (!newHtml) return
+                    newHtml = hasSpanOpen
+                    ? extendHighlightStart({hasSpanOpen, selectedParagraph,spanCloseTag,spanOpenRegex,spanOpenTag})
+                    : extendHighlightEnd({hasSpanClose,selectedParagraph,spanCloseTag,spanOpenTag, spanOpenRegex})
 
-
-                    const stateCopy = [...highlightedContent]
-                    stateCopy[Number(paragraphIdx)] = newHtml
-                
-                    setHighlightedContent(stateCopy)
-
+                    if (!newHtml || newHtml.match(emptySpanRegex)) return
+                    
                     bothTags = false
                     break
-
-                }else if (hasSpanClose) {                    
-
-
-                    const newHtml = extendHighlightEnd({hasSpanClose,selectedParagraph,spanCloseTag,spanOpenTag, spanOpenRegex})
-                    if (!newHtml) return
-
-                    const stateCopy = [...highlightedContent]
-                    stateCopy[Number(paragraphIdx)] = newHtml
-
-                    setHighlightedContent(stateCopy)
-
-                    bothTags = false
-
-                    break
-                    
-                    
-                } 
+                }
 
 
             }
 
             if (bothTags) {
                 const paragraphNoHighlight = removeHighlight(true)
-                console.log("removido");
+                if (!paragraphNoHighlight) return
                 
-                
-                const highlighted = highlightPlainText({htmlContent: paragraphNoHighlight,range,spanCloseTag,spanOpenTag, userSeleccion})
-        
-                
-                const copy = [...highlightedContent]
-                copy[Number(paragraphIdx)] = highlighted
-
-                setHighlightedContent(copy)
-
-                return
-        
+                newHtml = highlightPlainText({fullPlainTxt,range,spanCloseTag,spanOpenTag,userSeleccion, htmlContent: paragraphNoHighlight})
             }
 
-            return
         }
 
+        // if (!newHtml) return
 
-        //Si se seleccionan dos parrafos a la vez
-        if (range?.startContainer !== range?.endContainer){                
-            setAlert("Please select one paragraph at a time")
-            
+        //PONER QUE SI SE DEVUELVE UN TXTCONTENT DIFERENTE, RETURN
+
+        const copy = [...highlightedContent]
+
+        //REUTILIZAR EL DE ARRIBA?
+        const tempElmnt = document.createElement("div")
+        tempElmnt.innerHTML = newHtml
+
+        if (tempElmnt.textContent != fullPlainTxt || !newHtml) {
+            // Ocurre cuando se quiere extender el subrayado de etiquetas de diferentes colores
+            setAlert("First try removing the highlighting from the selection.")
+
             setTimeout(() => {
                 setAlert("")
             }, 2000);
-            return        
+            return
+            
         }
 
-
-        //PONER QUE SI SE DEVUELVE UN TXTCONTENT DIFERENTE, RETURN
-        const copy = [...highlightedContent]
-        copy[Number(paragraphIdx)] = newHtml
-
+        copy[paragraphIdx] = newHtml
         setHighlightedContent(copy)
+        return
 
+   
     }
     
 
 
-    function removeHighlight(fromHighlight) {        
+    function removeHighlight(fromHighlight: boolean) {        
         
         //SE REPITE MUCHO CODIGO
         const range = window.getSelection()?.getRangeAt(0)
 
         const toRemoveTxt = range?.startContainer.nextSibling?.textContent ?? range?.startContainer.textContent
-        
+                
         
         if (!toRemoveTxt) return
-
-        const classToSearch =range?.startContainer?.nextSibling?.className ?? range?.startContainer.parentElement?.className
+ 
+        
+        const classToSearch =range?.startContainer.parentElement?.className ||(range?.startContainer?.nextSibling as HTMLElement).className        
+        
 
         const spanOpenToSearch = `<span class="${classToSearch}">`
 
@@ -212,70 +210,75 @@ export function ContxtMenu() {
         
         const paragraph= range?.startContainer.parentElement?.closest("p")
 
-        const paragraphIdx = paragraph?.getAttribute('data-index') || ""
+        const paragraphIdx = Number(paragraph?.getAttribute('data-index'))
 
-        const firstIdx = highlightedContent[Number(paragraphIdx)].indexOf(toSearch)
-        const lastIdx =  highlightedContent[Number(paragraphIdx)].lastIndexOf(toSearch)
+        const firstIdx = highlightedContent[paragraphIdx].indexOf(toSearch)
+        const lastIdx =  highlightedContent[paragraphIdx].lastIndexOf(toSearch)
 
 
         if (firstIdx === -1) return
 
         //Si la palabra esta repetida
         if (firstIdx !== lastIdx){
-            let fullPreviousContent = ""
-            let currentElmnt = range?.commonAncestorContainer.parentElement?.previousSibling
+            const fullPreviousContent = getPreviousContent(range?.startContainer.previousSibling)
 
-            while (currentElmnt) {
-                fullPreviousContent = currentElmnt.textContent + fullPreviousContent
-                currentElmnt = currentElmnt.previousSibling
-            }
-
-
+            //getPreviousContent(range?.commonAncestorContainer.parentElement?.previousSibling)
+            
             let nOcurrences = 1
-            let fullPreviousIdx = fullPreviousContent.indexOf(toRemoveTxt)
+            let fullPreviousIdx = fullPreviousContent.indexOf(toRemoveTxt) // Se busca el indice DENTRO DEL TEXTO PLANO
+
+            console.log(fullPreviousContent);
+            
 
             while (fullPreviousIdx !== -1) {
                 fullPreviousIdx = fullPreviousContent.indexOf(toRemoveTxt, fullPreviousIdx + 1)
                 nOcurrences++
             }
 
+            console.log("palabra numero ", nOcurrences," dentro del texto plano");
+            
+
             let currentWord= 1
-            let realIdx= highlightedContent[Number(paragraphIdx)].indexOf(toRemoveTxt)
+            let realIdx= highlightedContent[paragraphIdx].indexOf(toRemoveTxt)
 
             while (currentWord !== nOcurrences) {
-                realIdx= highlightedContent[Number(paragraphIdx)].indexOf(toRemoveTxt, realIdx + 1)
+                realIdx= highlightedContent[paragraphIdx].indexOf(toRemoveTxt, realIdx + 1)
 
                 currentWord++
             }
         
+            console.log("numero dentro del html: ",currentWord);
+            
 
-            const firsPart = highlightedContent[Number(paragraphIdx)].slice(0, realIdx - spanOpenToSearch.length)
+            const firsPart = highlightedContent[paragraphIdx].slice(0, realIdx - spanOpenToSearch.length)
 
-            const lastPart = highlightedContent[Number(paragraphIdx)].slice(realIdx + toRemoveTxt.length + spanCloseTag.length)
+            const lastPart = highlightedContent[paragraphIdx].slice(realIdx + toRemoveTxt.length + spanCloseTag.length)
 
-            console.log(firsPart);
-            console.log(toRemoveTxt);
-            console.log(lastPart);
-
+            if (fromHighlight) {
+                return firsPart+toRemoveTxt+lastPart
+            }
 
             const copy = [...highlightedContent]
-            copy[Number(paragraphIdx)] = firsPart+toRemoveTxt+lastPart
+            copy[paragraphIdx] = firsPart+toRemoveTxt+lastPart
 
             setHighlightedContent(copy)   
             return  
             
         }
         
-        //HACER FUNCION QUE OBTENGA EL CONTENIDO ANTERIOR (PREVIOUS SIBLING)
-
-        const firsPart = highlightedContent[Number(paragraphIdx)].slice(0, firstIdx)
-        const lastPart = highlightedContent[Number(paragraphIdx)].slice(firstIdx+ spanOpenToSearch.length + toRemoveTxt?.length + spanCloseTag.length)
+        const firsPart = highlightedContent[paragraphIdx].slice(0, firstIdx)
+        const lastPart = highlightedContent[paragraphIdx].slice(firstIdx+ spanOpenToSearch.length + toRemoveTxt?.length + spanCloseTag.length)
 
         
         const copy = [...highlightedContent]
-        copy[Number(paragraphIdx)] = firsPart+toRemoveTxt+lastPart
+        copy[paragraphIdx] = firsPart+toRemoveTxt+lastPart
 
+        console.log(firsPart);
+        console.log(toRemoveTxt);
+        console.log(lastPart);
         
+        
+
 
         if (fromHighlight) {
             return firsPart+toRemoveTxt+lastPart

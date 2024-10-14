@@ -1,33 +1,22 @@
+import { getPreviousContent } from "../getPreviousContent"
+
 export interface Pinga{
     range: Range | undefined,
-    htmlContent: string,
+    htmlContent: string ,
     userSeleccion: string,
     spanOpenTag: string,
-    spanCloseTag: string
+    spanCloseTag: string,
+    fullPlainTxt: string | null
 
 }
 
-export function highlightPlainText({range, htmlContent, userSeleccion, spanCloseTag,spanOpenTag}:Pinga) {
-    
-    //ERROR: SELECCIONO ==> EXTIENDO AL FINAL ==> NESTING
-    //HAY QUE HACER QUE EL EXTEND LO EXTIENDA Y NO AÑADA DOBLE
-
-    const tempDiv = document.createElement("div")
-    tempDiv.innerHTML = htmlContent
-
-    const fullPlainTxt = tempDiv.textContent
+export function highlightPlainText({range, htmlContent, userSeleccion, spanCloseTag,spanOpenTag, fullPlainTxt}:Pinga) {
     
     if (!fullPlainTxt || !range ) return
+    
 
     let rangeStart =  range.startOffset
-    let previous = range.startContainer.previousSibling
-    let fullPreviousContent = ""
-
-    while (previous) {
-        fullPreviousContent = previous.textContent + fullPreviousContent
-
-        previous= previous.previousSibling
-    }
+    const fullPreviousContent = getPreviousContent(range.startContainer.previousSibling)
 
     if (fullPreviousContent){
         rangeStart += fullPreviousContent.length
@@ -63,15 +52,9 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
     
     let nMatchHtml = 1
 
-    console.log(currentIdxHtml);
-    console.log(htmlContent);
+
     
     if (currentIdxHtml === -1) {
-        console.log("No encontrado");
-        console.log(userSeleccion);
-        console.log(htmlContent);
-        
-        
 
         return
         

@@ -14,10 +14,11 @@ export function extendHighlightEnd({hasSpanClose, selectedParagraph, spanCloseTa
 
     const lastPart = selectedParagraph.slice(htmlSelectionEnd)
 
-    const existingSpanOpen = spanOpenRegex.exec(firstPart)
+    // const existingSpanOpen = spanOpenRegex.exec(firstPart)
+    const existingSpanOpen = firstPart.match(spanOpenRegex)
+    
 
-
-    const newHMTL = existingSpanOpen[0] == spanOpenTag
+    const newHMTL = existingSpanOpen![existingSpanOpen!.length - 1] == spanOpenTag
     ? firstPart+noSpanClose+spanCloseTag+lastPart
     : firstPart+spanCloseTag+spanOpenTag+noSpanClose+spanCloseTag+lastPart
 

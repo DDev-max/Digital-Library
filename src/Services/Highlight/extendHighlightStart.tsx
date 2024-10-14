@@ -14,17 +14,24 @@ export function extendHighlightStart({hasSpanOpen,selectedParagraph,spanCloseTag
     const presentSpan = htmlSelection.slice(searchSpan?.index, searchSpan?.index + searchSpan?.[0].length)
 
     
+    const sameColor = htmlSelection.includes(spanOpenTag)
 
     const noOpenTag = htmlSelection.replace(spanOpenRegex, "")
 
-    const newHighlight = `${spanOpenTag}${noOpenTag}${spanCloseTag}`
+
+
+    const newHighlight = sameColor
+    ? `${spanOpenTag}${noOpenTag}`
+    : `${spanOpenTag}${noOpenTag}${spanCloseTag}`
 
     
     const firstPart = selectedParagraph.slice(0, htmlSelectionStart)
     const lastPart= selectedParagraph.slice(htmlSelectionEnd)
     
-    const newHtml = firstPart+newHighlight+presentSpan+lastPart
-
+    const newHtml = sameColor
+    ? firstPart+newHighlight+lastPart
+    : firstPart+newHighlight+presentSpan+lastPart
+        
 
     return newHtml
 }
