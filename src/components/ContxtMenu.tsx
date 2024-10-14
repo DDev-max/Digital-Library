@@ -17,9 +17,11 @@ import { getPreviousContent } from "../Services/getPreviousContent.tsx";
 
 const spanCloseTag = "</span>"
 
-//ERROR AL SELECCIONAR ESPACIOS EN BLANCO POCAS LETRAS O ESPACIOS EN BLANCO " "
+//ERROR AL SELECCIONAR ESPACIOS EN BLANCO, POCAS LETRAS O ESPACIOS EN BLANCO " "
 //Ocurre cuando solo se selecciona una letra y esa letra justo coincide con la etiqueta span
 
+//CUANDO SE HACE CTRL + A, LA PAGINA EXPLOTA
+// HACER QUE NO SE PUEDA MARCAR EL TITULO
 
 export function ContxtMenu() {
     const [position, setPosition] =  useState({}) 
@@ -42,9 +44,27 @@ export function ContxtMenu() {
         }
 
         const moveContextMenu = (e: MouseEvent)=>{
+            const eTarget = e.target as HTMLElement // reutilizar lo de arriba?
+            console.log(e);
+            
             const isSelected = window.getSelection()?.toString() != ""
-            if (!isSelected) return
 
+            const tieneChildren = Array.from((window.getSelection()?.getRangeAt(0).commonAncestorContainer as HTMLElement)?.children ?? []) 
+
+            console.log(tieneChildren);
+            
+            // no permitir que se seleccione todo el documento o el titulo
+            if (tieneChildren.length) {
+                console.log(tieneChildren.some(elmnt => elmnt.nodeName === "P"));
+                
+            }
+
+            
+            
+            
+            if (!isSelected || eTarget.nodeName !== "P") return
+
+            
             e.preventDefault()
 
 
@@ -123,6 +143,7 @@ export function ContxtMenu() {
         
         //SI NO DEVUELVE NUEVO HTML, ES POR QUE SE SELECCIONO TEXTO QUE YA ESTA SUBRAYADO CON TEXTO PLANO
         if (!newHtml && !isNaN(paragraphIdx)) {
+            console.log("No se devolvio html y no hay indice");
             
             let bothTags = true
             for (let i = 0; i <= userSeleccion.length; i++) {
@@ -154,6 +175,7 @@ export function ContxtMenu() {
             if (bothTags) {
                 const paragraphNoHighlight = removeHighlight(true)
                 if (!paragraphNoHighlight) return
+                console.log("hay dos etiquetas");
                 
                 newHtml = highlightPlainText({fullPlainTxt,range,spanCloseTag,spanOpenTag,userSeleccion, htmlContent: paragraphNoHighlight})
             }
