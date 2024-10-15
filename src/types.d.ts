@@ -28,7 +28,6 @@ export interface SVGProps{
     
 }
 
-
 interface extendHighlightProps{
     selectedParagraph: string
     spanOpenTag: string
@@ -63,3 +62,39 @@ export interface HtmlFunctionProps{
     plainText: string
     selectedParagraph: string
 }
+
+
+export interface highlightColorProps{
+    e: React.MouseEvent<HTMLButtonElement>
+    highlightedContent: string[]
+    setHighlightedContent:  React.Dispatch<React.SetStateAction<string[]>>
+    setAlert:  React.Dispatch<React.SetStateAction<string>>
+}
+
+export interface highlightPlainTextProps{
+    range: Range | undefined,
+    htmlContent: string ,
+    userSeleccion: string,
+    spanOpenTag: string,
+    spanCloseTag: string,
+    fullPlainTxt: string | null
+
+}
+
+export interface removeHighlightProps{
+    fromHighlight: boolean
+    highlightedContent: string[]
+    setHighlightedContent:  React.Dispatch<React.SetStateAction<string[]>>
+}
+
+export interface RepeatedWordFnProps{
+    content: string
+    toSearch: string
+    condition: number
+}
+
+
+export interface conversionParams{
+    title: string
+    fromURL?: boolean
+ }

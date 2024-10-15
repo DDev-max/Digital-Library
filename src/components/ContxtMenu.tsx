@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { CSSProperties, useContext, useEffect, useState } from "react";
 import { AudioSVG } from "../svg/AudioSVG";
 import { CopySVG } from "../svg/CopySVG";
 import { DictionarySVG } from "../svg/DictionarySVG";
@@ -6,29 +6,21 @@ import { SearchSVG } from "../svg/SearchSVG";
 import { menuSize} from "../consts.ts"
 import { UnselectSVG } from "../svg/UnselectSVG.tsx";
 import { HighlightedCntxt } from "../contextAPI.tsx";
-import { highlightPlainText } from "../Services/Highlight/highlightPlainText.tsx";
-import { extendHighlightStart } from "../Services/Highlight/extendHighlightStart.tsx";
-import { extendHighlightEnd } from "../Services/Highlight/extendHighlightEnd.tsx";
 import { copyTxt } from "../Services/copyTxt.tsx";
 import { googleSearch } from "../Services/googleSearch.tsx";
-import { getPreviousContent } from "../Services/getPreviousContent.tsx";
-
-
-
-const spanCloseTag = "</span>"
+import { removeHighlight } from "../Services/Highlight/removeHighlight.tsx";
+import { highlightColor } from "../Services/Highlight/highlightColor.tsx";
 
 //ERROR AL SELECCIONAR ESPACIOS EN BLANCO, POCAS LETRAS O ESPACIOS EN BLANCO " "
 //Ocurre cuando solo se selecciona una letra y esa letra justo coincide con la etiqueta span
 
-//CUANDO SE HACE CTRL + A, LA PAGINA EXPLOTA
-// HACER QUE NO SE PUEDA MARCAR EL TITULO
 
 export function ContxtMenu() {
-    const [position, setPosition] =  useState({}) 
-    const [visibility, setVisibility] = useState(false)//QUITAR Y ENVEZ DE ESO RETORNAR DISPLAY NONE?
-    
+    const [position, setPosition] =  useState<CSSProperties>() 
+    //quizas es mejor prop drilling si solo la uso aqui
     const {highlightedContent, setHighlightedContent, setAlert} = useContext(HighlightedCntxt)
 
+    const colors = ["first","second","third","fourth"]
 
     //events handler:
     useEffect(()=>{
@@ -36,49 +28,41 @@ export function ContxtMenu() {
             const eTarget = e.target as HTMLElement
                         
             // para pasignarle la misma funcion a ambos eventos (ver los eventos añadidos)
-            if (e.type === "scroll") setVisibility(false) 
+            if (e.type === "scroll") setPosition({display: "none"})
 
             if (typeof eTarget.className === "string" && !eTarget.className.includes("contextMenu")) {
-                setVisibility(false)
+                setPosition({display: "none"})
             }
         }
 
         const moveContextMenu = (e: MouseEvent)=>{
-            const eTarget = e.target as HTMLElement // reutilizar lo de arriba?
-            console.log(e);
-            
+          
             const isSelected = window.getSelection()?.toString() != ""
 
-            const tieneChildren = Array.from((window.getSelection()?.getRangeAt(0).commonAncestorContainer as HTMLElement)?.children ?? []) 
+            const commonAncestor = window.getSelection()?.getRangeAt(0).commonAncestorContainer as HTMLElement
 
-            console.log(tieneChildren);
-            
-            // no permitir que se seleccione todo el documento o el titulo
-            if (tieneChildren.length) {
-                console.log(tieneChildren.some(elmnt => elmnt.nodeName === "P"));
-                
+            if (commonAncestor.id === "root" 
+                || commonAncestor.nodeName === "MAIN" 
+                || !isSelected ) {
+                return
             }
-
             
-            
-            
-            if (!isSelected || eTarget.nodeName !== "P") return
-
             
             e.preventDefault()
 
 
-            const menuPosition = {
+            const menuPosition: CSSProperties = {
                 right: e.pageX + menuSize > window.innerWidth? 0: "auto",
                 left: e.pageX + menuSize > window.innerWidth? "auto": e.pageX,
                 
                 top: e.clientY + menuSize > window.innerHeight? "auto": e.clientY,
-                bottom: e.clientY + menuSize > window.innerHeight? 0: "auto"
+                bottom: e.clientY + menuSize > window.innerHeight? 0: "auto",
+
+                display: "block"
 
             }
 
             setPosition(menuPosition)
-            setVisibility(true)  
         }
 
 
@@ -98,228 +82,24 @@ export function ContxtMenu() {
     }, [])
 
 
-
-    function highlightColor(e: React.MouseEvent<HTMLButtonElement>) {
-
-        const eTarget = e.target as HTMLElement
-        const wSelect = window.getSelection()
-        const range = wSelect?.getRangeAt(0)
-        const userSeleccion =  wSelect?.toString()
-        if (!userSeleccion) return
-
-        const spanOpenTag = `<span class="${eTarget.classList[1]}">`
-        const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/g
-        const spanCloseRegex = /<\/span>/g
-
-        const emptySpanRegex = /<span class="contextMenu_color--(first|second|third|fourth)"><\/span>/g
-
-
-        const paragraphIdx = range?.commonAncestorContainer.nodeName === "#text"
-        ? Number(range.commonAncestorContainer.parentElement?.closest('p')?.getAttribute('data-index'))
-        : Number((range?.commonAncestorContainer as HTMLElement).getAttribute('data-index'))
-        
-
-        //Si se seleccionan dos parrafos a la vez
-        if ((range?.commonAncestorContainer as HTMLElement).className == "paragraphsContainer" ){     
-            console.log("Dentro de dos parrafos");
-                       
-            setAlert("Please select one paragraph at a time")
-            
-            setTimeout(() => {
-                setAlert("")
-            }, 2000);
-            return        
-        }
-
-        const selectedParagraph = highlightedContent[paragraphIdx]
-
-        const tempDiv = document.createElement("div")
-        tempDiv.innerHTML = selectedParagraph
-
-        const fullPlainTxt = tempDiv.textContent
-
-        let newHtml = highlightPlainText({userSeleccion ,range, spanOpenTag, spanCloseTag,  htmlContent: selectedParagraph, fullPlainTxt})
-
-        
-        //SI NO DEVUELVE NUEVO HTML, ES POR QUE SE SELECCIONO TEXTO QUE YA ESTA SUBRAYADO CON TEXTO PLANO
-        if (!newHtml && !isNaN(paragraphIdx)) {
-            console.log("No se devolvio html y no hay indice");
-            
-            let bothTags = true
-            for (let i = 0; i <= userSeleccion.length; i++) {
-                const selectionFirstPart = userSeleccion.slice(0, i);
-                const selectionLastPart = userSeleccion.slice(i);
-            
-                const textSpanOpenRegex = new RegExp(`${selectionFirstPart}${spanOpenRegex.source}${selectionLastPart}`)
-                const textSpanCloseRegex = new RegExp(`${selectionFirstPart}${spanCloseRegex.source}${selectionLastPart}`)
-            
-                const hasSpanOpen = textSpanOpenRegex.exec(selectedParagraph)
-                const hasSpanClose = textSpanCloseRegex.exec(selectedParagraph)                
-
-                if (hasSpanOpen || hasSpanClose) {  
-                    
-
-                    newHtml = hasSpanOpen
-                    ? extendHighlightStart({hasSpanOpen, selectedParagraph,spanCloseTag,spanOpenRegex,spanOpenTag})
-                    : extendHighlightEnd({hasSpanClose,selectedParagraph,spanCloseTag,spanOpenTag, spanOpenRegex})
-
-                    if (!newHtml || newHtml.match(emptySpanRegex)) return
-                    
-                    bothTags = false
-                    break
-                }
-
-
-            }
-
-            if (bothTags) {
-                const paragraphNoHighlight = removeHighlight(true)
-                if (!paragraphNoHighlight) return
-                console.log("hay dos etiquetas");
-                
-                newHtml = highlightPlainText({fullPlainTxt,range,spanCloseTag,spanOpenTag,userSeleccion, htmlContent: paragraphNoHighlight})
-            }
-
-        }
-
-        // if (!newHtml) return
-
-        //PONER QUE SI SE DEVUELVE UN TXTCONTENT DIFERENTE, RETURN
-
-        const copy = [...highlightedContent]
-
-        //REUTILIZAR EL DE ARRIBA?
-        const tempElmnt = document.createElement("div")
-        tempElmnt.innerHTML = newHtml
-
-        if (tempElmnt.textContent != fullPlainTxt || !newHtml) {
-            // Ocurre cuando se quiere extender el subrayado de etiquetas de diferentes colores
-            setAlert("First try removing the highlighting from the selection.")
-
-            setTimeout(() => {
-                setAlert("")
-            }, 2000);
-            return
-            
-        }
-
-        copy[paragraphIdx] = newHtml
-        setHighlightedContent(copy)
-        return
-
-   
-    }
-    
-
-
-    function removeHighlight(fromHighlight: boolean) {        
-        
-        //SE REPITE MUCHO CODIGO
-        const range = window.getSelection()?.getRangeAt(0)
-
-        const toRemoveTxt = range?.startContainer.nextSibling?.textContent ?? range?.startContainer.textContent
-                
-        
-        if (!toRemoveTxt) return
- 
-        
-        const classToSearch =range?.startContainer.parentElement?.className ||(range?.startContainer?.nextSibling as HTMLElement).className        
-        
-
-        const spanOpenToSearch = `<span class="${classToSearch}">`
-
-        const toSearch = spanOpenToSearch+toRemoveTxt+spanCloseTag
-        
-        const paragraph= range?.startContainer.parentElement?.closest("p")
-
-        const paragraphIdx = Number(paragraph?.getAttribute('data-index'))
-
-        const firstIdx = highlightedContent[paragraphIdx].indexOf(toSearch)
-        const lastIdx =  highlightedContent[paragraphIdx].lastIndexOf(toSearch)
-
-
-        if (firstIdx === -1) return
-
-        //Si la palabra esta repetida
-        if (firstIdx !== lastIdx){
-            const fullPreviousContent = getPreviousContent(range?.startContainer.previousSibling)
-
-            //getPreviousContent(range?.commonAncestorContainer.parentElement?.previousSibling)
-            
-            let nOcurrences = 1
-            let fullPreviousIdx = fullPreviousContent.indexOf(toRemoveTxt) // Se busca el indice DENTRO DEL TEXTO PLANO
-
-            console.log(fullPreviousContent);
-            
-
-            while (fullPreviousIdx !== -1) {
-                fullPreviousIdx = fullPreviousContent.indexOf(toRemoveTxt, fullPreviousIdx + 1)
-                nOcurrences++
-            }
-
-            console.log("palabra numero ", nOcurrences," dentro del texto plano");
-            
-
-            let currentWord= 1
-            let realIdx= highlightedContent[paragraphIdx].indexOf(toRemoveTxt)
-
-            while (currentWord !== nOcurrences) {
-                realIdx= highlightedContent[paragraphIdx].indexOf(toRemoveTxt, realIdx + 1)
-
-                currentWord++
-            }
-        
-            console.log("numero dentro del html: ",currentWord);
-            
-
-            const firsPart = highlightedContent[paragraphIdx].slice(0, realIdx - spanOpenToSearch.length)
-
-            const lastPart = highlightedContent[paragraphIdx].slice(realIdx + toRemoveTxt.length + spanCloseTag.length)
-
-            if (fromHighlight) {
-                return firsPart+toRemoveTxt+lastPart
-            }
-
-            const copy = [...highlightedContent]
-            copy[paragraphIdx] = firsPart+toRemoveTxt+lastPart
-
-            setHighlightedContent(copy)   
-            return  
-            
-        }
-        
-        const firsPart = highlightedContent[paragraphIdx].slice(0, firstIdx)
-        const lastPart = highlightedContent[paragraphIdx].slice(firstIdx+ spanOpenToSearch.length + toRemoveTxt?.length + spanCloseTag.length)
-
-        
-        const copy = [...highlightedContent]
-        copy[paragraphIdx] = firsPart+toRemoveTxt+lastPart
-
-        console.log(firsPart);
-        console.log(toRemoveTxt);
-        console.log(lastPart);
-        
-        
-
-
-        if (fromHighlight) {
-            return firsPart+toRemoveTxt+lastPart
-        }
-
-        setHighlightedContent(copy)
-    }
-
     return(
         
-        visibility && 
+        position && 
         <section style={{...position}} className="contextMenu">
             <div className="contextMenu_ColorsCont">
-                <button onClick={(e)=> highlightColor(e)} className="contextMenu_color contextMenu_color--first"></button>
-                <button onClick={(e)=> highlightColor(e)} className="contextMenu_color contextMenu_color--second"></button>
-                <button onClick={(e)=> highlightColor(e)} className="contextMenu_color contextMenu_color--third"></button>
-                <button onClick={(e)=> highlightColor(e)} className="contextMenu_color contextMenu_color--fourth"></button>
+                {
+                    colors.map((elmnt, idx)=>{
+                        return(
+                            <button 
+                            key={idx} 
+                            className={`contextMenu_color contextMenu_color--${elmnt}`} 
+                            onClick={(e)=> highlightColor({e,highlightedContent,setAlert,setHighlightedContent})}>
+                            </button>
+                        )
+                    })
+                }
 
-                <button onClick={()=>{removeHighlight(false)}} className="contextMenu_unselectBtn">
+                <button onClick={()=>{removeHighlight({highlightedContent,setHighlightedContent, fromHighlight: false})}} className="contextMenu_unselectBtn">
                     <UnselectSVG className="contextMenu_unselectSVG"/>
                 </button>
                 

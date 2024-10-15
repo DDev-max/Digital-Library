@@ -10,5 +10,6 @@ export const pTagLength = 3
 
 export const spanWithClassAtt = 15
 
+export const spanCloseTag = "</span>"
 
 //buscar cuales no estoy usando

@@ -10,8 +10,6 @@ export function ReadBook() {
 
     const {highlightedContent} = useContext(HighlightedCntxt)
 
-    
-
     const bookName = urlConversion({title: urlTitle.title ?? "", fromURL: true})
 
 

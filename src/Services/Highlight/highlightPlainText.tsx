@@ -1,38 +1,21 @@
+import { highlightPlainTextProps } from "../../types"
 import { getPreviousContent } from "../getPreviousContent"
 
-export interface Pinga{
-    range: Range | undefined,
-    htmlContent: string ,
-    userSeleccion: string,
-    spanOpenTag: string,
-    spanCloseTag: string,
-    fullPlainTxt: string | null
 
-}
-
-export function highlightPlainText({range, htmlContent, userSeleccion, spanCloseTag,spanOpenTag, fullPlainTxt}:Pinga) {
+export function highlightPlainText({range, htmlContent, userSeleccion, spanCloseTag,spanOpenTag, fullPlainTxt}:highlightPlainTextProps) {
     
     if (!fullPlainTxt || !range ) return
-    
 
     let rangeStart =  range.startOffset
     const fullPreviousContent = getPreviousContent(range.startContainer.previousSibling)
 
-    if (fullPreviousContent){
-        rangeStart += fullPreviousContent.length
-    }
+    if (fullPreviousContent) rangeStart += fullPreviousContent.length
     
-
     let currentIdxPlainTxt = fullPlainTxt.indexOf(userSeleccion)
     let nMatchPlainTxt = 1 
-
-
     
     if (currentIdxPlainTxt === -1) return
     
-    
-    
-
     while (currentIdxPlainTxt !== rangeStart) {        
 
         nMatchPlainTxt++
@@ -44,8 +27,6 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
 
     }
     
-    
-
 
     let currentIdxHtml = htmlContent.indexOf(userSeleccion)
     
@@ -54,13 +35,7 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
 
 
     
-    if (currentIdxHtml === -1) {
-
-        return
-        
-    }
-    
-
+    if (currentIdxHtml === -1) return
     
 
     while (nMatchHtml !== nMatchPlainTxt) {
@@ -71,21 +46,11 @@ export function highlightPlainText({range, htmlContent, userSeleccion, spanClose
         
     }
     
-
     const firstPart = htmlContent.slice(0, currentIdxHtml)
     const spanHighlight = spanOpenTag + userSeleccion + spanCloseTag
     const lastPart= htmlContent.slice(currentIdxHtml + userSeleccion.length)
     
-    
     const newHighlight = firstPart + spanHighlight + lastPart
-    
-    // console.log(firstPart);
-    // console.log(spanHighlight);
-    // console.log(lastPart);
-    
-    
-    
-    
 
     return newHighlight
 

@@ -14,7 +14,6 @@ export function extendHighlightEnd({hasSpanClose, selectedParagraph, spanCloseTa
 
     const lastPart = selectedParagraph.slice(htmlSelectionEnd)
 
-    // const existingSpanOpen = spanOpenRegex.exec(firstPart)
     const existingSpanOpen = firstPart.match(spanOpenRegex)
     
 
@@ -22,11 +21,6 @@ export function extendHighlightEnd({hasSpanClose, selectedParagraph, spanCloseTa
     ? firstPart+noSpanClose+spanCloseTag+lastPart
     : firstPart+spanCloseTag+spanOpenTag+noSpanClose+spanCloseTag+lastPart
 
-
-//HACERLE LO MISMO AL START 👆 ?
-    
-
-//ERROR: 
 
     return newHMTL
 }

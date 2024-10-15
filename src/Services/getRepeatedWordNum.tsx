@@ -1,8 +1,5 @@
-export interface RepeatedWordFnProps{
-    content: string
-    toSearch: string
-    condition: number
-}
+import { RepeatedWordFnProps } from "../types"
+
 
 export function getRepeatedWordNum({content,toSearch, condition}: RepeatedWordFnProps){
 

@@ -1,7 +1,4 @@
- export interface conversionParams{
-    title: string
-    fromURL?: boolean
- }
+import { conversionParams } from "../types"
  
  export function urlConversion({title, fromURL=false}: conversionParams) {
 
