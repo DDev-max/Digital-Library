@@ -11,6 +11,8 @@ import { fetchBooks } from "../Services/fetchBooks";
 
 export function MainContent() {
 
+//NO DEPENDER DE LA API, HACER MAP
+
     //Se esta asignando dos veces el tipo
     //Añadir errores con OOP
     //Poner srcset a las imgs

@@ -123,3 +123,10 @@ export interface DebounceProps {
     callback: (...args: any[]) => void
     delay?: number
 }
+
+
+export interface BookAds {
+    ImgLink: string; // URL de la imagen
+    id: string;     // ID del libro
+    alt: string;    // Texto alternativo de la imagen
+}

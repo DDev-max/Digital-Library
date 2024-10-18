@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { FavoriteSVG } from "../svg/FavoriteSVG";
 import { SearchSVG } from "../svg/SearchSVG";
 import { UserSVG } from "../svg/UserSVG";
@@ -14,6 +14,7 @@ export function Header() {
 
     const [userSearch, setUserSearch] = useState("")
     const [optnIdx, setOptnIdx]   = useState(-1)
+    const redirect = useNavigate()
 
     const fetchData = async () => {
       if (!userSearch) return []
@@ -87,6 +88,12 @@ export function Header() {
       }
   }), []);
 
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    redirect(`/${userSearch}`)
+  }
+    
     
     return(
         <>
@@ -96,7 +103,7 @@ export function Header() {
                 </Link>
 
                 <search className="header_search">
-                    <form tabIndex={0} onKeyDown={selectOptn} className="header_form">
+                    <form onSubmit={handleSubmit} tabIndex={0} onKeyDown={selectOptn} className="header_form">
 
                         <input 
                         value={userSearch}
