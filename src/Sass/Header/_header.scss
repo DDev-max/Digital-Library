@@ -1,6 +1,42 @@
 .header{
     background-color: darkblue;
     display: flex;
+
+    &_input{
+      width: 100%;
+    }
+
+    &_form{
+      width: 100%;
+      position: relative;
+      background-color: green;
+    }
+
+    &_searchResults{
+      background-color: rgb(224, 80, 80);
+      color: black;
+      width: 100%;
+      height: auto;
+      position: absolute;
+      z-index: 1;
+      text-wrap: nowrap;
+      
+      &--selected{
+        background-color: darkcyan;
+      }
+
+      &_author{
+        font-size: .5em;
+      }
+
+      &_title{
+        display: block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+    }
+
   }
   
   .formCategories{
@@ -9,3 +45,4 @@
     justify-content: space-between;
   }
   
+

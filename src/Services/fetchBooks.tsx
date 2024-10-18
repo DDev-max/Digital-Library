@@ -3,7 +3,7 @@ import { BooksAPI } from "../types";
 
 export const fetchBooks=  async ()=>{
 
-    const response = await fetch(API_URL);
+    const response = await fetch("");
     const format: BooksAPI = await response.json();
     
 

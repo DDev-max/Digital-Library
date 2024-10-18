@@ -1,3 +1,5 @@
+import { CSSProperties } from "react";
+
 export interface BooksAPI {
     items: Item[];
 }
@@ -69,6 +71,7 @@ export interface highlightColorProps{
     highlightedContent: string[]
     setHighlightedContent:  React.Dispatch<React.SetStateAction<string[]>>
     setAlert:  React.Dispatch<React.SetStateAction<string>>
+    setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
 }
 
 export interface highlightPlainTextProps{
@@ -85,6 +88,7 @@ export interface removeHighlightProps{
     fromHighlight: boolean
     highlightedContent: string[]
     setHighlightedContent:  React.Dispatch<React.SetStateAction<string[]>>
+    setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
 }
 
 export interface RepeatedWordFnProps{
@@ -98,3 +102,24 @@ export interface conversionParams{
     title: string
     fromURL?: boolean
  }
+
+
+ export interface BooksAPISearch {
+    items: ItemSearch[];
+}
+
+export interface ItemSearch {
+    id:         string;
+    volumeInfo: VolumeInfoSearch;
+}
+
+export interface VolumeInfoSearch {
+    title:   string;
+    authors: string[];
+}
+
+export interface DebounceProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    callback: (...args: any[]) => void
+    delay?: number
+}

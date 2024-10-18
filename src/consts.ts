@@ -12,4 +12,6 @@ export const spanWithClassAtt = 15
 
 export const spanCloseTag = "</span>"
 
+export const nResults = 5
+
 //buscar cuales no estoy usando

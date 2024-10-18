@@ -6,7 +6,7 @@ import { highlightPlainText } from "./highlightPlainText"
 import { removeHighlight } from "./removeHighlight"
 
 
-export function highlightColor({e,highlightedContent,setHighlightedContent, setAlert}: highlightColorProps) {
+export function highlightColor({e,highlightedContent,setHighlightedContent, setAlert, setPosition}: highlightColorProps) {
 
     const eTarget = e.target as HTMLElement
     const wSelect = window.getSelection()
@@ -103,7 +103,8 @@ export function highlightColor({e,highlightedContent,setHighlightedContent, setA
 
     copy[paragraphIdx] = newHtml
     setHighlightedContent(copy)
-    return
+    setPosition({display: "none"})
 
+    return
 
 }

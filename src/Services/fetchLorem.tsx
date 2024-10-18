@@ -5,6 +5,5 @@ import { URLorem } from "../consts"
 export const fetchLorem = async () => {
     const response = await fetch(URLorem)
     const format = await response.json()
-    //Llega y se setea ✅    
     return format
 }

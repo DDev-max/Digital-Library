@@ -6,12 +6,10 @@ import { HorizontalProducts } from "./Main/HorizontalProducts";
 import { MultipleProducts } from "./Main/MultipleProducts";
 import { VerticalProducts } from "./Main/VerticalProducts";
 import {Item } from "../types";
-import {Pruebas} from "./Prueba"
 import { API_URL } from "../consts";
 import { fetchBooks } from "../Services/fetchBooks";
 
 export function MainContent() {
-    const PRUEBAS = !true
 
     //Se esta asignando dos veces el tipo
     //Añadir errores con OOP
@@ -29,9 +27,6 @@ export function MainContent() {
     const multipleBooks =  data?.slice(11)
 
 
-    if (PRUEBAS) {
-        return <Pruebas/>
-    }
 
 
     return(

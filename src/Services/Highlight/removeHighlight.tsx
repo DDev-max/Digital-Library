@@ -3,7 +3,7 @@ import { removeHighlightProps } from "../../types"
 import { getPreviousContent } from "../getPreviousContent"
 
 
-export function removeHighlight({fromHighlight,highlightedContent,setHighlightedContent}:removeHighlightProps) {     
+export function removeHighlight({fromHighlight,highlightedContent,setHighlightedContent, setPosition}:removeHighlightProps) {     
         
     const range = window.getSelection()?.getRangeAt(0)
 
@@ -83,4 +83,5 @@ export function removeHighlight({fromHighlight,highlightedContent,setHighlighted
     }
 
     setHighlightedContent(copy)
+    setPosition({display: "none"})
 }

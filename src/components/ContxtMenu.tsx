@@ -10,10 +10,9 @@ import { copyTxt } from "../Services/copyTxt.tsx";
 import { googleSearch } from "../Services/googleSearch.tsx";
 import { removeHighlight } from "../Services/Highlight/removeHighlight.tsx";
 import { highlightColor } from "../Services/Highlight/highlightColor.tsx";
+import { ShowMeaning } from "../Services/ShowMeaning.tsx"
 
-//ERROR AL SELECCIONAR ESPACIOS EN BLANCO, POCAS LETRAS O ESPACIOS EN BLANCO " "
-//Ocurre cuando solo se selecciona una letra y esa letra justo coincide con la etiqueta span
-
+//ELIMINAR LOS ARCHIVOS/ CARPETAS QUE NO ESTOY USANDO
 
 export function ContxtMenu() {
     const [position, setPosition] =  useState<CSSProperties>() 
@@ -93,20 +92,20 @@ export function ContxtMenu() {
                             <button 
                             key={idx} 
                             className={`contextMenu_color contextMenu_color--${elmnt}`} 
-                            onClick={(e)=> highlightColor({e,highlightedContent,setAlert,setHighlightedContent})}>
+                            onClick={(e)=> highlightColor({e,highlightedContent,setAlert,setHighlightedContent, setPosition})}>
                             </button>
                         )
                     })
                 }
 
-                <button onClick={()=>{removeHighlight({highlightedContent,setHighlightedContent, fromHighlight: false})}} className="contextMenu_unselectBtn">
+                <button onClick={()=>{removeHighlight({highlightedContent,setHighlightedContent, fromHighlight: false, setPosition})}} className="contextMenu_unselectBtn">
                     <UnselectSVG className="contextMenu_unselectSVG"/>
                 </button>
                 
             </div>
             <CopySVG onMouseDown={()=>{copyTxt({setAlert})}}/>
             <AudioSVG/>
-            <DictionarySVG/>
+            <DictionarySVG onClick={ShowMeaning}/>
             <SearchSVG onMouseDown={googleSearch}/>
         </section>
     )
