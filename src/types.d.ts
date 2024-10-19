@@ -6,6 +6,7 @@ export interface BooksAPI {
 
 export interface Item {
     volumeInfo: VolumeInfo;
+    id: string
 }
 
 export interface VolumeInfo {
@@ -28,6 +29,10 @@ export interface BookProp{
 export interface SVGProps{
     onMouseDown?: (event: MouseEventHandler<SVGSVGElement>) => void
     
+}
+
+export interface FavoriteSVGProps{
+    selection?: Item
 }
 
 interface extendHighlightProps{
@@ -91,11 +96,11 @@ export interface removeHighlightProps{
     setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
 }
 
-export interface RepeatedWordFnProps{
-    content: string
-    toSearch: string
-    condition: number
-}
+// export interface RepeatedWordFnProps{
+//     content: string
+//     toSearch: string
+//     condition: number
+// }
 
 
 export interface conversionParams{
@@ -130,3 +135,13 @@ export interface BookAds {
     id: string;     // ID del libro
     alt: string;    // Texto alternativo de la imagen
 }
+
+export interface HighlightedCntxtType{
+    highlightedContent : string[]
+    setHighlightedContent: React.Dispatch<React.SetStateAction<string[]>>
+    alert: string
+    setAlert: React.Dispatch<React.SetStateAction<string>>
+    favorites: Item[]
+    setFavorites:  React.Dispatch<React.SetStateAction<Item[] | undefined>>
+ }
+ 

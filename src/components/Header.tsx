@@ -18,7 +18,7 @@ export function Header() {
 
     const fetchData = async () => {
       if (!userSearch) return []
-        const response = await fetch(URL)
+        const response = await fetch("") //URL
         const format: BooksAPISearch = await response.json()
         console.log("fetcheado");
         return format.items
@@ -91,7 +91,7 @@ export function Header() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    redirect(`/${userSearch}`)
+    redirect(`/Read/${userSearch}`)
   }
     
     
@@ -143,8 +143,9 @@ export function Header() {
                 </search>
 
                 <div>
-                    <UserSVG/>
-                    <FavoriteSVG/>
+                    <Link to={"/Favorites"}>
+                        <FavoriteSVG/>
+                    </Link>
                 </div>
             </header>
 

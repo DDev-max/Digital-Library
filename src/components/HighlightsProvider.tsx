@@ -3,11 +3,14 @@ import { URLorem } from "../consts"
 import { HighlightedCntxt } from "../contextAPI"
 import { useQuery } from "@tanstack/react-query"
 import { fetchLorem } from "../Services/fetchLorem"
+import { Item } from "../types"
 
 export function HighlightsProvider({children}: {children :ReactNode}) {
 
     const [highlightedContent, setHighlightedContent] = useState<string[]>([])
     const [alert, setAlert] = useState("")
+
+    const [favorites, setFavorites] = useState<Item[]>([])
 
 
     const {data} = useQuery<string[]>({
@@ -32,7 +35,7 @@ export function HighlightsProvider({children}: {children :ReactNode}) {
  
  
     return(
-       <HighlightedCntxt.Provider value={{highlightedContent, setHighlightedContent, alert, setAlert}}>
+       <HighlightedCntxt.Provider value={{highlightedContent, setHighlightedContent, alert, setAlert, favorites, setFavorites}}>
           {children}
        </HighlightedCntxt.Provider>
     )

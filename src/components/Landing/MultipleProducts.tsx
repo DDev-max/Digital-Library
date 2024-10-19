@@ -1,3 +1,4 @@
+import { FavoriteSVG } from "../../svg/FavoriteSVG";
 import { BookProp } from "../../types";
 
 export function MultipleProducts({books}:BookProp) {
@@ -11,7 +12,10 @@ export function MultipleProducts({books}:BookProp) {
                     return(
                         <article key={info.title}>
                             <h3>{info.title}</h3>
+
                             <img className="MultipleProducts_Img" src={info.imageLinks.smallThumbnail} alt={`The book cover of "${info.title}"`}/>
+
+                            <FavoriteSVG selection={elmnt}/>
                         </article>
                     )
                 })}

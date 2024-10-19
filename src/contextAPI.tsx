@@ -1,17 +1,14 @@
 import { createContext } from "react";
+import { HighlightedCntxtType } from "./types";
 
-interface HighlightedCntxtType{
-   highlightedContent : string[]
-   setHighlightedContent: React.Dispatch<React.SetStateAction<string[]>>
-   alert: string
-   setAlert: React.Dispatch<React.SetStateAction<string>>
-}
 
 const defaultContxtValue = {
    highlightedContent: [],
    setHighlightedContent: ()=>{},
    alert: "",
-   setAlert:  ()=>{}
+   setAlert:  ()=>{},
+   favorites: [],
+   setFavorites: ()=>{}
 }
 
 export const HighlightedCntxt = createContext<HighlightedCntxtType>(defaultContxtValue);

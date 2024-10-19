@@ -1,13 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { BSellerSlider } from "./Main/BestSellersSlider";
-import { BigSlider } from "./Main/BigSlider";
+import { BSellerSlider } from "../Landing/BestSellersSlider";
+import { BigSlider } from "../Landing/BigSlider";
 // import { Filters } from "./Main/FIlters";
-import { HorizontalProducts } from "./Main/HorizontalProducts";
-import { MultipleProducts } from "./Main/MultipleProducts";
-import { VerticalProducts } from "./Main/VerticalProducts";
-import {Item } from "../types";
-import { API_URL } from "../consts";
-import { fetchBooks } from "../Services/fetchBooks";
+import { HorizontalProducts } from "../Landing/HorizontalProducts";
+import { MultipleProducts } from "../Landing/MultipleProducts";
+import { VerticalProducts } from "../Landing/VerticalProducts";
+import {Item } from "../../types";
+import { API_URL } from "../../consts";
+import { fetchBooks } from "../../Services/fetchBooks";
+
+import fakeData from "../../muchasRequest.json"
 
 export function MainContent() {
 
@@ -23,9 +25,12 @@ export function MainContent() {
     })
 
 
-    const sellersBooks= data?.slice(0,5)
-    const horizontalBooks = data?.slice(5,7)
-    const verticalBooks= data?.slice(8, 10)
+    const pinga = fakeData.items
+    
+
+    const sellersBooks= pinga?.slice(0,5)
+    const horizontalBooks = pinga?.slice(5,7)
+    const verticalBooks= pinga?.slice(8, 10)
     const multipleBooks =  data?.slice(11)
 
 
@@ -38,7 +43,7 @@ export function MainContent() {
                 <BSellerSlider books={sellersBooks}/>
                 <HorizontalProducts books={horizontalBooks}/>
                 <VerticalProducts books={verticalBooks}/>
-                <MultipleProducts books={multipleBooks}/>
+                <MultipleProducts books={pinga}/>
             </main>
     )
     

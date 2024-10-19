@@ -1,7 +1,6 @@
 import { CSSProperties, useContext, useEffect, useState } from "react";
 import { AudioSVG } from "../svg/AudioSVG";
 import { CopySVG } from "../svg/CopySVG";
-import { DictionarySVG } from "../svg/DictionarySVG";
 import { SearchSVG } from "../svg/SearchSVG";
 import { menuSize} from "../consts.ts"
 import { UnselectSVG } from "../svg/UnselectSVG.tsx";
@@ -10,7 +9,6 @@ import { copyTxt } from "../Services/copyTxt.tsx";
 import { googleSearch } from "../Services/googleSearch.tsx";
 import { removeHighlight } from "../Services/Highlight/removeHighlight.tsx";
 import { highlightColor } from "../Services/Highlight/highlightColor.tsx";
-import { ShowMeaning } from "../Services/ShowMeaning.tsx"
 
 //ELIMINAR LOS ARCHIVOS/ CARPETAS QUE NO ESTOY USANDO
 
@@ -105,7 +103,6 @@ export function ContxtMenu() {
             </div>
             <CopySVG onMouseDown={()=>{copyTxt({setAlert})}}/>
             <AudioSVG/>
-            <DictionarySVG onClick={ShowMeaning}/>
             <SearchSVG onMouseDown={googleSearch}/>
         </section>
     )

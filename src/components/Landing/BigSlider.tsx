@@ -19,6 +19,7 @@ export function BigSlider() {
                     {ads.map((_, idx)=>{
                         return(
                             <button
+                            key={idx}
                             onClick={()=> setImgIdx(idx)}
                             className={`bigSlider_imgNumber ${imgIdx === idx? " imgNumber--selected" : ""}`}
                             >
