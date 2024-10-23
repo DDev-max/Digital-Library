@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { HighlightedCntxt } from "../contextAPI"
 
 export function Alert() {
+    
     const {alert} = useContext(HighlightedCntxt)
 
     return(

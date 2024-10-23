@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { HighlightedCntxtType } from "./types";
+import { HighlightedCntxtType } from "./data/types";
 
 
 const defaultContxtValue = {
