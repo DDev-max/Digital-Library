@@ -2,12 +2,14 @@ import { createRoot } from 'react-dom/client'
 // import App from './App.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { MainContent } from './components/MainContent'
+import { MainContent } from './Pages/Home/MainContent'
 import "./Sass/styles.scss"
-import { Header } from './components/Header'
-import { ReadBook } from './components/Main/ReadBook'
+import { ReadBook } from './Pages/Read_Books/ReadBook'
 import { HighlightsProvider } from './components/HighlightsProvider'
 import { Pruebas } from './components/Prueba'
+import { FavoritePage } from './Pages/FavoritePage'
+import { Layout } from './components/Layout'
+
 
 const queryClient = new QueryClient({
    defaultOptions: {
@@ -21,18 +23,22 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
    {
      path: "/",
-     element: <Header/>,
+     element: <Layout/>,
      errorElement: <p>No hay nada</p>,
+     
      children: [
       {
          index: true,
          element: <MainContent/>
-      },
+      }
+      ,
       {
          path: "/:title",
          element: <ReadBook/>
       }
      ]
+
+
    }
  ])
 

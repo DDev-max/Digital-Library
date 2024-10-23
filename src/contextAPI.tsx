@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { HighlightedCntxtType } from "./data/types";
 
 interface HighlightedCntxtType{
    highlightedContent : string[]
