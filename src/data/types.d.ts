@@ -6,7 +6,9 @@ export interface BooksAPI {
 
 export interface Item {
     volumeInfo: VolumeInfo;
+    id: string
 }
+
 
 export interface VolumeInfo {
     title:          string;
@@ -76,6 +78,12 @@ export interface highlightColorProps{
     setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
 }
 
+export interface NewAlertProps{
+    setAlert:  React.Dispatch<React.SetStateAction<string>>
+    string: string
+}
+
+
 export interface highlightPlainTextProps{
     range: Range | undefined,
     htmlContent: string ,
@@ -128,11 +136,9 @@ export interface DebounceProps {
 
 
 export interface BookAds {
-    ImgLink: string; // URL de la imagen
-    id: string;     // ID del libro
-    alt: string;    // Texto alternativo de la imagen
-<<<<<<< HEAD:src/types.d.ts
-=======
+    ImgLink: string; 
+    id: string;    
+    alt: string;    
 }
 
 export interface HighlightedCntxtType{
@@ -141,7 +147,7 @@ export interface HighlightedCntxtType{
     alert: string
     setAlert: React.Dispatch<React.SetStateAction<string>>
     favorites: Item[]
-    setFavorites:  React.Dispatch<React.SetStateAction<Item[] | undefined>>
+    setFavorites:  React.Dispatch<React.SetStateAction<Item[]>>
  }
  
 
@@ -170,8 +176,13 @@ export interface InputChangeProps{
 
 
 export interface UseRemoveAddFavProps{
-    setFavorites: React.Dispatch<React.SetStateAction<Item[] | undefined>>
+    setFavorites: React.Dispatch<React.SetStateAction<Item[]>>
     selection: Item
     alreadyAdded: boolean
->>>>>>> 7db99b2 (New folder structure):src/data/types.d.ts
 }
+
+export interface ColorsMenuProps{
+    onClickColor: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onUnselectClick: () => void
+}
+

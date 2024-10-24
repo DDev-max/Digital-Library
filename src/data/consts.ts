@@ -8,11 +8,11 @@ export const menuSize: number = 160
 
 export const URLorem = "https://baconipsum.com/api/?type=all-meat&paras=10&format=json"
 
-export const pTagLength = 3
-
-export const spanWithClassAtt = 15
-
 export const spanCloseTag = "</span>"
+
+export const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/g
+export const spanCloseRegex = /<\/span>/g
+export const emptySpanRegex = /<span class="contextMenu_color--(first|second|third|fourth)"><\/span>/g
 
 export const nResults = 5
 
@@ -33,5 +33,3 @@ export const ads: BookAds[] = [
       alt: "The new kindle books."
     }
   ];
-
-//buscar cuales no estoy usando

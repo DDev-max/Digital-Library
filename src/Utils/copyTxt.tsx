@@ -1,4 +1,5 @@
 import { CopyTxProps } from "../data/types";
+import { newAlert } from "./newAlert";
 
 export function copyTxt({setAlert}:CopyTxProps){
 
@@ -7,10 +8,7 @@ export function copyTxt({setAlert}:CopyTxProps){
 
     navigator.clipboard.writeText(seleccion)
         .then(()=> {
-            setAlert("Text Copied")
-            setTimeout(() => {
-                setAlert("")
-            }, 2000);
+            newAlert({setAlert,string: "Text Copied"})
         })
 
 }

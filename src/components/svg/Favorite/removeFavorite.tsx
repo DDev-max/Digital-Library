@@ -1,10 +1,8 @@
-import { useContext } from "react";
-import { HighlightedCntxt } from "../../../contextAPI";
 import { Item } from "../../../data/types";
+import { useHighlightCntxt } from "../../../Context/useHighlightContxt";
 
 export function useRemoveFavorite() {
-    const { setFavorites } = useContext(HighlightedCntxt);
-
+    const { setFavorites } = useHighlightCntxt()
     return (selection: Item) => {
         setFavorites((prevFavorites) => {
             return prevFavorites?.filter((elmnt)=> elmnt.id !== selection.id)

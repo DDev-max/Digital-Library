@@ -1,9 +1,5 @@
 import { UnselectSVG } from "../../components/svg/UnselectSVG";
-
-export interface ColorsMenuProps{
-    onClickColor: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    onUnselectClick: () => void
-}
+import { ColorsMenuProps } from "../../data/types";
 
 
 export function ColorsMenu({onClickColor,onUnselectClick}: ColorsMenuProps) {

@@ -1,16 +1,17 @@
 import { useParams } from "react-router-dom"
 import { urlConversion } from "../../Utils/urlConversion"
 import { ContxtMenu } from "./ContxtMenu"
-import { useContext } from "react"
-import { HighlightedCntxt } from "../../contextAPI"
 import { Alert } from "../../components/Alert"
+import { useHighlightCntxt } from "../../Context/useHighlightContxt"
 
 
 
 export function ReadBook() {
     const urlTitle = useParams()
+    const context = useHighlightCntxt()
+    if (!context) return
 
-    const {highlightedContent} = useContext(HighlightedCntxt)
+    const {highlightedContent} = context
 
     const bookName = urlConversion({title: urlTitle.title ?? "", fromURL: true})
 

@@ -1,12 +1,13 @@
-import { useContext } from "react";
-import { HighlightedCntxt } from "../contextAPI";
 import { TrashSVG } from "../components/svg/TrashSVG";
 import { removeFav } from "../components/svg/Favorite/useRemoveAddFav";
+import { useHighlightCntxt } from "../Context/useHighlightContxt";
 
 export function FavoritePage() {
 
-    const {favorites,setFavorites} = useContext(HighlightedCntxt)
-
+    const context = useHighlightCntxt()
+    if (!context) return
+    
+    const {favorites,setFavorites} = context
 
     return (
         <main>

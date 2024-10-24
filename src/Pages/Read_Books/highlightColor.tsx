@@ -1,9 +1,9 @@
-import { spanCloseTag } from "../../data/consts"
+import { emptySpanRegex, spanCloseRegex, spanCloseTag, spanOpenRegex } from "../../data/consts"
 import { highlightColorProps } from "../../data/types"
-
 import { extendHighlightEnd } from "../../Pages/Read_Books/extendHighlightEnd"
 import { extendHighlightStart } from "../../Pages/Read_Books/extendHighlightStart"
 import { highlightPlainText } from "../../Pages/Read_Books/highlightPlainText"
+import { newAlert } from "../../Utils/newAlert"
 import { removeHighlight } from "./removeHighlight"
 
 
@@ -16,11 +16,6 @@ export function highlightColor({e,highlightedContent,setHighlightedContent, setA
     if (!userSeleccion) return
 
     const spanOpenTag = `<span class="${eTarget.classList[1]}">`
-    const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/g
-    const spanCloseRegex = /<\/span>/g
-
-    const emptySpanRegex = /<span class="contextMenu_color--(first|second|third|fourth)"><\/span>/g
-
 
     const paragraphIdx = range?.commonAncestorContainer.nodeName === "#text"
     ? Number(range.commonAncestorContainer.parentElement?.closest('p')?.getAttribute('data-index'))
@@ -29,11 +24,7 @@ export function highlightColor({e,highlightedContent,setHighlightedContent, setA
 
     //Si se seleccionan dos parrafos a la vez
     if ((range?.commonAncestorContainer as HTMLElement).className == "paragraphsContainer" ){                            
-        setAlert("Please select one paragraph at a time")
-        
-        setTimeout(() => {
-            setAlert("")
-        }, 2000);
+        newAlert({setAlert,string: "Please select one paragraph at a time"})
         return        
     }
 
@@ -78,7 +69,7 @@ export function highlightColor({e,highlightedContent,setHighlightedContent, setA
         }
 
         if (bothTags) {
-            const paragraphNoHighlight = removeHighlight({highlightedContent, setHighlightedContent,fromHighlight: true})
+            const paragraphNoHighlight = removeHighlight({fromHighlight: true, highlightedContent,setHighlightedContent,setPosition})
             if (!paragraphNoHighlight) return
             
             newHtml = highlightPlainText({fullPlainTxt,range,spanCloseTag,spanOpenTag,userSeleccion, htmlContent: paragraphNoHighlight})
@@ -93,11 +84,7 @@ export function highlightColor({e,highlightedContent,setHighlightedContent, setA
 
     if (tempDiv.textContent != fullPlainTxt || !newHtml) {
         // Ocurre cuando se quiere extender el subrayado de etiquetas de diferentes colores
-        setAlert("First try removing the highlighting from the selection.")
-
-        setTimeout(() => {
-            setAlert("")
-        }, 2000);
+        newAlert({setAlert,string: "First try removing the highlighting from the selection."})
         return
         
     }

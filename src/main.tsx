@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { MainContent } from './Pages/Home/MainContent'
 import "./Sass/styles.scss"
 import { ReadBook } from './Pages/Read_Books/ReadBook'
-import { HighlightsProvider } from './components/HighlightsProvider'
+import { HighlightsProvider } from './Context/HighlightsProvider'
 import { Pruebas } from './components/Prueba'
 import { FavoritePage } from './Pages/FavoritePage'
 import { Layout } from './components/Layout'

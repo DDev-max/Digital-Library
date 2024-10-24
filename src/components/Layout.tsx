@@ -3,8 +3,6 @@ import { Header } from "./Header";
 
 export function Layout() {
 
-console.log("Layout render");
-
     return (
         <>
             <Header/>

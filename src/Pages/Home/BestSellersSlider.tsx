@@ -3,13 +3,15 @@ import { BookProp } from "../../data/types"
 import { urlConversion } from "../../Utils/urlConversion"
 import { FavoriteSVG } from "../../components/svg/Favorite/FavoriteSVG"
 import { removeAddFav } from "../../components/svg/Favorite/useRemoveAddFav"
-import { useContext } from "react"
-import { HighlightedCntxt } from "../../contextAPI"
+import { useHighlightCntxt } from "../../Context/useHighlightContxt"
 
 export function BSellerSlider({books}: BookProp) {
 
-    const {favorites,setFavorites}= useContext(HighlightedCntxt)
 
+    const context = useHighlightCntxt()
+    if (!context) return
+
+    const {favorites,setFavorites}= context
 
 
     return(

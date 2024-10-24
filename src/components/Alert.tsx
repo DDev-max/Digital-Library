@@ -1,9 +1,8 @@
-import { useContext } from "react"
-import { HighlightedCntxt } from "../contextAPI"
+import { useHighlightCntxt } from "../Context/useHighlightContxt"
 
 export function Alert() {
     
-    const {alert} = useContext(HighlightedCntxt)
+    const {alert} = useHighlightCntxt()
 
     return(
         alert && 
