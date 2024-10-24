@@ -29,7 +29,7 @@ export function HighlightsProvider({children}: {children :ReactNode}) {
  
  
     return(
-       <HighlightedCntxt.Provider value={{highlightedContent, setHighlightedContent, alert, setAlert}}>
+       <HighlightedCntxt.Provider value={{highlightedContent, setHighlightedContent, alert, setAlert, favorites, setFavorites}}>
           {children}
        </HighlightedCntxt.Provider>
     )

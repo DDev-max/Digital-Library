@@ -16,8 +16,9 @@ export function Header() {
                 <Search/>
 
                 <div>
-                    <UserSVG/>
-                    <FavoriteSVG/>
+                    <Link to={"/Favorites"}>
+                        <FavoriteSVG/>
+                    </Link>
                 </div>
             </header>
         </>
