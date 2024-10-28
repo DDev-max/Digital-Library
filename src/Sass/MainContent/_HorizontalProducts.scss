@@ -1,20 +1,56 @@
+@use "../Globals/variables";
+
+$border: .2rem;
+
 .horizontalSctn{
-    background-color: darkcyan;
     display: flex;
     justify-content: space-between;
+    font-size: .8rem;
+    text-align: center;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+    gap: $border;
+    background-color: variables.$SecColor;
 
     &_Img{
-        width: 10rem;
     }
 
     &_Article{
-        max-width: 100%;
+        width: 100%;
         max-height: 100%;
         display: flex;
         justify-content: space-between;
+        border-right: $border solid variables.$SecColor;
+        background-color: variables.$PrimaryColor;
+
     }
 
-    &_Article:nth-of-type(2){
+    &_Article:nth-of-type(even){
         flex-direction: row-reverse;
+        border-left: $border solid variables.$SecColor;
+        border-right: none;
+    }
+
+    &_btn{
+        border: .1rem solid;
+        padding: .5rem;
+        border-radius: 1rem;
+        background-color: transparent;
+        color: variables.$TxtColor;
+        width: 5rem;
+        margin: 2rem;
+    }
+
+    &_infoDiv{
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto
+    }
+
+    &_title{
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
     }
 }

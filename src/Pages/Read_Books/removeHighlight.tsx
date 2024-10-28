@@ -12,7 +12,8 @@ export function removeHighlight({fromHighlight,highlightedContent,setHighlighted
     if (!toRemoveTxt) return
 
     
-    const classToSearch =range?.startContainer.parentElement?.className ||(range?.startContainer?.nextSibling as HTMLElement).className        
+    const classToSearch =range?.startContainer.parentElement?.className || (range?.startContainer?.nextSibling as HTMLElement).className ||  undefined     
+    
     
     const spanOpenToSearch = `<span class="${classToSearch}">`
 

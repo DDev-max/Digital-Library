@@ -11,9 +11,9 @@ export function HorizontalProducts({books}: BookProp) {
                 return(
                     <article key={info.title} className="horizontalSctn_Article"> 
                         <img className="horizontalSctn_Img" src={info.imageLinks.smallThumbnail} alt={info.title} />
-                        <div>
-                            <h2>{info.title}</h2>
-                            <button>Button</button>
+                        <div className="horizontalSctn_infoDiv">
+                            <h2 className="horizontalSctn_title">{info.title}</h2>
+                            <button className="horizontalSctn_btn">Pre-order</button>
                         </div>
                     </article>
                 )

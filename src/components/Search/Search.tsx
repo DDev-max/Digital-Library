@@ -9,62 +9,58 @@ import { subtmitSearch } from "./submitSearch";
 import { selectOptn } from "./selectOptn";
 import { inputChange } from "./inputChange";
 import { fetchFn } from "../../Utils/fetchFn";
+import fakeData from "../../data/muchasRequest.json"
 
+const optnsFake = fakeData.items.slice(0,5)
 
 export function Search() {
 
     const [userSearch, setUserSearch] = useState("")
-    const [optnIdx, setOptnIdx]   = useState(-1)
+    const [optnIdx, setOptnIdx]   = useState(-1)//-1
     const redirect = useNavigate()
-
-
-    const {data, refetch, isLoading, isError} = useQuery({
-        queryKey: ["searchBooks"],
-        queryFn: ()=> fetchFn<BooksAPISearch>(""), //URL
-        enabled: false
-    })
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const URL =`https://www.googleapis.com/books/v1/volumes?q=${userSearch}&maxResults=${nResults}&fields=items(id,volumeInfo(title,authors))`
 
+
+    const {data, refetch, isLoading, isError} = useQuery({
+        queryKey: ["searchBooks", URL],
+        queryFn: ()=> fetchFn<BooksAPISearch>(""), //URL
+        enabled: false,
+    })
 
     
     const optnsRef =  useRef<(string | null)[]>([]);
 
 
-
-    //VER SI SE PUEDE EVITAR
     const debounceCallback = useCallback(debounce({
         callback: ()=>{
+            console.log("Refetch");
             refetch()
         }
     }), [])
 
-
+    
 
 
     return (
         <search className="header_search">
             <form 
-            onSubmit={(event)=> subtmitSearch({event,redirect,userSearch})} 
+            onSubmit={(event)=> subtmitSearch({event,redirect,userSearch, setUserSearch, inputRef})} 
             tabIndex={0} 
-            onKeyDown={(event)=> selectOptn({debouncCb: debounceCallback, event,optnsRef,setOptnIdx,setUserSearch,userSearch})} className="header_form">
+            onKeyDown={(event)=> selectOptn({debouncCb: debounceCallback, event,optnsRef,setOptnIdx,setUserSearch,userSearch, isError})} className="header_form"
+            >
 
-                <input 
-                value={userSearch}
-                onChange={(event)=> inputChange({debounceCb: debounceCallback,event,setUserSearch})}
-                className="header_input" 
-                aria-label="Search for a book" 
-                placeholder="Search books"  
-                type="text"
-                />
+
 
                 <div className="header_searchResults">
                 {isLoading && <progress/>}
-                {isError && <p>No matches</p>}
-
-                    {!isError && data?.items.map((elmnt, idx)=>{return(
+                
+                    {/* {data.item} */}
+                    {!isError && optnsFake.map((elmnt, idx)=>{return(
+                        //header_searchResults_result --selected
                         <p 
-                        className={optnIdx === idx ? "header_searchResults--selected" :  ""}
+                        className={`header_searchResults_result  ${optnIdx == idx ? "header_searchResults--selected" : "" }`}
                         key={elmnt.id} 
                         translate="no"
                         >
@@ -86,9 +82,29 @@ export function Search() {
                     )})}
                 </div>
 
-                <SearchSVG/>
+
+                <div className="header_inputCont">
+
+                    <SearchSVG 
+                    classNameBtn="header_searchBtn" 
+                    classNameSVG="header_searchSVG"/>
+
+                    <input 
+                    ref={inputRef}
+                    value={userSearch}
+                    onChange={(event)=> inputChange({debounceCb: debounceCallback,event,setUserSearch})}
+                    className="header_input" 
+                    aria-label="Search for a book" 
+                    placeholder="Search books"  
+                    type="text"
+                    />
+
+                </div>
+
                 
             </form>
         </search>
     )
 }
+
+

@@ -1,29 +1,128 @@
-.header{
-    background-color: darkblue;
-    display: flex;
+@use "../Globals/variables";
 
-    &_input{
-      width: 100%;
-    }
+$borders: .2rem;
+
+.header{
+    display: flex;
+    height: 7vh;
+
 
     &_form{
       width: 100%;
       position: relative;
-      background-color: green;
+      display: flex;
+      margin-left: auto;
+
+      &:focus-within .header_input {
+        width: 100%;
+        opacity: 1;
+        border-left: $borders solid variables.$SecColor;
+        border-top: 0;
+        border-bottom: 0;
+      }
+
+      &:focus-within .header_searchResults{
+        display: flex;
+        opacity: 1;
+        width: 100%;
+      }
+
+      &:focus-within .header_searchBtn{
+        border-right: $borders solid variables.$SecColor;
+
+      }
+      
+    }
+
+    &_search{
+      margin-left: auto;
+    }
+
+    &_search svg{
+      width: 2.5rem;
+    }
+
+
+    &_inputCont{
+      display: flex;
+      flex-direction: row-reverse;
+      pointer-events: all;
+
+
+    }
+
+    &_searchBtn{
+      background-color: transparent;
+      color: rgb(167, 167, 167);
+      border: none;
+      cursor: pointer;
+
+    }
+
+
+
+    &_input {
+      transition: .2s all ease;
+      width: 0;
+      opacity: 0;
+
+
+    }
+
+
+    &_LinkContainer{
+      display: flex;
+      text-decoration: none;
+      margin: 0 .5rem;
+
+    }
+
+    &_h1{
+      margin: auto 0;
+      font-size:1.5rem; //2rem
+    }
+
+    &_aside{
+      margin: 0 .5rem 0 1rem;
+      
+    }
+
+    &_aside svg{
+      width: 2.5rem;
     }
 
     &_searchResults{
-      background-color: rgb(224, 80, 80);
-      color: black;
-      width: 100%;
+      transition: .2s all ease;
+      opacity: 0;
+      width: 0;
+      background-color: variables.$SecColor;
+      color: variables.$TxtColor;
+      width: 100%; //calc(100% - .8rem)
       height: auto;
       position: absolute;
       z-index: 1;
       text-wrap: nowrap;
-      
-      &--selected{
-        background-color: darkcyan;
+      flex-direction: column;
+      gap: .2rem;
+      top: 100%;
+      border:  $borders solid variables.$SecColor;
+      border-top: 0;
+      border-bottom-left-radius: .5rem;
+      border-bottom-right-radius: .5rem;
+      box-sizing: border-box;
+
+      &_result{
+        background-color: variables.$PrimaryColor;
+        padding: .5rem;
       }
+
+      &--selected{
+        background-color: variables.$SecColor;
+        padding: .5rem;
+
+      }
+
+
 
       &_author{
         font-size: .5em;
@@ -37,12 +136,21 @@
 
     }
 
-  }
-  
-  .formCategories{
-    background-color: darkgreen;
-    display: flex;
-    justify-content: space-between;
-  }
-  
 
+    &_result{
+      
+    }
+
+  }
+
+  /*
+
+  <div class="header_inputCont">
+    <button class="header_searchBtn" type="submit">
+      <svg>...</svg>
+    </button>
+    <input class="header_input" aria-label="Search for a book" placeholder="Search books" type="text" value="">
+  </div>
+
+
+*/

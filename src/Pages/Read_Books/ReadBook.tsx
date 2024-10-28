@@ -17,10 +17,10 @@ export function ReadBook() {
 
 
     return(
-        <main>
+        <main className="readBook">
             <ContxtMenu/>
-            <h1>{bookName}</h1>
-            <div className="paragraphsContainer">
+            <h1 className="readBook_h1">{bookName}</h1>
+            <div className="readBook_paragraphsContainer">
                 {highlightedContent?.map((elmnt, pIndex)=>{
                     return(
                         <p dangerouslySetInnerHTML={{__html: elmnt}} data-index={pIndex} key={pIndex}>

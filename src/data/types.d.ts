@@ -155,6 +155,8 @@ export interface HighlightedCntxtType{
     event: React.FormEvent<HTMLFormElement>
     redirect: NavigateFunction
     userSearch: string
+    setUserSearch:  React.Dispatch<React.SetStateAction<string>>
+    inputRef:  React.RefObject<HTMLInputElement>
 }
 
 
@@ -165,6 +167,7 @@ export interface SelectOptnProps{
     event: React.KeyboardEvent<HTMLFormElement>
     optnsRef: React.MutableRefObject<(string | null)[]>
     debouncCb: () => void
+    isError: boolean
 }
 
 

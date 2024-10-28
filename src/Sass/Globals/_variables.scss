@@ -1,0 +1,63 @@
+$PrimaryColor: rgb(17, 10, 43);
+$SecColor: rgb(46, 39, 139);
+$TxtColor: rgb(167, 167, 167);
+
+$highlightColors: (
+    "first" : (
+        bgColor: rgb(98, 144, 228),
+        txtColor: rgb(0, 0, 0)
+    ),
+    "second": (
+        bgColor: rgb(235, 162, 4),
+        txtColor: rgb(0, 0, 0)
+    ),
+    "third" : (
+        bgColor: rgb(67, 175, 67),
+        txtColor: rgb(0, 0, 0)
+    ),
+    "fourth": (
+        bgColor: rgb(209, 31, 40),
+        txtColor: rgb(255, 255, 255)
+    )
+);
+
+
+@mixin favBtn{
+    margin-top: auto;
+    background-color: transparent;
+    border: none;
+    color: $TxtColor;
+}
+
+@mixin colorBtn($size, $bgColor, $padding){
+    background-color: $bgColor;
+    width: $size;
+    height: $size;
+    padding: $padding;
+    border-radius: 50%;
+    border: 2px solid rgb(0, 0, 0);
+}
+
+@mixin defaultBtn{
+    background-color: transparent;
+    border: none;
+    color: $TxtColor;
+    cursor: pointer;
+}
+
+@mixin gridResponsive{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+
+@keyframes flick {
+    0%, 100%{
+        opacity: 1;
+    }
+
+    50%{
+        opacity: 50%;
+    }
+}

@@ -3,7 +3,7 @@ export function FavoriteSVG({added}: {added?:boolean} ) {
   
     return(
             <svg 
-            fill={ added ? "red" : "currentColor"}
+            className={added? "svg--added": ""}
             aria-label="Favorites List" 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 32 32"

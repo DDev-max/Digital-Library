@@ -10,8 +10,8 @@ export function VerticalProducts({books}:BookProp) {
                 return(
                     <article key={info.title} className="VerticalSctn_Article">
                         <img className="VerticalSctn_Img" src={info.imageLinks.smallThumbnail} alt={`The book cover of "${info.title}"`} />
-                        <h2>{info.title}</h2>
-                        <button>Button</button>
+                        <h2 className="VerticalSctn_title">{info.title}</h2>
+                        <button className="VerticalSctn_btn">Pre-order</button>
                     </article>
                 )
             })}

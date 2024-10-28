@@ -6,8 +6,8 @@ export function Alert() {
 
     return(
         alert && 
-        <div className="alert">
+        <dialog open className="alert">
             <p> {alert} </p>
-        </div>
+        </dialog>
     )
 }

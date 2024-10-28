@@ -1,0 +1,41 @@
+@use "../Globals//variables";
+
+.favPage{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+
+    &_h2{
+        padding: 1rem;
+        margin: 1rem;
+        background-color: variables.$SecColor
+    }
+
+    &_Grid{
+        @include variables.gridResponsive;
+    }
+
+
+    &_Img{
+        width: clamp(12rem, 50%, 14rem);  //12rem
+    }
+
+    &_title{
+        font-size: 1.4rem;
+        padding: .8rem;
+        margin: auto;
+    }
+    
+    &_article{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        font-size: clamp(.9rem, 1.8vw, 1rem);  //<== reutilizar
+        align-items: center;
+    }
+
+
+    &_trashBtn{
+        @include variables.defaultBtn;
+    }
+}

@@ -1,64 +1,53 @@
-$highlightColors: (
-    "first" : (
-        bgColor: red,
-        txtColor: white
-    ),
-    "second": (
-        bgColor: blue,
-        txtColor: white
-    ),
-    "third" : (
-        bgColor: green,
-        txtColor: white
-    ),
-    "fourth": (
-        bgColor: orange,
-        txtColor: black
-    )
-);
-
-@mixin colorBtn($size, $bgColor, $padding){
-    background-color: $bgColor;
-    width: $size;
-    height: $size;
-    padding: $padding;
-    border-radius: 50%;
-    border: 2px solid black;
-}
-
-
-.highlighted{
-    background-color: blue;
-}
+@use "../Globals//variables";
 
 .contextMenu{
     position: fixed;
-    width: 8rem;
-    height: 8rem;
-    padding: 1rem;
-    border-radius: 1rem;
-    background-color: rgb(167, 196, 209);
 
     &_ColorsCont{
         display: flex;
         justify-content: space-around;
+        padding: 1rem;
+        gap: .3rem;
+        border-radius: 1rem;
+        background-color: rgb(30, 26, 73);
+        border: .1rem solid variables.$TxtColor;
+    }
+
+    &_btnsCont{
+        margin-top: .5rem;
+        padding: 1rem;
+        border-radius: 1rem;
+        background-color: rgb(30, 26, 73);
+        border: .1rem solid variables.$TxtColor;
+        display: flex;
+        justify-content: space-around
+    }
+
+    &_copyBtn{
+        @include variables.defaultBtn;
+    }
+
+    &_searchbtn{
+        @include variables.defaultBtn;
+
     }
 
     &_color{
-        @include colorBtn(1.5rem, transparent, 0)
+        @include variables.colorBtn(1.5rem, transparent, 0)
     }
 
     &_unselectSVG{
-        @include colorBtn(1.2rem, transparent, .1rem)
-
+        @include variables.colorBtn(1.2rem, transparent, .1rem);
+        color: variables.$TxtColor;
+        border-color: variables.$TxtColor;
     }
 
     &_unselectBtn{
-        @include colorBtn(1.65rem, transparent ,0 );
+        @include variables.colorBtn(1.65rem, transparent ,0 );
         border: none;
     }
 
-    @each $modifier, $properties in $highlightColors{
+    @each $modifier, $properties in variables.$highlightColors{
         &_color--#{$modifier}{
             background-color: map-get($properties, bgColor);
             color: map-get($properties, txtColor )

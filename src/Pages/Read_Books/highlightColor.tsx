@@ -23,7 +23,7 @@ export function highlightColor({e,highlightedContent,setHighlightedContent, setA
     
 
     //Si se seleccionan dos parrafos a la vez
-    if ((range?.commonAncestorContainer as HTMLElement).className == "paragraphsContainer" ){                            
+    if ((range?.commonAncestorContainer as HTMLElement).className == "readBook_paragraphsContainer" ){                            
         newAlert({setAlert,string: "Please select one paragraph at a time"})
         return        
     }
@@ -84,7 +84,7 @@ export function highlightColor({e,highlightedContent,setHighlightedContent, setA
 
     if (tempDiv.textContent != fullPlainTxt || !newHtml) {
         // Ocurre cuando se quiere extender el subrayado de etiquetas de diferentes colores
-        newAlert({setAlert,string: "First try removing the highlighting from the selection."})
+        newAlert({setAlert,string: "First try removing some highlighting from the selection."})
         return
         
     }

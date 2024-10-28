@@ -1,18 +1,26 @@
+@use "variables";
+
 *{
     padding: 0;
     margin: 0;
-  
   }
   
   body{
-    background-color: #4b4b4b;
-    color: rgb(167, 167, 167);
+    background-color: variables.$PrimaryColor;
+    color:  variables.$TxtColor;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 100;
+    padding-bottom: 2rem;
   }
   
   svg{
     width: 3rem;
+    fill: currentColor;
   }
-  
+
+  .svg--added{
+    fill: rgb(191, 42, 228);
+  }
 
   a{
     color: currentColor;
@@ -20,6 +28,6 @@
 
   p::selection{
     color: white;
-    background-color: black;
+    background-color: variables.$SecColor;
   }
-  
+

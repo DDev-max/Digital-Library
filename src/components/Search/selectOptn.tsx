@@ -1,11 +1,14 @@
 import { nResults } from "../../data/consts"
 import { SelectOptnProps } from "../../data/types";
 
-export function selectOptn({event,optnsRef,setOptnIdx,setUserSearch,userSearch,debouncCb}: SelectOptnProps) {
+export function selectOptn({event,optnsRef,setOptnIdx,setUserSearch,userSearch,debouncCb, isError}: SelectOptnProps) {
     if (!userSearch) return
 
       setOptnIdx(previous=>{
           let newIdx;
+
+          if (isError) return -1
+
 
           if (event.key === "ArrowDown") {
               newIdx = (previous + 1) % nResults
@@ -26,6 +29,7 @@ export function selectOptn({event,optnsRef,setOptnIdx,setUserSearch,userSearch,d
               return newIdx
   
           }
+
 
           return previous
 
