@@ -4,19 +4,37 @@ import { urlConversion } from "../../Utils/urlConversion"
 import { FavoriteSVG } from "../../components/svg/Favorite/FavoriteSVG"
 import { removeAddFav } from "../../components/svg/Favorite/useRemoveAddFav"
 import { useHighlightCntxt } from "../../Context/useHighlightContxt"
+import { useRef } from "react"
+import { useScrollBtns } from "../../hooks/useScrollBtns"
+import { scrollSlider } from "../../Utils/scrollSlider"
+
+
 export function BSellerSlider({books}: BookProp) {
 
+    const sliderRef = useRef<HTMLDivElement>(null)
+    const showBtns = useScrollBtns(sliderRef)
+
+    
+
+
     const context = useHighlightCntxt()
+
     if (!context) return
 
     const {favorites,setFavorites}= context
 
 
-
     return(
         <section className="slider">
             <h2 className="slider_h2">Best Sellers</h2>
-            <div className="slider_contImgs">
+            <div ref={sliderRef} className="slider_contImgs">
+
+                {showBtns[0] &&
+                 <button 
+                onClick={()=> scrollSlider({elmntRef: sliderRef, toRight: true})}
+                className="slider_btn"> &lt; </button>
+                }
+            
                 {books?.map((elmnt, idx)=>{
                     const info= elmnt.volumeInfo
 
@@ -49,6 +67,13 @@ export function BSellerSlider({books}: BookProp) {
                         
 
                 })}
+
+                {showBtns[1] &&
+                <button  onClick={()=> scrollSlider({elmntRef: sliderRef})}
+                className="slider_btn slider_btn--der"> &gt; </button>
+                }
+
+
             </div>
         </section>
     )

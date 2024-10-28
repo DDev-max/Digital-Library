@@ -189,3 +189,8 @@ export interface ColorsMenuProps{
     onUnselectClick: () => void
 }
 
+
+export interface ScrollSliderProps{
+    toRight?: boolean
+    elmntRef: React.RefObject<HTMLElement>
+}
