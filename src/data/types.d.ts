@@ -138,7 +138,8 @@ export interface DebounceProps {
 export interface BookAds {
     ImgLink: string; 
     id: string;    
-    alt: string;    
+    alt: string; 
+    bgColor: string   
 }
 
 export interface HighlightedCntxtType{
