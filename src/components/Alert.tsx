@@ -1,12 +1,19 @@
 import { useHighlightCntxt } from "../Context/useHighlightContxt"
 
-export function Alert() {
+export interface AlertProps{
+    brdrColor?: boolean
+}
+
+export function Alert({brdrColor}:AlertProps) {
     
-    const {alert} = useHighlightCntxt()
+    const context = useHighlightCntxt()
+    if (!context) return
+
+    const {alert} = context
 
     return(
         alert && 
-        <dialog open className="alert">
+        <dialog  open className={`alert${brdrColor ? "--green": ""}`}>
             <p> {alert} </p>
         </dialog>
     )

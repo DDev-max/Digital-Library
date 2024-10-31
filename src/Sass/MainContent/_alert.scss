@@ -12,7 +12,16 @@
     border-color: rgb(255, 0, 0);
     animation: flick .5s infinite;
     border-radius: .5rem;
+
+    &--green{
+        @extend .alert;
+        animation: none;
+        border-color: rgb(42, 194, 123);
+    }
+
 }
+
+
 
 
 @keyframes flick {

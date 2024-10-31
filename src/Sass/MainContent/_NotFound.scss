@@ -1,0 +1,18 @@
+.errorPage{
+
+    display: grid;
+    place-items: center;
+    height: 94vh;
+
+    &_div{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    &_svg{
+        margin: 2rem;
+        width: 5rem;
+    }
+
+}

@@ -42,8 +42,8 @@ export function MainContent() {
     return(
             <main>
                 <BigSlider/>
-                <BSellerSlider books={pinga1}/>
                 <HorizontalProducts books={pinga2}/>
+                <BSellerSlider books={pinga1}/>
                 <VerticalProducts books={pinga3}/>
                 <MultipleProducts books={pinga4}/>
             </main>

@@ -12,6 +12,7 @@ export function useHighlightCntxt(){
         }
 
         return context;
+        
     } catch (error) {
         if (error instanceof NoProviderError) {
             console.error(error)

@@ -195,3 +195,33 @@ export interface ScrollSliderProps{
     toRight?: boolean
     elmntRef: React.RefObject<HTMLElement>
 }
+
+
+export interface LocMarkerProps{
+    markerPosition: LatLngExpression
+}
+
+export interface MapClickProps{
+    setMarkerPosition : React.Dispatch<React.SetStateAction<LatLngExpression>>
+}
+
+export interface MapProps extends LocMarkerProps, MapClickProps {
+
+}
+
+export interface HandleUserLocationProps{
+    setMarkerPosition: React.Dispatch<React.SetStateAction<LatLngExpression>>
+    setAlert: React.Dispatch<React.SetStateAction<string>>
+}
+
+export interface PhoneInputChangeProps{
+    e: React.ChangeEvent<HTMLInputElement>
+    phoneRef:  React.RefObject<HTMLInputElement>
+}
+
+export interface FormSubmitProps{
+    e: React.FormEvent<HTMLFormElement>
+    markerPosition?: LatLngExpression
+    setAlert: React.Dispatch<React.SetStateAction<string>>
+
+}

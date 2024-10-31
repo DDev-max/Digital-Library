@@ -23,6 +23,10 @@ $border: .2rem;
         border-right: $border solid variables.$SecColor;
         background-color: variables.$PrimaryColor;
 
+        @media (width > 800px) {
+            width: 49.3%;
+        }
+
     }
 
     &_Article:nth-of-type(even){

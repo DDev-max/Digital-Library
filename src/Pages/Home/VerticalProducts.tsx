@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { BookProp } from "../../data/types";
 
 export function VerticalProducts({books}:BookProp) {
@@ -11,7 +12,10 @@ export function VerticalProducts({books}:BookProp) {
                     <article key={info.title} className="VerticalSctn_Article">
                         <img className="VerticalSctn_Img" src={info.imageLinks.smallThumbnail} alt={`The book cover of "${info.title}"`} />
                         <h2 className="VerticalSctn_title">{info.title}</h2>
-                        <button className="VerticalSctn_btn">Pre-order</button>
+
+                        <Link to={"/Order"} className="VerticalSctn_btn">
+                            Pre-order
+                        </Link>
                     </article>
                 )
             })}

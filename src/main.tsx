@@ -3,11 +3,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { MainContent } from './Pages/Home/MainContent'
 import "./Sass/styles.scss"
+import "leaflet/dist/leaflet.css"
 import { ReadBook } from './Pages/Read_Books/ReadBook'
 import { HighlightsProvider } from './Context/HighlightsProvider'
 import { Pruebas } from './components/Prueba'
 import { FavoritePage } from './Pages/FavoritePage'
 import { Layout } from './components/Layout'
+import { NotFound } from './Pages/NotFound'
+import { PreOrder } from './Pages/Pre-Order/PreOrder'
 
 
 const queryClient = new QueryClient({
@@ -23,7 +26,7 @@ const router = createBrowserRouter([
    {
      path: "/",
      element: <Layout/>,
-     errorElement: <p>No hay nada</p>,
+     errorElement: <NotFound/>,
      
      children: [
       {
@@ -39,6 +42,10 @@ const router = createBrowserRouter([
          path: "/Favorites",
          element: <FavoritePage/>
 
+      },
+      {
+         path: "/Order",
+         element: <PreOrder/>
       }
      ]
 
