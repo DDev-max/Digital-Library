@@ -7,7 +7,7 @@ import { newAlert } from "../../Utils/newAlert"
 import { removeHighlight } from "./removeHighlight"
 
 
-export function highlightColor({e,highlightedContent,setHighlightedContent, setAlert, setPosition}: highlightColorProps) {
+export function highlightColor({e,data,changeContent, setAlert, setPosition}: highlightColorProps) {
 
     const eTarget = e.target as HTMLElement
     const wSelect = window.getSelection()
@@ -28,7 +28,7 @@ export function highlightColor({e,highlightedContent,setHighlightedContent, setA
         return        
     }
 
-    const selectedParagraph = highlightedContent[paragraphIdx]
+    const selectedParagraph = data[paragraphIdx]
 
     const tempDiv = document.createElement("div")
     tempDiv.innerHTML = selectedParagraph
@@ -69,7 +69,7 @@ export function highlightColor({e,highlightedContent,setHighlightedContent, setA
         }
 
         if (bothTags) {
-            const paragraphNoHighlight = removeHighlight({fromHighlight: true, highlightedContent,setHighlightedContent,setPosition})
+            const paragraphNoHighlight = removeHighlight({fromHighlight: true, data,changeContent,setPosition})
             if (!paragraphNoHighlight) return
             
             newHtml = highlightPlainText({fullPlainTxt,range,spanCloseTag,spanOpenTag,userSeleccion, htmlContent: paragraphNoHighlight})
@@ -78,7 +78,7 @@ export function highlightColor({e,highlightedContent,setHighlightedContent, setA
     }
 
     
-    const copy = [...highlightedContent]
+    const copy = [...data]
 
     tempDiv.innerHTML = newHtml ?? ""
 
@@ -90,7 +90,7 @@ export function highlightColor({e,highlightedContent,setHighlightedContent, setA
     }
 
     copy[paragraphIdx] = newHtml
-    setHighlightedContent(copy)
+    changeContent(copy)
     setPosition({display: "none"})
 
     return

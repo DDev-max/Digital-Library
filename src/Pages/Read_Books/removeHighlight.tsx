@@ -3,7 +3,7 @@ import { removeHighlightProps } from "../../data/types"
 import { getPreviousContent } from "../../Utils/getPreviousContent"
 
 
-export function removeHighlight({fromHighlight,highlightedContent,setHighlightedContent, setPosition}:removeHighlightProps) {     
+export function removeHighlight({fromHighlight, data,changeContent, setPosition}:removeHighlightProps) {     
         
     const range = window.getSelection()?.getRangeAt(0)
 
@@ -23,8 +23,8 @@ export function removeHighlight({fromHighlight,highlightedContent,setHighlighted
 
     const paragraphIdx = Number(paragraph?.getAttribute('data-index'))
 
-    const firstIdx = highlightedContent[paragraphIdx].indexOf(toSearch)
-    const lastIdx =  highlightedContent[paragraphIdx].lastIndexOf(toSearch)
+    const firstIdx = data[paragraphIdx].indexOf(toSearch)
+    const lastIdx =  data[paragraphIdx].lastIndexOf(toSearch)
 
 
     if (firstIdx === -1) return
@@ -46,35 +46,35 @@ export function removeHighlight({fromHighlight,highlightedContent,setHighlighted
         
 
         let currentWord= 1
-        let realIdx= highlightedContent[paragraphIdx].indexOf(toRemoveTxt)
+        let realIdx= data[paragraphIdx].indexOf(toRemoveTxt)
 
         while (currentWord !== nOcurrences) {
-            realIdx= highlightedContent[paragraphIdx].indexOf(toRemoveTxt, realIdx + 1)
+            realIdx= data[paragraphIdx].indexOf(toRemoveTxt, realIdx + 1)
 
             currentWord++
         }
                 
 
-        const firsPart = highlightedContent[paragraphIdx].slice(0, realIdx - spanOpenToSearch.length)
+        const firsPart = data[paragraphIdx].slice(0, realIdx - spanOpenToSearch.length)
 
-        const lastPart = highlightedContent[paragraphIdx].slice(realIdx + toRemoveTxt.length + spanCloseTag.length)
+        const lastPart = data[paragraphIdx].slice(realIdx + toRemoveTxt.length + spanCloseTag.length)
 
         if (fromHighlight) {
             return firsPart+toRemoveTxt+lastPart
         }
 
-        const copy = [...highlightedContent]
+        const copy = [...data]
         copy[paragraphIdx] = firsPart+toRemoveTxt+lastPart
 
-        setHighlightedContent(copy)   
+        changeContent(copy)   
         return  
         
     }
     
-    const firsPart = highlightedContent[paragraphIdx].slice(0, firstIdx)
-    const lastPart = highlightedContent[paragraphIdx].slice(firstIdx+ spanOpenToSearch.length + toRemoveTxt?.length + spanCloseTag.length)
+    const firsPart = data[paragraphIdx].slice(0, firstIdx)
+    const lastPart = data[paragraphIdx].slice(firstIdx+ spanOpenToSearch.length + toRemoveTxt?.length + spanCloseTag.length)
     
-    const copy = [...highlightedContent]
+    const copy = [...data]
     copy[paragraphIdx] = firsPart+toRemoveTxt+lastPart
     
 
@@ -82,6 +82,6 @@ export function removeHighlight({fromHighlight,highlightedContent,setHighlighted
         return firsPart+toRemoveTxt+lastPart
     }
 
-    setHighlightedContent(copy)
+    changeContent(copy)
     setPosition({display: "none"})
 }

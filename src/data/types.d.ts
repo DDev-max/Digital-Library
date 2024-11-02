@@ -73,8 +73,8 @@ export interface HtmlFunctionProps{
 
 export interface highlightColorProps{
     e: React.MouseEvent<HTMLButtonElement>
-    highlightedContent: string[]
-    setHighlightedContent:  React.Dispatch<React.SetStateAction<string[]>>
+    data: string[]
+    changeContent: (newData: string[]) => void
     setAlert:  React.Dispatch<React.SetStateAction<string>>
     setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
 }
@@ -97,8 +97,8 @@ export interface highlightPlainTextProps{
 
 export interface removeHighlightProps{
     fromHighlight: boolean
-    highlightedContent: string[]
-    setHighlightedContent:  React.Dispatch<React.SetStateAction<string[]>>
+    data: string[]
+    changeContent: (newData: string[]) => void
     setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
 }
 

@@ -8,17 +8,30 @@ import { useMenuPosition } from "./useMenuPosition.tsx";
 import { CopySVG } from "../../components/svg/CopySVG.tsx";
 import { SearchSVG } from "../../components/svg/SearchSVG.tsx";
 import { useHighlightCntxt } from "../../Context/useHighlightContxt.tsx";
+import { useLorem } from "../../hooks/useLorem.tsx";
+import { useQueryClient } from "@tanstack/react-query";
+import { URLorem } from "../../data/consts.ts";
 
 //ELIMINAR LOS ARCHIVOS/ CARPETAS QUE NO ESTOY USANDO
 
 export function ContxtMenu() {
 
+    const {data} = useLorem()
+    const queryClient = useQueryClient()
+
     const {position,setPosition} = useMenuPosition()
 
     const context = useHighlightCntxt()
-    if (!context) return
+    if (!context || !data) return
 
-    const {highlightedContent, setHighlightedContent, setAlert} = context
+    const { setAlert} = context 
+
+
+    function changeContent(newData: string[]) {
+        console.log("llamada al cache");
+        
+        queryClient.setQueryData(["LoremIpsum", URLorem], newData)
+    }
 
 
     return(
@@ -28,11 +41,11 @@ export function ContxtMenu() {
 
             <ColorsMenu 
             onClickColor={(e)=>{
-                highlightColor({e,highlightedContent,setAlert,setHighlightedContent,setPosition})
+                highlightColor({e,data,setAlert,changeContent,setPosition})
             }}
             
             onUnselectClick={()=> {
-                removeHighlight({fromHighlight: false,highlightedContent,setHighlightedContent,setPosition})
+                removeHighlight({fromHighlight: false,data,changeContent,setPosition})
             }}
             
             />
