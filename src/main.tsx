@@ -4,13 +4,12 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { MainContent } from './Pages/Home/MainContent'
 import "./Sass/styles.scss"
 import "leaflet/dist/leaflet.css"
-import { ReadBook } from './Pages/Read_Books/ReadBook'
 import { HighlightsProvider } from './Context/HighlightsProvider'
 import { Pruebas } from './components/Prueba'
 import { FavoritePage } from './Pages/FavoritePage'
 import { Layout } from './components/Layout'
 import { NotFound } from './Pages/NotFound'
-import { PreOrder } from './Pages/Pre-Order/PreOrder'
+import { lazy, Suspense } from 'react'
 
 
 const queryClient = new QueryClient({
@@ -21,6 +20,8 @@ const queryClient = new QueryClient({
    }
 })
 
+const LazyReadBook = lazy(()=> import("./Pages/Read_Books/ReadBook"))
+const LazyForm = lazy(()=> import("./Pages/Pre-Order/PreOrder"))
 
 const router = createBrowserRouter([
    {
@@ -36,7 +37,11 @@ const router = createBrowserRouter([
       ,
       {
          path: "/Read/:title",
-         element: <ReadBook/>
+         element:(
+            <Suspense>
+               <LazyReadBook/>
+            </Suspense>
+         )
       },
       {
          path: "/Favorites",
@@ -44,8 +49,12 @@ const router = createBrowserRouter([
 
       },
       {
-         path: "/Order",
-         element: <PreOrder/>
+         path: "/Order/:book",
+         element: (
+            <Suspense>
+               <LazyForm/>
+            </Suspense>
+         )
       }
      ]
 

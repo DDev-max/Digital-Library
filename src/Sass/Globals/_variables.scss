@@ -1,6 +1,8 @@
 $PrimaryColor: rgb(17, 10, 43);
-$SecColor: rgb(46, 39, 139);
+$SecColor: #2e278b;
 $TxtColor: rgb(167, 167, 167);
+$SectionBgClr:  #201644;
+$marginSectn : 0 1rem;
 
 $highlightColors: (
     "first" : (
@@ -51,6 +53,18 @@ $highlightColors: (
     gap: 1rem;
 }
 
+@mixin btnStyles{
+    border: .1rem solid;
+    padding: .7rem;
+    border-radius: 1rem;
+    background-color: transparent;
+    margin: auto 1rem 2rem 1rem;
+    color: $TxtColor;
+    width: 6rem;
+    cursor: pointer;
+
+    font-size: 1.1rem;
+}
 
 @keyframes flick {
     0%, 100%{

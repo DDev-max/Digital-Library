@@ -6,6 +6,7 @@
           "title": "Clean Code",
           "authors": ["Robert C. Martin"],
           "publishedDate": "2008-08-11",
+          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus est odio beatae ducimus necessitatibus quas doloribus distinctio, quasi maiores! Dolores consectetur in hic asperiores modi aliquam labore, quod eos eaque.",
           "categories": ["Programming", "Software Development"],
           "imageLinks": {
             "smallThumbnail": "https://picsum.photos/150/200",

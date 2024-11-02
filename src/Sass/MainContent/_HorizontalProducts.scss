@@ -7,21 +7,22 @@ $border: .2rem;
     justify-content: space-between;
     font-size: .8rem;
     text-align: center;
-    margin: 2rem 0;
     flex-wrap: wrap;
     gap: $border;
-    background-color: variables.$SecColor;
 
     &_Img{
+        border-radius: 1rem;
+
     }
 
     &_Article{
+        background-color: variables.$SectionBgClr;
         width: 100%;
         max-height: 100%;
         display: flex;
         justify-content: space-between;
         border-right: $border solid variables.$SecColor;
-        background-color: variables.$PrimaryColor;
+        border-radius: 3rem;
 
         @media (width > 800px) {
             width: 49.3%;
@@ -33,16 +34,11 @@ $border: .2rem;
         flex-direction: row-reverse;
         border-left: $border solid variables.$SecColor;
         border-right: none;
+        border-bottom-right-radius: 2rem;
     }
 
     &_btn{
-        border: .1rem solid;
-        padding: .5rem;
-        border-radius: 1rem;
-        background-color: transparent;
-        color: variables.$TxtColor;
-        width: 5rem;
-        margin: 2rem;
+        @include variables.btnStyles;
     }
 
     &_infoDiv{
@@ -51,10 +47,11 @@ $border: .2rem;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin: 0 auto
+        margin: 0 auto;
     }
 
     &_title{
         font-size: clamp(1.1rem, 2vw, 1.5rem);
+        padding: .5rem;
     }
 }

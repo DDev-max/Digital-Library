@@ -18,7 +18,7 @@ export function BigSlider() {
 
                                     <img  className="bigSlider_Img" key={elmnt.id} src={elmnt.ImgLink} alt={elmnt.alt} />
 
-                                    <h2 className="bigSlider_title">{elmnt.alt}</h2>
+                                    <h2 style={{color: elmnt.txtColor}} className="bigSlider_title">{elmnt.alt}</h2>
 
                                 </div>
 

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { BookProp } from "../../data/types";
+import { urlConversion } from "../../Utils/urlConversion";
 
 export function HorizontalProducts({books}: BookProp) {
 
@@ -8,6 +9,7 @@ export function HorizontalProducts({books}: BookProp) {
 
             {books?.map(elmnt=>{
                 const info = elmnt.volumeInfo
+                const nameForUrl = urlConversion({title: info.title})
 
                 return(
                     <article key={info.title} className="horizontalSctn_Article"> 
@@ -15,7 +17,7 @@ export function HorizontalProducts({books}: BookProp) {
                         <div className="horizontalSctn_infoDiv">
                             <h2 className="horizontalSctn_title">{info.title}</h2>
                             
-                            <Link to={"/Order"} className="horizontalSctn_btn">
+                            <Link to={`/Order/${nameForUrl}`} className="horizontalSctn_btn">
                                 Pre-order
                             </Link>
                         </div>

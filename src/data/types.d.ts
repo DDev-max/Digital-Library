@@ -16,6 +16,7 @@ export interface VolumeInfo {
     publishedDate?: Date;
     categories?:    string[];
     imageLinks:     ImageLinks;
+    description: string;
 }
 
 export interface ImageLinks {
@@ -139,7 +140,8 @@ export interface BookAds {
     ImgLink: string; 
     id: string;    
     alt: string; 
-    bgColor: string   
+    bgColor: string  
+    txtColor: string 
 }
 
 export interface HighlightedCntxtType{

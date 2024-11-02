@@ -5,6 +5,7 @@ $borders: .2rem;
 .header{
     display: flex;
     height: 7vh;
+    padding: .5rem;
 
 
     &_form{
@@ -79,7 +80,7 @@ $borders: .2rem;
 
     &_h1{
       margin: auto 0;
-      font-size:1.5rem; //2rem
+      font-size:2rem;
     }
 
     &_aside{

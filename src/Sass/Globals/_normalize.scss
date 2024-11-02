@@ -31,3 +31,11 @@
     background-color: variables.$SecColor;
   }
 
+
+
+  .mainDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1.5rem;
+  }

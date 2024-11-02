@@ -2,15 +2,25 @@
 
 .slider{
     position: relative;
+    padding: 1rem;
+    background-color:variables.$SectionBgClr;
+    border-radius: 1rem;
 
     &_h2{
         font-size: clamp(1.6rem, 2vw, 2.4rem);
-        margin: 1rem ;
+        display: inline-block;
+        background-color: variables.$PrimaryColor;
+        box-shadow: inset .3rem .3rem .3rem #000;
+
+
+        margin: 1rem;
+        padding: 1rem;
+        border-radius: 2rem;
     }
 
     &_img {
         width: 100%;
-        height: 12rem;
+        // height: 12rem;
 
     }
 
@@ -49,6 +59,7 @@
         white-space: nowrap;
         overflow: hidden;
         font-size: clamp(.9rem, 4vw, 1.3rem); //1rem
+        text-align: center;
     }
 
 
@@ -62,16 +73,9 @@
         flex-direction: column;
         border-bottom: .2rem solid variables.$SecColor;
         width: clamp(9rem, 15vw,11rem); //10rem max) 
-
-        &--loading{
-            background-color: red;
-            display: flex;
-            flex-shrink: 0;
-            flex-direction: column;
-            border-bottom: .2rem solid variables.$SecColor;
-            width: clamp(9rem, 15vw,11rem); //10rem max) 
-        }
+        
     
     }
     
 }
+

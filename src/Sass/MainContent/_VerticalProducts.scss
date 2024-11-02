@@ -2,37 +2,54 @@
 
 .VerticalSctn{
     display: flex;
-    gap: .3rem;
-    background-color: variables.$SecColor;
-    margin-top: 3rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+    border-radius: 2rem;
+    background-color: variables.$SectionBgClr;
+    justify-content: space-around;
+    align-items: center;
+    // height: 36rem;
+    padding: 1rem;
+    
 
     &_Article{
         display: flex;
         flex-direction: column;
-        text-align: center;
-        flex: 1;
-        background-color: variables.$PrimaryColor;
+        justify-content: center;
         align-items: center;
+        text-align: center;
+        width: 14.5rem; //14rem
+        height: 87%;
+        border-radius: 2rem;
+        padding: clamp(1.5rem, 20%, 3rem); //max: 4rem
+        
+        background-color: variables.$PrimaryColor;
+        box-shadow: inset .3rem .3rem 1rem #000;
+
     }
 
     &_Img{
         width: 13rem;
+        margin-bottom: auto;
     }
 
     &_title{
-        font-size: 1rem;
+        font-size:  clamp(0.9rem, 4vw, 1.3rem);//
         padding: 1rem;
+        margin: 1rem;
+        // text-overflow: ellipsis;
+        // white-space: nowrap;
+        // overflow: hidden;
+        // width: 10rem;
     }
 
     &_btn{
-        margin: auto 1rem 2rem 1rem;
-        background-color: transparent;
-        color: variables.$TxtColor;
-        border: .1rem solid;
-        padding: .5rem;
-        border-radius: 1rem;
-        width: 5rem;
+        @include variables.btnStyles;
+        margin-top: auto;
+
     }
 
 
 }
+
+

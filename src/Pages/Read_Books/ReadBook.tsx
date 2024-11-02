@@ -6,7 +6,7 @@ import { useHighlightCntxt } from "../../Context/useHighlightContxt"
 
 
 
-export function ReadBook() {
+export default function ReadBook() {
     const urlTitle = useParams()
     const context = useHighlightCntxt()
     if (!context) return

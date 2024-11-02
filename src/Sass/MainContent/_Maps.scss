@@ -1,4 +1,55 @@
+@use "../Globals//variables";
+
 .leaflet-container {
-    height: 20rem;
-    width: 20rem;
+    height: calc(20rem + 5vw);
+    width: 100%;
+    margin: 1.5rem;
+    border-radius: 1rem;
+  }
+
+
+  .orderMain{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &_h1{
+      margin: .5rem;
+    }
+
+    &_form{
+      display: flex;
+      flex-direction: column;
+      align-items: center;      
+      width: clamp(20rem,90vw, 40rem);
+
+      &_inputCont{
+        display: flex;
+        justify-content: space-between;
+        margin: .5rem;
+
+        &_input{
+          padding: .5rem;
+          border-radius: .7rem;
+          background-color: variables.$SecColor;
+          color: white;
+
+          &::placeholder{
+            color: variables.$TxtColor;
+          }
+        }
+      }
+
+      &_allInputsCont{
+        width: 90%;
+
+      }
+
+      &_submitBtn{
+        @include variables.btnStyles
+      }
+
+    }
   }

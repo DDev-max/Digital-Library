@@ -1,0 +1,36 @@
+@use "../Globals/variables";
+
+.singleProduct{
+    background-color: variables.$SectionBgClr;
+    display: flex;
+    border-radius: 2rem;
+    padding: .5rem;
+
+
+    &_img{
+        border-radius: 2rem;
+        height: 20rem;
+    }
+
+    &_infoCont{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        flex: 1;
+        padding: 0 7rem;
+        text-align: center;
+
+        &_title{
+        }
+
+        &_desc{
+        }
+        
+        &_link{
+            @include variables.btnStyles;
+            margin: 0 auto;
+        }
+
+    }
+
+}

@@ -4,13 +4,16 @@
     position: relative;
     height: auto;
     border-bottom: .2rem variables.$SecColor solid;
-    
+    @media (width > 800px) {
+      height: 70vh;
+    }
 
     &_contImgs{
       position: relative;
       width: 100%;
       display: flex;
       justify-content: center;
+      height: 100%;
 
     }
 
@@ -34,7 +37,7 @@
       margin: auto;
       padding: 1rem;
       text-align: center;
-      font-size: 3rem;
+      font-size: 3.5rem;
       word-spacing: 30rem;
 
       @media (width < 800px) {
