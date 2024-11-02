@@ -1,9 +1,9 @@
 import { ReactNode, useEffect, useState } from "react"
-import { URLorem } from "../data/consts"
 import { HighlightedCntxt } from "./contextAPI"
-import { useQuery } from "@tanstack/react-query"
 import { Item } from "../data/types"
-import { fetchFn } from "../Utils/fetchFn"
+import { useLorem } from "../hooks/useLorem"
+
+
 
 export function HighlightsProvider({children}: {children :ReactNode}) {
 
@@ -12,10 +12,7 @@ export function HighlightsProvider({children}: {children :ReactNode}) {
     const [favorites, setFavorites] = useState<Item[]>([])
 
     
-    const {data} = useQuery({
-       queryKey: ["LoremIpsum", URLorem],
-       queryFn: ()=> fetchFn<string[]>(URLorem)
-   })
+    const {data} = useLorem()
  
    useEffect(()=>{
     if (data) setHighlightedContent(data)       

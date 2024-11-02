@@ -1,7 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
-import {BooksAPI } from "../../data/types";
-import { API_URL } from "../../data/consts";
-
 import { HorizontalProducts } from "./HorizontalProducts";
 import { MultipleProducts } from "./MultipleProducts";
 import { VerticalProducts } from "./VerticalProducts";
@@ -9,8 +5,8 @@ import { BigSlider } from "./BigSlider";
 import { BSellerSlider } from "./BestSellersSlider";
 
 import fakeData from "../../data/muchasRequest.json"
-import { fetchFn } from "../../Utils/fetchFn";
 import { SingleProduct } from "./SingleProduct";
+import { useBooks } from "../../hooks/useBooks";
 
 export function MainContent() {
 
@@ -19,11 +15,8 @@ export function MainContent() {
     //Se esta asignando dos veces el tipo
     //Añadir errores con OOP
     //Poner srcset a las imgs
-    const {data} = useQuery({
-        queryKey: ["books", API_URL],
-        //Separar function:
-        queryFn: () => fetchFn<BooksAPI>("")//API URL
-    })
+
+    const {data} = useBooks()
 
 
     const pinga = fakeData.items

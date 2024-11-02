@@ -1,6 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
 import { SearchSVG } from "../svg/SearchSVG";
-import { BooksAPISearch } from "../../data/types";
 import { nResults } from "../../data/consts";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useRef, useState } from "react";
@@ -8,8 +6,8 @@ import { debounce } from "../../Utils/debounce";
 import { subtmitSearch } from "./submitSearch";
 import { selectOptn } from "./selectOptn";
 import { inputChange } from "./inputChange";
-import { fetchFn } from "../../Utils/fetchFn";
 import fakeData from "../../data/muchasRequest.json"
+import { useSearch } from "../../hooks/useSearch";
 
 const optnsFake = fakeData.items.slice(0,5)
 
@@ -23,12 +21,7 @@ export function Search() {
     const URL =`https://www.googleapis.com/books/v1/volumes?q=${userSearch}&maxResults=${nResults}&fields=items(id,volumeInfo(title,authors))`
 
 
-    const {data, refetch, isLoading, isError} = useQuery({
-        queryKey: ["searchBooks", URL],
-        queryFn: ()=> fetchFn<BooksAPISearch>(""), //URL
-        enabled: false,
-    })
-
+    const {data, refetch, isLoading, isError} = useSearch("") //URL
     
     const optnsRef =  useRef<(string | null)[]>([]);
 
