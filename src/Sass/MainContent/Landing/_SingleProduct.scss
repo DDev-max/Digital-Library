@@ -1,4 +1,4 @@
-@use "../Globals/variables";
+@use "../../Globals/variables";
 
 .singleProduct{
     background-color: variables.$SectionBgClr;
@@ -17,13 +17,17 @@
         flex-direction: column;
         justify-content: space-evenly;
         flex: 1;
-        padding: 0 7rem;
+        padding: 0 clamp(1rem,4vw,7rem);
         text-align: center;
 
         &_title{
+            @include variables.shadedHeading;
+            padding: 1rem;
+            font-size: variables.$bookTitleFntSize; 
         }
 
         &_desc{
+            font-size: variables.$secTxtFntSize
         }
         
         &_link{

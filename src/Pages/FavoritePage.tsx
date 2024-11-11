@@ -1,6 +1,7 @@
 import { TrashSVG } from "../components/svg/TrashSVG";
 import { removeFav } from "../components/svg/Favorite/useRemoveAddFav";
 import { useHighlightCntxt } from "../Context/useHighlightContxt";
+import { ellipsisText } from "../Utils/ellipsisText";
 
 export function FavoritePage() {
 
@@ -13,16 +14,20 @@ export function FavoritePage() {
         <main className="favPage">
             <h1 className="favPage_h2">Favorite List</h1>
             <div className="favPage_Grid">
+                {favorites.length==0 && <p>Click on the heart to add a book</p>}
+
                 {favorites.map((elmnt)=>{
                     const alreadyAdded = favorites.some(fav => fav.id === elmnt.id)
 
                     return(
                         <article key={elmnt.id} className="favPage_article">
-                            <img className="favPage_Img" src={elmnt.volumeInfo.imageLinks.smallThumbnail} alt={elmnt.volumeInfo.title} />
-                            <p className="favPage_title">{elmnt.volumeInfo.title}</p>
+                            <img className="favPage_article_Img" src={elmnt.volumeInfo.imageLinks.smallThumbnail} alt={elmnt.volumeInfo.title} />
+                            <p className="favPage_article_title">
+                                {ellipsisText(elmnt.volumeInfo.title)}
+                            </p>
                             
                             <TrashSVG 
-                                classNameBtn="favPage_trashBtn"
+                                classNameBtn="favPage_article_trashBtn"
                                 onClick={()=>removeFav({alreadyAdded,selection: elmnt, setFavorites})}
                             />
                         </article>

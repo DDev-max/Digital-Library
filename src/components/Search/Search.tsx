@@ -8,6 +8,7 @@ import { selectOptn } from "./selectOptn";
 import { inputChange } from "./inputChange";
 import fakeData from "../../data/muchasRequest.json"
 import { useSearch } from "../../hooks/useSearch";
+import { searchOptn } from "./searchOptn";
 
 const optnsFake = fakeData.items.slice(0,5)
 
@@ -22,7 +23,8 @@ export function Search() {
 
 
     const {data, refetch, isLoading, isError} = useSearch("") //URL
-    
+
+
     const optnsRef =  useRef<(string | null)[]>([]);
 
 
@@ -34,8 +36,6 @@ export function Search() {
     }), [])
 
     
-
-
     return (
         <search className="header_search">
             <form 
@@ -45,29 +45,29 @@ export function Search() {
             >
 
 
-
-                <div className="header_searchResults">
+                <div className="header_form_searchResults">
                 {isLoading && <progress/>}
                 
                     {/* {data.item} */}
-                    {!isError && optnsFake.map((elmnt, idx)=>{return(
-                        //header_searchResults_result --selected
+                    {!isError && data?.items.map((elmnt, idx)=>{return(
                         <p 
-                        className={`header_searchResults_result  ${optnIdx == idx ? "header_searchResults--selected" : "" }`}
+                        onClick={()=> searchOptn({redirect, bookName:elmnt.volumeInfo.title, inputRef,setUserSearch})}
+
+                        className={`header_form_searchResults_result  ${optnIdx == idx ? "header_form_searchResults_result--selected" : "" }`}
                         key={elmnt.id} 
                         translate="no"
                         >
 
                             <span 
                             ref={(title)=> optnsRef.current[idx] = title?.textContent || ""}
-                            className="header_searchResults_title"
+                            className="header_form_searchResults_result_title"
                             >
                                 {elmnt.volumeInfo.title}
 
                             </span>
 
                             {elmnt.volumeInfo.authors?.[0] &&
-                            <span className="header_searchResults_author">
+                            <span className="header_form_searchResults_result_author">
                                 {elmnt.volumeInfo.authors[0]}
                             </span>}
 
@@ -79,14 +79,13 @@ export function Search() {
                 <div className="header_inputCont">
 
                     <SearchSVG 
-                    classNameBtn="header_searchBtn" 
-                    classNameSVG="header_searchSVG"/>
+                    classNameBtn="header_inputCont_searchBtn"/>
 
                     <input 
                     ref={inputRef}
                     value={userSearch}
                     onChange={(event)=> inputChange({debounceCb: debounceCallback,event,setUserSearch})}
-                    className="header_input" 
+                    className="header_inputCont_input" 
                     aria-label="Search for a book" 
                     placeholder="Search books"  
                     type="text"

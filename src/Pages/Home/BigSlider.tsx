@@ -14,11 +14,15 @@ export function BigSlider() {
                         return(
                             <article key={idx} className="bigSlider_bg" style={{display: imgIdx === idx? "flex": "none", background: `linear-gradient(${elmnt.bgColor})`}}>
 
-                                <div className="bigSlider_contInfo">
+                                <div className="bigSlider_bg_contInfo">
 
-                                    <img  className="bigSlider_Img" key={elmnt.id} src={elmnt.ImgLink} alt={elmnt.alt} />
+                                    <img  className="bigSlider_bg_contInfo_Img" 
+                                    key={elmnt.id} src={elmnt.ImgLink} 
+                                    alt={elmnt.alt} 
+                                    loading="lazy"
+                                    />
 
-                                    <h2 style={{color: elmnt.txtColor}} className="bigSlider_title">{elmnt.alt}</h2>
+                                    <h2 style={{color: elmnt.txtColor}} className="bigSlider_bg_contInfo_title">{elmnt.alt}</h2>
 
                                 </div>
 
@@ -34,7 +38,7 @@ export function BigSlider() {
                             <button
                             key={idx}
                             onClick={()=> setImgIdx(idx)}
-                            className={`bigSlider_imgNumber ${imgIdx === idx? " bigSlider_imgNumber--selected" : ""}`}
+                            className={`bigSlider_footer_imgNumber ${imgIdx === idx? " bigSlider_footer_imgNumber--selected" : ""}`}
                             >
 
                             </button>

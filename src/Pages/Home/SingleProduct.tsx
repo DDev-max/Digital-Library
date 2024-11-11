@@ -8,7 +8,9 @@ export function SingleProduct({books}: BookProp) {
 
     return (
         <section className="singleProduct">
-            <img className="singleProduct_img" src={info.imageLinks.thumbnail} alt={info.title} />
+            <img className="singleProduct_img"
+            loading="lazy"
+            src={info.imageLinks.thumbnail} alt={info.title} />
 
             <div className="singleProduct_infoCont">
                 <h2 className="singleProduct_infoCont_title">{info.title}</h2>

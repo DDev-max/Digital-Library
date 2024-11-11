@@ -6,7 +6,12 @@ $borders: .2rem;
     display: flex;
     height: 7vh;
     padding: .5rem;
+    position: relative;
 
+
+    svg {
+      width: 2.5rem;
+    }
 
     &_form{
       width: 100%;
@@ -14,7 +19,7 @@ $borders: .2rem;
       display: flex;
       margin-left: auto;
 
-      &:focus-within .header_input {
+      &:focus-within .header_inputCont_input {
         width: 100%;
         opacity: 1;
         border-left: $borders solid variables.$SecColor;
@@ -22,16 +27,67 @@ $borders: .2rem;
         border-bottom: 0;
       }
 
-      &:focus-within .header_searchResults{
+      &:focus-within .header_form_searchResults{
         display: flex;
         opacity: 1;
         width: 100%;
+        pointer-events: auto;
       }
 
       &:focus-within .header_searchBtn{
         border-right: $borders solid variables.$SecColor;
 
       }
+
+
+        
+      &_searchResults{
+        transition: .1s all ease;
+        opacity: 0;
+        width: 0;
+        background-color: variables.$SecColor;
+        color: variables.$TxtColor;
+        height: auto;
+        position: absolute;
+        z-index: 1;
+        text-wrap: nowrap;
+        flex-direction: column;
+        gap: .2rem;
+        top: 100%;
+        right: 0;
+        border:  $borders solid variables.$SecColor;
+        border-top: 0;
+        border-bottom-left-radius: .5rem;
+        border-bottom-right-radius: .5rem;
+        box-sizing: border-box;
+        pointer-events: none;
+
+        &_result{
+          background-color: variables.$PrimaryColor;
+          padding: .5rem;
+      
+          &--selected{
+            background-color: variables.$SecColor;
+            padding: .5rem;
+      
+          }
+            
+          &_author{
+            font-size: .5em;
+          }
+        
+          &_title{
+            display: block;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            cursor: pointer;
+          }
+      
+        }
+
+    }
+
+
       
     }
 
@@ -39,9 +95,6 @@ $borders: .2rem;
       margin-left: auto;
     }
 
-    &_search svg{
-      width: 2.5rem;
-    }
 
 
     &_inputCont{
@@ -49,26 +102,23 @@ $borders: .2rem;
       flex-direction: row-reverse;
       pointer-events: all;
 
+      &_searchBtn{
+        background-color: transparent;
+        color: rgb(167, 167, 167);
+        border: none;
+        cursor: pointer;
+  
+      }
+
+      &_input {
+        transition: .2s all ease;
+        width: 0;
+        opacity: 0;
+  
+      }
 
     }
 
-    &_searchBtn{
-      background-color: transparent;
-      color: rgb(167, 167, 167);
-      border: none;
-      cursor: pointer;
-
-    }
-
-
-
-    &_input {
-      transition: .2s all ease;
-      width: 0;
-      opacity: 0;
-
-
-    }
 
 
     &_LinkContainer{
@@ -78,80 +128,14 @@ $borders: .2rem;
 
     }
 
-    &_h1{
-      margin: auto 0;
-      font-size:2rem;
-    }
-
     &_aside{
       margin: 0 .5rem 0 1rem;
       
     }
 
-    &_aside svg{
-      width: 2.5rem;
-    }
 
-    &_searchResults{
-      transition: .2s all ease;
-      opacity: 0;
-      width: 0;
-      background-color: variables.$SecColor;
-      color: variables.$TxtColor;
-      width: 100%; //calc(100% - .8rem)
-      height: auto;
-      position: absolute;
-      z-index: 1;
-      text-wrap: nowrap;
-      flex-direction: column;
-      gap: .2rem;
-      top: 100%;
-      border:  $borders solid variables.$SecColor;
-      border-top: 0;
-      border-bottom-left-radius: .5rem;
-      border-bottom-right-radius: .5rem;
-      box-sizing: border-box;
-
-      &_result{
-        background-color: variables.$PrimaryColor;
-        padding: .5rem;
-      }
-
-      &--selected{
-        background-color: variables.$SecColor;
-        padding: .5rem;
-
-      }
-
-
-
-      &_author{
-        font-size: .5em;
-      }
-
-      &_title{
-        display: block;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-
-    }
-
-
-    &_result{
-      
-    }
 
   }
 
-  /*
-
-  <div class="header_inputCont">
-    <button class="header_searchBtn" type="submit">
-      <svg>...</svg>
-    </button>
-    <input class="header_input" aria-label="Search for a book" placeholder="Search books" type="text" value="">
-  </div>
 
 
-*/

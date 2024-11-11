@@ -6,7 +6,7 @@ export function useSearch(URL: string){
     
     return useQuery({
         queryKey: ["searchBooks", URL],
-        queryFn: ()=> fetchFn<BooksAPISearch>(URL), 
+        queryFn: ()=> fetchFn<BooksAPISearch>(""), 
         enabled: false,
     })
 

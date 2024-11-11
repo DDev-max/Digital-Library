@@ -45,20 +45,21 @@ export function BSellerSlider({books}: BookProp) {
                         <article 
                         className="slider_bookContainer" key={idx}
                         >
-                            <Link to={`/Read/${bookLink}`} key={info.title}>
+                            <Link className="slider_bookContainer_link" to={`/Read/${bookLink}`} key={info.title}>
                                 <img 
-                                className="slider_img"
+                                loading="lazy"
+                                className="slider_bookContainer_link_img"
                                 src={info.imageLinks.smallThumbnail} 
                                 alt={`The book cover of "${info.title}"`} />
 
                                 <h3
-                                className="slider_title"
+                                className="slider_bookContainer_link_title"
                                 >{info.title}</h3>
 
 
                             </Link>
                             
-                            <button className="slider_FavBtn" onClick={()=> removeAddFav({alreadyAdded,selection: elmnt,setFavorites})}>
+                            <button className="slider_bookContainer_FavBtn" onClick={()=> removeAddFav({alreadyAdded,selection: elmnt,setFavorites})}>
                                 <FavoriteSVG added={alreadyAdded} />
                             </button>
                     

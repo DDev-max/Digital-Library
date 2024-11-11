@@ -154,15 +154,6 @@ export interface HighlightedCntxtType{
  }
  
 
- export interface submitSearchProps{
-    event: React.FormEvent<HTMLFormElement>
-    redirect: NavigateFunction
-    userSearch: string
-    setUserSearch:  React.Dispatch<React.SetStateAction<string>>
-    inputRef:  React.RefObject<HTMLInputElement>
-}
-
-
 export interface SelectOptnProps{
     userSearch: string
     setOptnIdx: React.Dispatch<React.SetStateAction<number>>
@@ -226,4 +217,21 @@ export interface FormSubmitProps{
     markerPosition?: LatLngExpression
     setAlert: React.Dispatch<React.SetStateAction<string>>
 
+}
+
+
+
+export interface SearchOptnProps{
+    bookName: string,
+    redirect: NavigateFunction
+    setUserSearch:  React.Dispatch<React.SetStateAction<string>>
+    inputRef:  React.RefObject<HTMLInputElement>
+}
+
+export interface submitSearchProps{
+    event: React.FormEvent<HTMLFormElement>
+    redirect: NavigateFunction
+    userSearch: string
+    setUserSearch:  React.Dispatch<React.SetStateAction<string>>
+    inputRef:  React.RefObject<HTMLInputElement>
 }
