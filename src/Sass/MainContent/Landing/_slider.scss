@@ -5,6 +5,8 @@
     padding: 1rem;
     background-color:variables.$SectionBgClr;
     border-radius: 1rem;
+    transform: variables.$defaultPosition;
+
 
     &_h2{
         @include variables.shadedHeading;
@@ -51,6 +53,15 @@
         flex-direction: column;
         border-bottom: .2rem solid variables.$SecColor;
         width: clamp(9rem, 15vw,11rem); 
+
+
+        &--skeleton{
+            @extend .slider_bookContainer;
+            height: 15rem;
+
+            @include variables.defaultSkeleton;
+        }
+
 
         &_link{
 

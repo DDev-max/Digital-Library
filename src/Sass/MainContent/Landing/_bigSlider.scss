@@ -4,9 +4,10 @@
     position: relative;
     height: auto;
     border-bottom: .2rem variables.$SecColor solid;
-    @media (width > 800px) {
-      height: 70vh;
-    }
+    overflow: hidden;
+    // @media (width > 800px) {
+    //   height: 70vh;
+    // }
 
     &_contImgs{
       position: relative;
@@ -23,14 +24,27 @@
       justify-content: center;
       align-items: center;
 
+      min-height: 45vh;
+      height: 28rem;
+
+      @media (width <= 600px) {
+        height: auto;
+        min-height: auto;
+      }
+
+
+
       &_contInfo{
         display: flex;
         width: clamp(28rem, 100%, 65rem); //70rem
         justify-content: center;
 
         &_Img{
-          width:  clamp(20rem, 100%, 35rem); //
+          width: clamp(20rem,100%,37.5rem); //37.5rem
+          // width: clamp(20rem, calc(40vw + 20vh), 57rem);
+
           height: auto;
+          display: block;
         }
 
         &_title{

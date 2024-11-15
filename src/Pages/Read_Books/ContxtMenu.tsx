@@ -11,6 +11,7 @@ import { useHighlightCntxt } from "../../Context/useHighlightContxt.tsx";
 import { useLorem } from "../../hooks/useLorem.tsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { URLorem } from "../../data/consts.ts";
+import { useRef } from "react";
 
 //ELIMINAR LOS ARCHIVOS/ CARPETAS QUE NO ESTOY USANDO
 
@@ -19,7 +20,11 @@ export function ContxtMenu() {
     const {data} = useLorem()
     const queryClient = useQueryClient()
 
-    const {position,setPosition} = useMenuPosition()
+    const menuRef = useRef<HTMLElement | null>(null)
+
+    
+    
+    const {position,setPosition} = useMenuPosition(menuRef)
 
     const context = useHighlightCntxt()
     if (!context || !data) return
@@ -37,9 +42,9 @@ export function ContxtMenu() {
     return(
         
         position && 
-        <section style={{...position}} className="contextMenu">
+        <section ref={menuRef} role="menu" style={{...position}} className="contextMenu">
 
-            <ColorsMenu 
+            <ColorsMenu
             onClickColor={(e)=>{
                 highlightColor({e,data,setAlert,changeContent,setPosition})
             }}
@@ -54,7 +59,7 @@ export function ContxtMenu() {
             <div className="contextMenu_btnsCont">
                 <CopySVG classNameBtn="contextMenu_copyBtn" onMouseDown={()=>{copyTxt({setAlert})}}/>
                     
-                <SearchSVG classNameBtn="contextMenu_searchbtn" onMouseDown={googleSearch}/>
+                <SearchSVG title="Search on Google" classNameBtn="contextMenu_searchbtn" onMouseDown={googleSearch}/>
             </div>
 
         </section>

@@ -6,6 +6,9 @@ $marginSectn : 0 1rem;
 $bookTitleFntSize: clamp(1.1rem, 2vw, 1.5rem);
 $secTxtFntSize: clamp(1rem,1vw,1.2rem);
 $headingsFntSize: clamp(1.9rem, 3vw ,2.1rem); //1.9rem
+$defaultPosition: translateX(-90%);
+
+
 
 $highlightColors: (
     "first" : (
@@ -78,12 +81,18 @@ $highlightColors: (
     font-size: $headingsFntSize;
 }
 
-@keyframes flick {
-    0%, 100%{
+
+@mixin defaultSkeleton{
+    background-color: #382c66;
+    animation:  skeletonFlick 1.2s infinite ease-in-out;
+}
+
+
+@keyframes skeletonFlick {
+    0%, 100% {
         opacity: 1;
     }
-
-    50%{
-        opacity: 50%;
+    50% {
+        opacity: 0.5;
     }
 }

@@ -1,8 +1,14 @@
-import { CSSProperties, useEffect, useState } from "react"
+import { CSSProperties, useEffect, useRef, useState } from "react"
 import { menuSize } from "../../data/consts"
 
-export function useMenuPosition(){
+
+
+export function useMenuPosition(menuRef: React.MutableRefObject<HTMLElement | null>){
+
     const [position, setPosition] =  useState<CSSProperties>() 
+    
+
+    const optnIdx = useRef(-1)
 
 
 
@@ -11,7 +17,8 @@ export function useMenuPosition(){
             const eTarget = e.target as HTMLElement
                         
             // para pasignarle la misma funcion a ambos eventos (ver los eventos añadidos)
-            if (e.type === "scroll") setPosition({display: "none"})
+
+            if (e.type === "scroll") setPosition({display: "none"}) //ACTIVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
 
             if (typeof eTarget.className === "string" && !eTarget.className.includes("contextMenu")) {
                 setPosition({display: "none"})
@@ -48,16 +55,51 @@ export function useMenuPosition(){
             setPosition(menuPosition)
         }
 
+        const focusElmnt= (e: KeyboardEvent)=>{
+            
+            if (!menuRef.current) return
+
+            const allOptns = menuRef.current.querySelectorAll(".contextMenu button")
+            const nResults = allOptns.length
+
+            
+            if (e.key === "ArrowRight" || e.key==="Tab") {
+                    optnIdx.current = (optnIdx.current + 1) % nResults;
+                    (allOptns[optnIdx.current] as HTMLElement).focus()
+
+            }
+      
+            if (e.key === "ArrowLeft") {
+
+                optnIdx.current = optnIdx.current === -1 
+                ? nResults - 1 
+                : (optnIdx.current - 1 + nResults) % nResults;
+      
+                (allOptns[optnIdx.current] as HTMLElement).focus()
+        
+            }
+
+
+            if (e.key ==="Escape") {
+                setPosition({display: "none"})
+            }
+
+
+        }
+
 
 
         document.addEventListener("click", hideContextMenu)
         document.addEventListener("scroll", hideContextMenu)
         document.addEventListener("contextmenu", moveContextMenu)
+        document.addEventListener("keydown", focusElmnt)
 
         return ()=> {
             document.removeEventListener("click", hideContextMenu)
             document.removeEventListener("scroll", hideContextMenu)
             document.removeEventListener("contextmenu", moveContextMenu)
+            document.removeEventListener("keydown", focusElmnt)
+
         }
 
 

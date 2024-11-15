@@ -1,42 +1,44 @@
 import { nResults } from "../../data/consts"
 import { SelectOptnProps } from "../../data/types";
 
-export function selectOptn({event,optnsRef,setOptnIdx,setUserSearch,userSearch,debouncCb, isError}: SelectOptnProps) {
-    if (!userSearch) return
+export function selectOptn({e,optnsRef,setOptnIdx,setUserSearch}: SelectOptnProps) {
+    // if (!userSearch) return
+
 
       setOptnIdx(previous=>{
-          let newIdx;
+        let newIdx;
 
-          if (isError) return -1
-
-
-          if (event.key === "ArrowDown") {
-              newIdx = (previous + 1) % nResults
-
-              setUserSearch( optnsRef.current[newIdx] || "")
-              return newIdx
-  
-          }
-
-          if (event.key === "ArrowUp") {
-
-              newIdx = previous === -1 
-              ? nResults - 1 
-              : (previous - 1 + nResults) % nResults
+      //   if (isError) return -1
 
 
-              setUserSearch(optnsRef.current[newIdx] || "")
-              return newIdx
-  
-          }
+        if (e.key === "ArrowDown") {
+            newIdx = (previous + 1) % nResults
+
+            setUserSearch( optnsRef.current[newIdx]?.textContent || "")
+            return newIdx
+
+        }
+
+        if (e.key === "ArrowUp") {
+
+            newIdx = previous === -1 
+            ? nResults - 1 
+            : (previous - 1 + nResults) % nResults
 
 
-          return previous
+            setUserSearch( optnsRef.current[newIdx]?.textContent || "")
+            return newIdx
+
+        }
 
 
-      })
+        return previous
 
-      debouncCb()
+
+    })
+
+
+
       
 
   }

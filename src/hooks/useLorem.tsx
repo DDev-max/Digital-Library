@@ -5,6 +5,7 @@ import { URLorem } from "../data/consts";
 export function useLorem () {
     return useQuery({
         queryKey: ["LoremIpsum", URLorem],
-        queryFn: ()=> fetchFn<string[]>(URLorem)
+        queryFn: ()=> fetchFn<string[]>({URL: URLorem})
     })
  }
+

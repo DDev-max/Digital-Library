@@ -7,16 +7,27 @@ import { BSellerSlider } from "./BestSellersSlider";
 import fakeData from "../../data/muchasRequest.json"
 import { SingleProduct } from "./SingleProduct";
 import { useBooks } from "../../hooks/useBooks";
+import { useEffect, useRef, useState } from "react";
 
 export function MainContent() {
 
-//NO DEPENDER DE LA API, HACER MAP
 
-    //Se esta asignando dos veces el tipo
-    //Añadir errores con OOP
-    //Poner srcset a las imgs
+    const {data, error, isError, } = useBooks()
 
-    const {data} = useBooks()
+
+    if (isError && error instanceof Error ) {
+        const errorCode = error.message.match(/\d+/)?.[0]
+        console.log(errorCode);
+        
+
+        // if (Number(errorCode) === 429) {
+        //     return <p className="fullError">There seems to be a lot of traffic on our application today, please come back later.</p>
+        // } else{
+        //     return <p  className="fullError"> Connection error</p>
+        // }
+
+
+      }
 
 
     const pinga = fakeData.items
@@ -33,18 +44,58 @@ export function MainContent() {
     const multipleBooks =  data?.items?.slice(11)
 
 
+    const observedElements= useRef<HTMLElement[]>([])
+
+
+      useEffect(()=>{
+
+        const intObserver = new IntersectionObserver((entries)=>{
+            entries.forEach((elmnt) => {
+                
+                if (elmnt.isIntersecting) {
+                    console.log("se ve");
+                    
+                    elmnt.target.classList.add("visibleElmnt")
+                }
+            })
+        },
+        {
+            threshold: 0,
+        }
+    )
+ 
+        observedElements.current.forEach((elmnt) => {
+            if (elmnt) {
+                console.log("hay elemento", elmnt);
+                
+              intObserver.observe(elmnt);
+            }
+          })
+
+          return ()=> intObserver.disconnect()
+          
+      }, [])
+
     return(
-            <main>
+            <main id="mainContent" className="mainContent">
+
                 <BigSlider/>
+                
                 <div className="mainDiv">
 
-                    <HorizontalProducts books={pinga1}/>
-                    <BSellerSlider books={pinga2}/>
-                    {/* <VerticalProducts books={pinga3}/> */}
-                    <MultipleProducts books={pinga3}/>
-                    <SingleProduct books={pinga4}/>
+                    <HorizontalProducts sectionRef={(elmnt: HTMLElement) =>  observedElements.current[0] = elmnt} books={pinga1}/>
+
+                    <BSellerSlider sectionRef={(elmnt: HTMLElement) =>  observedElements.current[1] = elmnt} books={pinga2}/>
+                    
+                    <MultipleProducts sectionRef={(elmnt: HTMLElement) =>  observedElements.current[2] = elmnt} books={pinga3}/>
+                    
+                    <SingleProduct sectionRef={(elmnt: HTMLElement) =>  observedElements.current[3] = elmnt} books={pinga4}/>
+                    
+                    
 
                 </div>
+
+
             </main>
     )
     

@@ -11,7 +11,7 @@ export function FavoritePage() {
     const {favorites,setFavorites} = context
 
     return (
-        <main className="favPage">
+        <main id="mainContent" className="favPage">
             <h1 className="favPage_h2">Favorite List</h1>
             <div className="favPage_Grid">
                 {favorites.length==0 && <p>Click on the heart to add a book</p>}

@@ -12,7 +12,9 @@ export function ColorsMenu({onClickColor,onUnselectClick}: ColorsMenuProps) {
         {
             colors.map((elmnt, idx)=>{
                 return(
-                    <button 
+                    <button
+                    role="menuitem"
+                    aria-label={`Color number ${idx +1}`}
                     key={idx} 
                     className={`contextMenu_color contextMenu_color--${elmnt}`} 
                     onClick={onClickColor}>

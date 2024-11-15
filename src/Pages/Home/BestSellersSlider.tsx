@@ -7,13 +7,17 @@ import { useHighlightCntxt } from "../../Context/useHighlightContxt"
 import { useRef } from "react"
 import { useScrollBtns } from "../../hooks/useScrollBtns"
 import { scrollSlider } from "../../Utils/scrollSlider"
+import { useBooks } from "../../hooks/useBooks"
+import { BestSellersSkeleton } from "../../components/Skeletons/BestSellersSkeleton"
 
 
-export function BSellerSlider({books}: BookProp) {
+export function BSellerSlider({books, sectionRef}: BookProp) {
 
     const sliderRef = useRef<HTMLDivElement>(null)
     const showBtns = useScrollBtns(sliderRef)
 
+
+    const {isLoading} = useBooks()
     
 
 
@@ -25,7 +29,7 @@ export function BSellerSlider({books}: BookProp) {
 
 
     return(
-        <section className="slider">
+        <section ref={sectionRef} className="slider ">
             <h2 className="slider_h2">Best Sellers</h2>
             <div ref={sliderRef} className="slider_contImgs">
 
@@ -34,40 +38,57 @@ export function BSellerSlider({books}: BookProp) {
                 onClick={()=> scrollSlider({elmntRef: sliderRef, toRight: true})}
                 className="slider_btn"> &lt; </button>
                 }
-            
-                {books?.map((elmnt, idx)=>{
+
+
+                {isLoading 
+                
+                ? <BestSellersSkeleton/>
+
+                
+                : ( books?.map((elmnt, idx)=>{
                     const info= elmnt.volumeInfo
 
                     const bookLink = urlConversion({title: info.title})                    
                     const alreadyAdded = favorites.some(fav => fav.id === elmnt.id)
 
-                    return(
-                        <article 
-                        className="slider_bookContainer" key={idx}
-                        >
-                            <Link className="slider_bookContainer_link" to={`/Read/${bookLink}`} key={info.title}>
-                                <img 
-                                loading="lazy"
-                                className="slider_bookContainer_link_img"
-                                src={info.imageLinks.smallThumbnail} 
-                                alt={`The book cover of "${info.title}"`} />
-
-                                <h3
-                                className="slider_bookContainer_link_title"
-                                >{info.title}</h3>
 
 
-                            </Link>
-                            
-                            <button className="slider_bookContainer_FavBtn" onClick={()=> removeAddFav({alreadyAdded,selection: elmnt,setFavorites})}>
-                                <FavoriteSVG added={alreadyAdded} />
-                            </button>
-                    
-                        </article>
-                    )
+
+                        return(
+
+                            <article 
+                            className="slider_bookContainer" key={idx}
+                            >
+                                <Link className="slider_bookContainer_link" to={`/Read/${bookLink}`} key={info.title}>
+                                    <img 
+                                    loading="lazy"
+                                    className="slider_bookContainer_link_img"
+                                    src={info.imageLinks.smallThumbnail} 
+                                    alt={`The book cover of "${info.title}"`} />
+
+                                    <h3
+                                    title={info.title}
+                                    className="slider_bookContainer_link_title"
+                                    >{info.title}</h3>
+
+
+                                </Link>
+                                
+                                <button className="slider_bookContainer_FavBtn" onClick={()=> removeAddFav({alreadyAdded,selection: elmnt,setFavorites})}>
+                                    <FavoriteSVG title={alreadyAdded? "Remove from favorites list": "Add to favorites list"} added={alreadyAdded} />
+                                </button>
                         
+                            </article>
 
-                })}
+                        )
+                            
+
+                    })
+
+
+                )}
+
+
 
                 {showBtns[1] &&
                 <button  onClick={()=> scrollSlider({elmntRef: sliderRef})}

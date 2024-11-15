@@ -16,9 +16,9 @@ export default function PreOrder() {
     const defaultCoords: LatLngExpression = [9.93333, -84.08333]
 
     const selectedBook = useParams()
-    const bookNameConv = urlConversion({title: selectedBook.book || "", fromURL: true})
+    const bookNameConv = urlConversion({ title: selectedBook.book || "", fromURL: true })
 
-    const [bookName, setBookName] =  useState(bookNameConv)
+    const [bookName, setBookName] = useState(bookNameConv)
     const [markerPosition, setMarkerPosition] = useState<LatLngExpression>(defaultCoords)
 
     const phoneRef = useRef<HTMLInputElement>(null)
@@ -27,77 +27,94 @@ export default function PreOrder() {
     const context = useHighlightCntxt()
     if (!context) return
 
-    const {setAlert} = context
+    const { setAlert } = context
 
 
     return (
-        <main className="orderMain">
-            <Alert brdrColor/>
+        <main id="mainContent" className="orderMain">
+            <Alert brdrColor />
 
-            <h1 className="orderMain_h1">Pre-order book</h1>
 
-            <form className="orderMain_form" onSubmit={(e)=> formSubmit({e,setAlert,markerPosition})}>
+            <form aria-labelledby="formName" className="orderForm" onSubmit={(e) => formSubmit({ e, setAlert, markerPosition })}>
 
-                <div className="orderMain_form_allInputsCont">
+                <h1 id="formName" className="orderForm_h1">Pre-order a book</h1>
 
-                    <p className="orderMain_form_inputCont">
-                        <label htmlFor="name">Name</label>
+                <div className="orderForm_AllInputs">
 
-                        <input 
-                        className="orderMain_form_inputCont_input"
-                        onChange={nameInputChange}
-                        pattern={nameInputRegex.source}
-                        required minLength={5}  
-                        placeholder="Luis Ramirez"
-                        type="text" id="name" name="name" />
+                    <p>
+                        <label 
+                        className="orderForm_AllInputs_label" 
+                        htmlFor="name">
+
+                            Name
+                            <input
+                                className="orderForm_AllInputs_input"
+                                onChange={nameInputChange}
+                                pattern={nameInputRegex.source}
+                                required minLength={5}
+                                placeholder="Luis Ramirez"
+                                type="text" id="name" name="name" />
+                        </label>
                     </p>
 
-                    <p className="orderMain_form_inputCont">
-                        <label htmlFor="phone">Phone</label>
-
-                        <input 
-                        className="orderMain_form_inputCont_input"
-                        minLength={9}
-                        maxLength={9}
-                        placeholder="1234-5678"
-                        onChange={(e)=>phoneInputChange({e,phoneRef})}
-                        ref={phoneRef} 
-                        required type="tel" 
-                        id="phone" name="phone" />
-
+                    <p >
+                        <label 
+                        className="orderForm_AllInputs_label"
+                        htmlFor="phone">
+                            Phone
+                            <input
+                                className="orderForm_AllInputs_input"
+                                minLength={9}
+                                maxLength={9}
+                                placeholder="1234-5678"
+                                onChange={(e) => phoneInputChange({ e, phoneRef })}
+                                ref={phoneRef}
+                                required type="tel"
+                                id="phone" name="phone" />
+                        </label>
                     </p>
 
-                    <p className="orderMain_form_inputCont">
-                        <label htmlFor="email">Email</label>
-
-                        <input 
-                        className="orderMain_form_inputCont_input"
-                        onChange={emailInputChange}
-                        placeholder="example@gmail.com"
-                        pattern={emailInputRegex.source}
-                        required type="email" 
-                        id="email" name="email" />
+                    <p >
+                        <label 
+                        className="orderForm_AllInputs_label"
+                        htmlFor="email">
+                            Email
+                            <input
+                                className="orderForm_AllInputs_input"
+                                onChange={emailInputChange}
+                                placeholder="example@gmail.com"
+                                pattern={emailInputRegex.source}
+                                required type="email"
+                                id="email" name="email" />
+                        </label>
                     </p>
 
-                    <p className="orderMain_form_inputCont">
-                        <label htmlFor="book">Book name</label>
-                        
-                        <input 
-                        onChange={(e)=> {setBookName(e.target.value)}}
-                        required
-                        className="orderMain_form_inputCont_input"
-                        type="text" name="book" 
-                        id="book"  
-                        value={bookName} />
+
+                    <p >
+                        <label                         
+                        className="orderForm_AllInputs_label"
+                        htmlFor="book">
+                            Book name
+                            <input
+                                onChange={(e) => { setBookName(e.target.value) }}
+                                required
+                                className="orderForm_AllInputs_input"
+                                type="text" name="book"
+                                id="book"
+                                value={bookName} />
+                        </label>
                     </p>
 
                 </div>
 
-                <Map markerPosition={markerPosition} setMarkerPosition={setMarkerPosition}/>
 
-                <button className="orderMain_form_submitBtn" type="submit">Send</button>
 
+                <Map divClassName="orderForm_MapCont" markerPosition={markerPosition} setMarkerPosition={setMarkerPosition} />
+
+
+                <button className="orderForm_submitBtn" type="submit">Send Form</button>
             </form>
+
         </main>
     )
 }

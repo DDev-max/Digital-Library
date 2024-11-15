@@ -7,6 +7,7 @@ export function useBooks(){
 
     return useQuery({
         queryKey: ["books", API_URL],
-        queryFn: () => fetchFn<BooksAPI>("")//API URL
+        queryFn: () => fetchFn<BooksAPI>({URL: API_URL}),//API URL
+        
     })
 }

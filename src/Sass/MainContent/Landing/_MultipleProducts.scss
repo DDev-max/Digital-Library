@@ -8,6 +8,7 @@
     background-color: variables.$SectionBgClr;
     border-radius: 2rem;
     padding: 1.5rem;
+    transform: variables.$defaultPosition;
 
     &_h2{
         margin: 2rem auto ;
@@ -38,6 +39,15 @@
 
         background-color: variables.$PrimaryColor;
         border-radius: 1rem;
+
+        &--skeleton{
+            @extend .MultipleProducts_article;
+            @include variables.defaultSkeleton;
+            height: 20rem;
+            width: 12rem;
+
+        }
+
 
         &_link{
             flex: 1;

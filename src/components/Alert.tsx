@@ -13,7 +13,7 @@ export function Alert({brdrColor}:AlertProps) {
 
     return(
         alert && 
-        <dialog  open className={`alert${brdrColor ? "--green": ""}`}>
+        <dialog  role="alert" aria-live="assertive" open className={`alert${brdrColor ? "--green": ""}`}>
             <p> {alert} </p>
         </dialog>
     )

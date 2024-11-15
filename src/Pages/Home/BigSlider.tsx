@@ -4,12 +4,11 @@ import { ads } from "../../data/consts"
 export function BigSlider() {
     const [imgIdx, setImgIdx] = useState(0)
 
-//linear-gradient(100deg, rgb(48 2 4) 16%, #af2022 50%)
     return(
             <section className="bigSlider"
             
             >
-                <div className="bigSlider_contImgs">
+                <div className="bigSlider_contImgs" aria-live="polite" id="slider" >
                     {ads.map((elmnt, idx)=>{
                         return(
                             <article key={idx} className="bigSlider_bg" style={{display: imgIdx === idx? "flex": "none", background: `linear-gradient(${elmnt.bgColor})`}}>
@@ -36,6 +35,9 @@ export function BigSlider() {
                     {ads.map((_, idx)=>{
                         return(
                             <button
+                            aria-selected={imgIdx == idx}
+                            aria-label={`Click to see image number ${idx + 1}`}
+                            aria-controls="slider"
                             key={idx}
                             onClick={()=> setImgIdx(idx)}
                             className={`bigSlider_footer_imgNumber ${imgIdx === idx? " bigSlider_footer_imgNumber--selected" : ""}`}

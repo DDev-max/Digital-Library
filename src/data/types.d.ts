@@ -26,6 +26,8 @@ export interface ImageLinks {
 
 export interface BookProp{
     books: Item[] | undefined;
+    sectionRef: (elmnt: HTMLElement)=> void
+    /// React.MutableRefObject<HTMLElement[] | null[]>
 }
 
 export interface SVGProps{
@@ -33,7 +35,15 @@ export interface SVGProps{
     classNameBtn?: string
     onClick?: ()=> void
     onMouseDown?: ()=> void
+    title?: string
 }
+
+export interface FavoriteSVGProps{
+    added?: boolean
+    title?: string
+    className?: string
+}
+
 
 interface extendHighlightProps{
     selectedParagraph: string
@@ -155,19 +165,16 @@ export interface HighlightedCntxtType{
  
 
 export interface SelectOptnProps{
-    userSearch: string
+    e: React.KeyboardEvent<HTMLFormElement>
+    optnsRef: React.MutableRefObject<(HTMLSpanElement | null)[]>
     setOptnIdx: React.Dispatch<React.SetStateAction<number>>
     setUserSearch:  React.Dispatch<React.SetStateAction<string>>
-    event: React.KeyboardEvent<HTMLFormElement>
-    optnsRef: React.MutableRefObject<(string | null)[]>
-    debouncCb: () => void
-    isError: boolean
+
 }
 
 
 export interface InputChangeProps{
     event: React.ChangeEvent<HTMLInputElement>
-    debounceCb: ()=> void
     setUserSearch: React.Dispatch<React.SetStateAction<string>>
 }
 
@@ -199,7 +206,7 @@ export interface MapClickProps{
 }
 
 export interface MapProps extends LocMarkerProps, MapClickProps {
-
+    divClassName: string
 }
 
 export interface HandleUserLocationProps{
@@ -234,4 +241,11 @@ export interface submitSearchProps{
     userSearch: string
     setUserSearch:  React.Dispatch<React.SetStateAction<string>>
     inputRef:  React.RefObject<HTMLInputElement>
+}
+
+
+export interface UseSearchProps{
+    URL: string
+    fetchNow: boolean
+    setFetchNow:  React.Dispatch<React.SetStateAction<boolean>>
 }

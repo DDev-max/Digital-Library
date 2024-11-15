@@ -4,13 +4,18 @@ $borders: .2rem;
 
 .header{
     display: flex;
-    height: 7vh;
+    flex-wrap: wrap;
+    // height: 7vh;
     padding: .5rem;
     position: relative;
 
+    &_h1{
+      margin: auto;
+    }
 
-    svg {
-      width: 2.5rem;
+
+    &_favListIcon{
+      margin: auto;
     }
 
     &_form{
@@ -25,6 +30,10 @@ $borders: .2rem;
         border-left: $borders solid variables.$SecColor;
         border-top: 0;
         border-bottom: 0;
+      }
+
+      &:focus-within .header_inputCont_input{
+        visibility: visible;
       }
 
       &:focus-within .header_form_searchResults{
@@ -42,6 +51,7 @@ $borders: .2rem;
 
         
       &_searchResults{
+        list-style: none;
         transition: .1s all ease;
         opacity: 0;
         width: 0;
@@ -93,6 +103,7 @@ $borders: .2rem;
 
     &_search{
       margin-left: auto;
+      margin: auto 0 auto auto;
     }
 
 
@@ -114,6 +125,7 @@ $borders: .2rem;
         transition: .2s all ease;
         width: 0;
         opacity: 0;
+        visibility: hidden;
   
       }
 
@@ -129,7 +141,8 @@ $borders: .2rem;
     }
 
     &_aside{
-      margin: 0 .5rem 0 1rem;
+      margin: auto .5rem auto 1rem;
+
       
     }
 

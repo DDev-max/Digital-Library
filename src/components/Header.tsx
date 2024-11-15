@@ -10,16 +10,18 @@ export function Header() {
     return(
         <>
             <header className="header">
-                <Link className="header_LinkContainer" to={"/"}>
+                <Link title="Go to home page." className="header_LinkContainer" to={"/"}>
                     <Logo/>
-                    <h1>Library</h1>
+                    <h1 className="header_h1">MarkMyBook </h1>
                 </Link>
+
+                <a tabIndex={0} className="skipLink" href="#mainContent">Skip navigation</a>
 
                 <Search/>
 
                 <div className="header_aside">
                     <Link to={"/Favorites"}>
-                        <FavoriteSVG/>
+                        <FavoriteSVG className="header_favListIcon"/>
                     </Link>
                 </div>
             </header>
