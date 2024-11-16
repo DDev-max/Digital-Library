@@ -12,6 +12,6 @@ export function formSubmit({e,markerPosition,setAlert}:FormSubmitProps) {
 
     newAlert({setAlert, string: "Form submitted!"})
 
-    console.log(userInfo)
+
     
 }

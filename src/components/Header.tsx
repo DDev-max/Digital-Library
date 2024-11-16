@@ -11,8 +11,8 @@ export function Header() {
         <>
             <header className="header">
                 <Link title="Go to home page." className="header_LinkContainer" to={"/"}>
-                    <Logo/>
-                    <h1 className="header_h1">MarkMyBook </h1>
+                    <Logo />
+                    <h1 className="header_h1">MarkMyBook</h1>
                 </Link>
 
                 <a tabIndex={0} className="skipLink" href="#mainContent">Skip navigation</a>

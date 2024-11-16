@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer } from "react-leaflet";
 import { LocMarker } from "./LocMarker";
 import { useEffect } from "react";
-import { MapClick } from "./MapClick";
+import { MapClick } from "./mapClick";
 import { useHighlightCntxt } from "../../Context/useHighlightContxt";
 import { handleUserLocation } from "../../Utils/handleUserLocation";
 import { MapProps } from "../../data/types";
@@ -14,17 +14,18 @@ export function Map({markerPosition,setMarkerPosition,divClassName}:MapProps) {
   useEffect(()=>{
 
     if (!context) return
+    
     const {setAlert} = context
     handleUserLocation({setAlert,setMarkerPosition})
 
-  }, [])
+  }, [context, setMarkerPosition])
 
 
   
 
   
     return (
-
+//  The div tag is to improve accessibility
       <div className={divClassName} role="region" aria-label="Interactive map. Activate the location if you have not already done so.">
         
         <MapContainer 

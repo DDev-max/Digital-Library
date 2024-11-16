@@ -7,7 +7,7 @@ export function useSearch({URL,fetchNow,setFetchNow}: UseSearchProps){
 
 
     return useQuery({
-        queryKey: ["searchBooks"],
+        queryKey: ["searchBooks", URL, setFetchNow],
         queryFn: ()=> fetchFn<BooksAPISearch>({URL,setFetchNow}), 
         enabled: fetchNow,
     })

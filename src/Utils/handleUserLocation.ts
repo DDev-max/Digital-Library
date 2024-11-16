@@ -7,8 +7,7 @@ export function handleUserLocation({setAlert, setMarkerPosition}: HandleUserLoca
 
     getUserLocation()
     .then(location =>{
-        console.log(location)
-        setMarkerPosition(location) //CORREGIR  
+        setMarkerPosition(location) 
     })
 
     .catch((error: GeolocationPositionError) =>{

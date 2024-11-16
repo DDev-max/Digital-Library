@@ -4,11 +4,10 @@ export function subtmitSearch({event,redirect,userSearch, setUserSearch,inputRef
 
     event.preventDefault()
     
-    inputRef.current?.focus() //place the cursor
+    inputRef.current?.focus()
     
     
     if (!userSearch) return
-    console.log("submiteado");
 
     redirect(`/Read/${userSearch}`)
     setUserSearch("")

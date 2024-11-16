@@ -1,3 +1,4 @@
+import { QueryClient } from "@tanstack/react-query";
 import { CSSProperties } from "react";
 
 export interface BooksAPI {
@@ -27,7 +28,6 @@ export interface ImageLinks {
 export interface BookProp{
     books: Item[] | undefined;
     sectionRef: (elmnt: HTMLElement)=> void
-    /// React.MutableRefObject<HTMLElement[] | null[]>
 }
 
 export interface SVGProps{
@@ -84,9 +84,9 @@ export interface HtmlFunctionProps{
 export interface highlightColorProps{
     e: React.MouseEvent<HTMLButtonElement>
     data: string[]
-    changeContent: (newData: string[]) => void
     setAlert:  React.Dispatch<React.SetStateAction<string>>
     setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
+    queryClient: QueryClient
 }
 
 export interface NewAlertProps{
@@ -108,8 +108,8 @@ export interface highlightPlainTextProps{
 export interface removeHighlightProps{
     fromHighlight: boolean
     data: string[]
-    changeContent: (newData: string[]) => void
     setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
+    queryClient: QueryClient
 }
 
 export interface RepeatedWordFnProps{
@@ -155,8 +155,6 @@ export interface BookAds {
 }
 
 export interface HighlightedCntxtType{
-    highlightedContent : string[]
-    setHighlightedContent: React.Dispatch<React.SetStateAction<string[]>>
     alert: string
     setAlert: React.Dispatch<React.SetStateAction<string>>
     favorites: Item[]
@@ -169,6 +167,8 @@ export interface SelectOptnProps{
     optnsRef: React.MutableRefObject<(HTMLSpanElement | null)[]>
     setOptnIdx: React.Dispatch<React.SetStateAction<number>>
     setUserSearch:  React.Dispatch<React.SetStateAction<string>>
+    userSearch: string
+    isError: boolean
 
 }
 
@@ -179,7 +179,7 @@ export interface InputChangeProps{
 }
 
 
-export interface UseRemoveAddFavProps{
+export interface RemoveAddFavProps{
     setFavorites: React.Dispatch<React.SetStateAction<Item[]>>
     selection: Item
     alreadyAdded: boolean
@@ -248,4 +248,54 @@ export interface UseSearchProps{
     URL: string
     fetchNow: boolean
     setFetchNow:  React.Dispatch<React.SetStateAction<boolean>>
+}
+
+
+export interface ResetFormProps{
+    setUserSearch:   React.Dispatch<React.SetStateAction<string>>
+    setOptnIdx:  React.Dispatch<React.SetStateAction<number>>
+    queryClient: QueryClient
+}
+
+
+export interface ContentErrorProps{
+    isError: boolean
+    error: Error | null
+}
+
+export interface UseIntObserverProps{
+    classToAdd: string
+    elementsArrayRef: React.MutableRefObject<HTMLElement[]>
+    options?: IntersectionObserverInit
+    
+}
+
+
+export interface ErrorSearchProps{
+    error: Error | null
+    isError: boolean
+    userSearch: string
+    isLoading: boolean
+    data: BooksAPISearch | undefined
+}
+
+export interface AlertProps{
+    brdrColor?: boolean
+}
+
+export interface ChangeContentProps{
+    newData: string[]
+    queryClient: QueryClient
+}
+
+export interface FetchFnProps{
+    URL: string
+    setFetchNow?:  React.Dispatch<React.SetStateAction<boolean>>
+
+}
+
+
+export interface EllipsisTextProps{
+    text: string
+    maxLength: number
 }

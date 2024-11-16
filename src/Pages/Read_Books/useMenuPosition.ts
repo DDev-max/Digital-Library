@@ -16,9 +16,8 @@ export function useMenuPosition(menuRef: React.MutableRefObject<HTMLElement | nu
         const hideContextMenu = (e: Event)=>{
             const eTarget = e.target as HTMLElement
                         
-            // para pasignarle la misma funcion a ambos eventos (ver los eventos añadidos)
 
-            if (e.type === "scroll") setPosition({display: "none"}) //ACTIVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
+            if (e.type === "scroll") setPosition({display: "none"})
 
             if (typeof eTarget.className === "string" && !eTarget.className.includes("contextMenu")) {
                 setPosition({display: "none"})

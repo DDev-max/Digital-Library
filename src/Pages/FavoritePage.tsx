@@ -1,5 +1,5 @@
 import { TrashSVG } from "../components/svg/TrashSVG";
-import { removeFav } from "../components/svg/Favorite/useRemoveAddFav";
+import { removeAddFav } from "../components/svg/Favorite/removeAddFav";
 import { useHighlightCntxt } from "../Context/useHighlightContxt";
 import { ellipsisText } from "../Utils/ellipsisText";
 
@@ -23,12 +23,12 @@ export function FavoritePage() {
                         <article key={elmnt.id} className="favPage_article">
                             <img className="favPage_article_Img" src={elmnt.volumeInfo.imageLinks.smallThumbnail} alt={elmnt.volumeInfo.title} />
                             <p className="favPage_article_title">
-                                {ellipsisText(elmnt.volumeInfo.title)}
+                                {ellipsisText({maxLength:23, text:elmnt.volumeInfo.title})}
                             </p>
                             
                             <TrashSVG 
                                 classNameBtn="favPage_article_trashBtn"
-                                onClick={()=>removeFav({alreadyAdded,selection: elmnt, setFavorites})}
+                                onClick={()=>removeAddFav({alreadyAdded,selection: elmnt, setFavorites})}
                             />
                         </article>
                     )

@@ -19,7 +19,7 @@
             @include variables.defaultSkeleton;
             @extend .singleProduct_img;
 
-            width: clamp(13rem,40%,18rem); //14rem
+            width: clamp(13rem,40%,18rem);
         }
     }
 

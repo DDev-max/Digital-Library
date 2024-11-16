@@ -11,7 +11,7 @@ export default function ReadBook() {
 
     const urlTitle = useParams()
 
-    const {data, isLoading, fetchNextPage} = useLorem()
+    const {data} = useLorem()
 
     const bookName = urlConversion({title: urlTitle.title ?? "", fromURL: true})
 

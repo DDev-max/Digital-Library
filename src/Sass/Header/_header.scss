@@ -5,13 +5,18 @@ $borders: .2rem;
 .header{
     display: flex;
     flex-wrap: wrap;
-    // height: 7vh;
     padding: .5rem;
     position: relative;
 
     &_h1{
       margin: auto;
+      font-size: clamp(1.4rem,4vw,2rem);
+
+      @media (width < 535px) {
+        display: none;
+      }
     }
+
 
 
     &_favListIcon{
@@ -71,6 +76,11 @@ $borders: .2rem;
         border-bottom-right-radius: .5rem;
         box-sizing: border-box;
         pointer-events: none;
+
+        &_error{
+          text-wrap: auto;
+          padding: .5rem;
+        }
 
         &_result{
           background-color: variables.$PrimaryColor;

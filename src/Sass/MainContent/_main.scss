@@ -1,0 +1,35 @@
+
+.mainDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: clamp(.7rem, 2vw, 1.5rem);  
+  }
+
+
+  .fullError{
+    padding: 1rem;
+    margin: 1rem;
+    background-color: variables.$SecColor
+  }
+
+
+  .skipLink{
+    @include variables.btnStyles;
+    margin: 0;
+    width: auto;
+    position: absolute;
+    left: -10rem;
+  }
+
+  .skipLink:focus{
+    left: 11rem;
+  }
+
+
+ main .visibleElmnt{
+  transform: translateX(0);
+  transition: transform .7s ease-out;
+
+ } 
+

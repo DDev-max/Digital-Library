@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FavoriteSVG } from "../../components/svg/Favorite/FavoriteSVG";
-import { removeAddFav } from "../../components/svg/Favorite/useRemoveAddFav";
+import { removeAddFav } from "../../components/svg/Favorite/removeAddFav";
 import { useHighlightCntxt } from "../../Context/useHighlightContxt";
 import { BookProp } from "../../data/types";
 import { urlConversion } from "../../Utils/urlConversion";
@@ -39,7 +39,7 @@ export function MultipleProducts({books,sectionRef}:BookProp) {
 
                             <Link className="MultipleProducts_article_link" to={`/Read/${bookLink}`}>
                                 <h3 title={info.title} className="MultipleProducts_article_link_title">
-                                    {ellipsisText(info.title)}
+                                    {ellipsisText({maxLength:23, text:info.title})}
                                 </h3>                                    
 
 

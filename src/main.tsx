@@ -5,7 +5,6 @@ import { MainContent } from './Pages/Home/MainContent'
 import "./Sass/styles.scss"
 import "leaflet/dist/leaflet.css"
 import { HighlightsProvider } from './Context/HighlightsProvider'
-import { Pruebas } from './components/Prueba'
 import { FavoritePage } from './Pages/FavoritePage'
 import { Layout } from './components/Layout'
 import { NotFound } from './Pages/NotFound'
@@ -65,17 +64,14 @@ const router = createBrowserRouter([
 
 
 
- const PRUEBAS = !true
-
 
 
 createRoot(document.getElementById('root')!).render(
    <QueryClientProvider client={queryClient}>
-      {PRUEBAS && <Pruebas/>}
-      {!PRUEBAS &&
+
          <HighlightsProvider>
             <RouterProvider router={router} />
          </HighlightsProvider>
-      }
+      
    </QueryClientProvider>
 )

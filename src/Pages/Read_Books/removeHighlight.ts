@@ -1,9 +1,10 @@
 import { spanCloseTag } from "../../data/consts"
 import { removeHighlightProps } from "../../data/types"
 import { getPreviousContent } from "../../Utils/getPreviousContent"
+import { changeContent } from "./changeContent"
 
 
-export function removeHighlight({fromHighlight, data,changeContent, setPosition}:removeHighlightProps) {     
+export function removeHighlight({fromHighlight, data,queryClient, setPosition}:removeHighlightProps) {     
         
     const range = window.getSelection()?.getRangeAt(0)
 
@@ -29,14 +30,12 @@ export function removeHighlight({fromHighlight, data,changeContent, setPosition}
 
     if (firstIdx === -1) return
 
-    //Si la palabra esta repetida
     if (firstIdx !== lastIdx){
         const fullPreviousContent = getPreviousContent(range?.startContainer.previousSibling)
         
         let nOcurrences = 1
-        let fullPreviousIdx = fullPreviousContent.indexOf(toRemoveTxt) // Se busca el indice DENTRO DEL TEXTO PLANO
+        let fullPreviousIdx = fullPreviousContent.indexOf(toRemoveTxt) // searches the index within the plain text
 
-        console.log(fullPreviousContent);
         
 
         while (fullPreviousIdx !== -1) {
@@ -66,7 +65,7 @@ export function removeHighlight({fromHighlight, data,changeContent, setPosition}
         const copy = [...data]
         copy[paragraphIdx] = firsPart+toRemoveTxt+lastPart
 
-        changeContent(copy)   
+        changeContent({newData:copy, queryClient})   
         return  
         
     }
@@ -82,6 +81,6 @@ export function removeHighlight({fromHighlight, data,changeContent, setPosition}
         return firsPart+toRemoveTxt+lastPart
     }
 
-    changeContent(copy)
+    changeContent({newData:copy, queryClient})   
     setPosition({display: "none"})
 }

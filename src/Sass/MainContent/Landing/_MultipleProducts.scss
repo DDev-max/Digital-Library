@@ -35,7 +35,7 @@
         display: flex;
         flex-direction: column;
         position: relative;
-        font-size: clamp(.9rem, 1.8vw, 1rem);  //<== reutilizar
+        font-size: clamp(.9rem, 1.8vw, 1rem); 
 
         background-color: variables.$PrimaryColor;
         border-radius: 1rem;

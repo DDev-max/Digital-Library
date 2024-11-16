@@ -1,19 +1,17 @@
-import { copyTxt } from "../../Utils/copyTxt.tsx";
-import { googleSearch } from "../../Utils/googleSearch.tsx";
-import { removeHighlight } from "./removeHighlight.tsx";
-import { highlightColor } from "./highlightColor.tsx";
-import { ColorsMenu } from "./ColorsMenu.tsx";
-import { useMenuPosition } from "./useMenuPosition.tsx";
+import { useQueryClient } from "@tanstack/react-query"
+import { CopySVG } from "../../components/svg/CopySVG"
+import { SearchSVG } from "../../components/svg/SearchSVG"
+import { useHighlightCntxt } from "../../Context/useHighlightContxt"
+import { useLorem } from "../../hooks/useLorem"
+import { ColorsMenu } from "./ColorsMenu"
+import { highlightColor } from "./highlightColor"
+import { removeHighlight } from "./removeHighlight"
+import { useMenuPosition } from "./useMenuPosition"
+import { useRef } from "react"
+import { copyTxt } from "../../Utils/copyTxt.ts"
+import { googleSearch } from "../../Utils/googleSearch.ts"
 
-import { CopySVG } from "../../components/svg/CopySVG.tsx";
-import { SearchSVG } from "../../components/svg/SearchSVG.tsx";
-import { useHighlightCntxt } from "../../Context/useHighlightContxt.tsx";
-import { useLorem } from "../../hooks/useLorem.tsx";
-import { useQueryClient } from "@tanstack/react-query";
-import { URLorem } from "../../data/consts.ts";
-import { useRef } from "react";
 
-//ELIMINAR LOS ARCHIVOS/ CARPETAS QUE NO ESTOY USANDO
 
 export function ContxtMenu() {
 
@@ -32,12 +30,6 @@ export function ContxtMenu() {
     const { setAlert} = context 
 
 
-    function changeContent(newData: string[]) {
-        console.log("llamada al cache");
-        
-        queryClient.setQueryData(["LoremIpsum", URLorem], newData)
-    }
-
 
     return(
         
@@ -46,11 +38,11 @@ export function ContxtMenu() {
 
             <ColorsMenu
             onClickColor={(e)=>{
-                highlightColor({e,data,setAlert,changeContent,setPosition})
+                highlightColor({e,data,setAlert,setPosition,queryClient})
             }}
             
             onUnselectClick={()=> {
-                removeHighlight({fromHighlight: false,data,changeContent,setPosition})
+                removeHighlight({fromHighlight: false,data,setPosition,queryClient})
             }}
             
             />

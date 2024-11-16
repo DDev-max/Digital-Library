@@ -1,8 +1,5 @@
 import { useHighlightCntxt } from "../Context/useHighlightContxt"
-
-export interface AlertProps{
-    brdrColor?: boolean
-}
+import { AlertProps } from "../data/types"
 
 export function Alert({brdrColor}:AlertProps) {
     
@@ -18,3 +15,5 @@ export function Alert({brdrColor}:AlertProps) {
         </dialog>
     )
 }
+
+

@@ -1,13 +1,14 @@
 import { emptySpanRegex, spanCloseRegex, spanCloseTag, spanOpenRegex } from "../../data/consts"
 import { highlightColorProps } from "../../data/types"
-import { extendHighlightEnd } from "../../Pages/Read_Books/extendHighlightEnd"
-import { extendHighlightStart } from "../../Pages/Read_Books/extendHighlightStart"
-import { highlightPlainText } from "../../Pages/Read_Books/highlightPlainText"
+import { extendHighlightEnd } from "./extendHighlightEnd"
+import { extendHighlightStart } from "./extendHighlightStart"
+import { highlightPlainText } from "./highlightPlainText"
 import { newAlert } from "../../Utils/newAlert"
+import { changeContent } from "./changeContent"
 import { removeHighlight } from "./removeHighlight"
 
 
-export function highlightColor({e,data,changeContent, setAlert, setPosition}: highlightColorProps) {
+export function highlightColor({e,data, setAlert, setPosition,queryClient}: highlightColorProps) {
 
     const eTarget = e.target as HTMLElement
     const wSelect = window.getSelection()
@@ -22,7 +23,7 @@ export function highlightColor({e,data,changeContent, setAlert, setPosition}: hi
     : Number((range?.commonAncestorContainer as HTMLElement).getAttribute('data-index'))
     
 
-    //Si se seleccionan dos parrafos a la vez
+    //if more than one paragraph is selected at the same time
     if ((range?.commonAncestorContainer as HTMLElement).className == "readBook_paragraphsContainer" ){                            
         newAlert({setAlert,string: "Please select one paragraph at a time"})
         return        
@@ -38,7 +39,7 @@ export function highlightColor({e,data,changeContent, setAlert, setPosition}: hi
     let newHtml = highlightPlainText({userSeleccion ,range, spanOpenTag, spanCloseTag,  htmlContent: selectedParagraph, fullPlainTxt})
 
     
-    //SI NO DEVUELVE NUEVO HTML, ES POR QUE SE SELECCIONO TEXTO QUE YA ESTA SUBRAYADO CON TEXTO PLANO
+    //if there is no 'newHtml' it means that there is already highlighted text in the paragraph
     if (!newHtml && !isNaN(paragraphIdx)) {
 
         let bothTags = true
@@ -69,7 +70,7 @@ export function highlightColor({e,data,changeContent, setAlert, setPosition}: hi
         }
 
         if (bothTags) {
-            const paragraphNoHighlight = removeHighlight({fromHighlight: true, data,changeContent,setPosition})
+            const paragraphNoHighlight = removeHighlight({fromHighlight: true, data,queryClient,setPosition})
             if (!paragraphNoHighlight) return
             
             newHtml = highlightPlainText({fullPlainTxt,range,spanCloseTag,spanOpenTag,userSeleccion, htmlContent: paragraphNoHighlight})
@@ -82,15 +83,15 @@ export function highlightColor({e,data,changeContent, setAlert, setPosition}: hi
 
     tempDiv.innerHTML = newHtml ?? ""
 
+    //if the user attempts to nest the highlighting
     if (tempDiv.textContent != fullPlainTxt || !newHtml) {
-        // Ocurre cuando se quiere extender el subrayado de etiquetas de diferentes colores
         newAlert({setAlert,string: "First try removing some highlighting from the selection."})
         return
         
     }
 
     copy[paragraphIdx] = newHtml
-    changeContent(copy)
+    changeContent({queryClient,newData:copy})
     setPosition({display: "none"})
 
     return
