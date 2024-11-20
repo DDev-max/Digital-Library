@@ -2,7 +2,7 @@ import { BookAds } from "./types"
 
 const fields = "title,description,publishedDate,imageLinks,authors,categories"
 
-export const API_URL=  `https://www.googleapis.com/books/v1/volumes?q=subject:fiction&fields=items(id,volumeInfo(${fields}))&maxResults=20`
+export const API_URL=  `https://www.googleapis.com/books/v1/volumes?q=subject:fiction&fields=items(id,volumeInfo(${fields}))&maxResults=35`
 
 export const menuSize: number = 160
 

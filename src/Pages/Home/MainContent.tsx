@@ -14,10 +14,11 @@ export function MainContent() {
     const {data, error, isError, } = useBooks()
 
 
-    const horizontalBooks = data?.items?.slice(5,7)
-    const sellersBooks= data?.items?.slice(0,10)
-    const multipleBooks =  data?.items?.slice(11)
     const oneProduct = data?.items?.slice(0,1)
+    const horizontalBooks = data?.items?.slice(1,3)
+
+    const sellersBooks= data?.items?.slice(3,13)
+    const multipleBooks =  data?.items?.slice(15)
     
 
     const observedElements= useRef<HTMLElement[]>([])
