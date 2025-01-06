@@ -6,14 +6,13 @@ export function selectOptn({ e, optnsRef, setOptnIdx, setUserSearch, isError, us
 
 
   setOptnIdx(previous => {
-    let newIdx;
+    let newIdx: number;
 
     if (isError) return -1
 
 
     if (e.key === "ArrowDown") {
       newIdx = (previous + 1) % nResults
-
       setUserSearch(optnsRef.current[newIdx]?.textContent || "")
       return newIdx
 

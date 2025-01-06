@@ -52,8 +52,7 @@
         flex-shrink: 0;
         flex-direction: column;
         border-bottom: .2rem solid variables.$SecColor;
-        width: clamp(9rem, 15vw,11rem); 
-
+        width: clamp(10rem, 15vw,11rem); 
 
         &--skeleton{
             @extend .slider_bookContainer;
@@ -66,9 +65,8 @@
         &_link{
 
             &_img {
-
                 height: 14rem;
-                width: 90%;
+                width: auto;
                 display: flex;
                 margin: auto;
         

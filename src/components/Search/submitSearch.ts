@@ -1,6 +1,6 @@
 import { submitSearchProps } from "../../data/types"
 
-export function subtmitSearch({event,redirect,userSearch, setUserSearch,inputRef}: submitSearchProps) {
+export function subtmitSearch({event,push,userSearch, setUserSearch,inputRef}: submitSearchProps) {
 
     event.preventDefault()
     
@@ -9,7 +9,7 @@ export function subtmitSearch({event,redirect,userSearch, setUserSearch,inputRef
     
     if (!userSearch) return
 
-    redirect(`/Read/${userSearch}`)
+    push(`/Read/${userSearch}`)
     setUserSearch("")
 
     inputRef.current?.blur()

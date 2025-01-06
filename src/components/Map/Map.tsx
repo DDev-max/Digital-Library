@@ -1,50 +1,28 @@
-import { MapContainer, TileLayer } from "react-leaflet";
-import { LocMarker } from "./LocMarker";
-import { useEffect } from "react";
-import { MapClick } from "./mapClick";
-import { useHighlightCntxt } from "../../Context/useHighlightContxt";
-import { handleUserLocation } from "../../Utils/handleUserLocation";
-import { MapProps } from "../../data/types";
-
-export function Map({markerPosition,setMarkerPosition,divClassName}:MapProps) {
-
-  const context = useHighlightCntxt()
+import { MapContainer, TileLayer} from "react-leaflet";
+import { LocationMarker } from "./LocMarker";
+import { MapProps } from "data/types";
 
 
-  useEffect(()=>{
-
-    if (!context) return
-    
-    const {setAlert} = context
-    handleUserLocation({setAlert,setMarkerPosition})
-
-  }, [context, setMarkerPosition])
-
+export default function Map({divClassName, markerPosition, setMarkerPosition, setAlert}:MapProps) {
 
   
-
   
-    return (
-//  The div tag is to improve accessibility
-      <div className={divClassName} role="region" aria-label="Interactive map. Activate the location if you have not already done so.">
-        
-        <MapContainer 
-        center={markerPosition} zoom={13} scrollWheelZoom={false}>
-
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <MapClick setMarkerPosition={setMarkerPosition}/>
-          <LocMarker markerPosition={markerPosition}/>
-
-        </MapContainer>
-
-      </div>
-    )
+  return (
+    <div className={divClassName} role="region" aria-label="Interactive map. Activate the location if you have not already done so.">
+      <MapContainer
+        center={{ lat: 51.505, lng: -0.09 }}
+        zoom={13}
+        scrollWheelZoom={false}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <LocationMarker markerPosition={markerPosition} setMarkerPosition={setMarkerPosition} setAlert={setAlert}/>
+      </MapContainer>
+    </div>
+  )
+  
 }
-
-
 
 
 

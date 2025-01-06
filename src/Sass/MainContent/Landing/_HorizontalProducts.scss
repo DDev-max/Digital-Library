@@ -9,7 +9,7 @@ $border: .2rem;
     text-align: center;
     flex-wrap: wrap;
     gap: $border;
-    transform: variables.$defaultPosition;
+    // transform: variables.$defaultPosition;
 
 
 
@@ -37,8 +37,8 @@ $border: .2rem;
 
         &_Img{
             border-radius: 1rem;
-            width: clamp(8rem, 12vw ,12rem);
 
+            //  QUITAR ESTA BASURA y dejarle ambas clases
             &--skeleton{
                 @extend .horizontalSctn_Article_Img;
                 @include variables.defaultSkeleton;

@@ -5,7 +5,6 @@ import { BooksAPISearch, UseSearchProps } from "../data/types";
 
 export function useSearch({URL,fetchNow,setFetchNow}: UseSearchProps){
 
-
     return useQuery({
         queryKey: ["searchBooks", URL, setFetchNow],
         queryFn: ()=> fetchFn<BooksAPISearch>({URL,setFetchNow}), 

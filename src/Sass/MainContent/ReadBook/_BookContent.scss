@@ -1,4 +1,5 @@
 @use "../../Globals/variables";
+@use "sass:map";
 
 .contextMenu{
     position: fixed;
@@ -47,13 +48,12 @@
         border: none;
     }
 
+    //MAP GET DEPRECADO
     @each $modifier, $properties in variables.$highlightColors{
         &_color--#{$modifier}{
-            background-color: map-get($properties, bgColor);
-            color: map-get($properties, txtColor )
+            background-color: map.get($properties, bgColor);
+            color: map.get($properties, txtColor )
         }
     }
 
 }
-
-

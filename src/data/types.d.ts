@@ -25,9 +25,12 @@ export interface ImageLinks {
     thumbnail:      string;
 }
 
+//hacerlo con type para poder usar "|"
 export interface BookProp{
     books: Item[] | undefined;
-    sectionRef: (elmnt: HTMLElement)=> void
+    // idx: number
+    isVisible?: boolean
+    sectionRef?: (elmnt: HTMLElement)=> void
 }
 
 export interface SVGProps{
@@ -83,10 +86,10 @@ export interface HtmlFunctionProps{
 
 export interface highlightColorProps{
     e: React.MouseEvent<HTMLButtonElement>
-    data: string[]
     setAlert:  React.Dispatch<React.SetStateAction<string>>
     setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
-    queryClient: QueryClient
+    highlightedContent: string[]
+    setHighlightedContent: Dispatch<SetStateAction<string[]>>
 }
 
 export interface NewAlertProps{
@@ -107,9 +110,9 @@ export interface highlightPlainTextProps{
 
 export interface removeHighlightProps{
     fromHighlight: boolean
-    data: string[]
+    highlightedContent: string[]
     setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
-    queryClient: QueryClient
+    setHighlightedContent: Dispatch<SetStateAction<string[]>>
 }
 
 export interface RepeatedWordFnProps{
@@ -205,13 +208,12 @@ export interface MapClickProps{
     setMarkerPosition : React.Dispatch<React.SetStateAction<LatLngExpression>>
 }
 
-export interface MapProps extends LocMarkerProps, MapClickProps {
-    divClassName: string
-}
 
-export interface HandleUserLocationProps{
-    setMarkerPosition: React.Dispatch<React.SetStateAction<LatLngExpression>>
-    setAlert: React.Dispatch<React.SetStateAction<string>>
+
+export interface UseHandleUserLocationProps{
+  markerPosition :L.LatLngExpression | undefined
+  setAlert : Dispatch<SetStateAction<string>>
+  setMarkerPosition :  Dispatch<SetStateAction<L.LatLngExpression | undefined>>
 }
 
 export interface PhoneInputChangeProps{
@@ -221,7 +223,6 @@ export interface PhoneInputChangeProps{
 
 export interface FormSubmitProps{
     e: React.FormEvent<HTMLFormElement>
-    markerPosition?: LatLngExpression
     setAlert: React.Dispatch<React.SetStateAction<string>>
 
 }
@@ -237,7 +238,7 @@ export interface SearchOptnProps{
 
 export interface submitSearchProps{
     event: React.FormEvent<HTMLFormElement>
-    redirect: NavigateFunction
+    push:(href: string, options?: NavigateOptions) => void
     userSearch: string
     setUserSearch:  React.Dispatch<React.SetStateAction<string>>
     inputRef:  React.RefObject<HTMLInputElement>
@@ -264,8 +265,8 @@ export interface ContentErrorProps{
 }
 
 export interface UseIntObserverProps{
-    classToAdd: string
-    elementsArrayRef: React.MutableRefObject<HTMLElement[]>
+    observedElements: React.MutableRefObject<HTMLElement[]>
+    setIsVisible: Dispatch<SetStateAction<boolean[]>>
     options?: IntersectionObserverInit
     
 }
@@ -281,6 +282,7 @@ export interface ErrorSearchProps{
 
 export interface AlertProps{
     brdrColor?: boolean
+    alert: string
 }
 
 export interface ChangeContentProps{
@@ -298,4 +300,59 @@ export interface FetchFnProps{
 export interface EllipsisTextProps{
     text: string
     maxLength: number
+}
+
+
+export interface PageProps {
+    searchParams?: Promise<SearchParams>
+}
+
+export interface SearchParams {
+    category?: string
+    page?: string
+}
+
+//NO ESTOY USANDO VARIAS, TAMBIEN HAY QUE REFACTORIZAR
+
+
+export interface MainContentProps {
+    books: BooksAPI
+}
+
+export interface ContxtMenuProps{
+    highlightedContent: string[]
+    setHighlightedContent : Dispatch<SetStateAction<string[]>>
+}
+
+export interface ReadBookProps {
+    plainBookContent: string[]
+}
+
+
+export interface LocationMarkerProps extends LocationMarkerState{
+    setAlert : Dispatch<SetStateAction<string>>
+  
+  }
+
+
+  export interface MapProps extends LocationMarkerState{
+    divClassName : string
+    setAlert: React.Dispatch<React.SetStateAction<string>>
+}
+
+
+export interface OrderPageParams extends Record<string, string | undefined> {
+    book: string; // Agrega aquí los parámetros que esperas
+}
+
+//---------------------------------
+
+export interface LocationMarkerState {
+    markerPosition: LatLngExpression | undefined
+    setMarkerPosition: Dispatch<SetStateAction<LatLngExpression | undefined>>
+}
+
+export interface AlertState{
+    alert: string
+    setAlert: React.Dispatch<React.SetStateAction<string>>
 }

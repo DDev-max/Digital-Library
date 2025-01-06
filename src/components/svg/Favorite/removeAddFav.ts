@@ -5,7 +5,7 @@ export function removeAddFav({alreadyAdded,selection,setFavorites}:RemoveAddFavP
     if (!selection) return false
 
     if (!alreadyAdded) {
-        setFavorites(prev => [...prev!, selection])
+        setFavorites(prev => [...prev, selection])
     }else{
         setFavorites((prevFavorites) => {
             return prevFavorites?.filter((elmnt)=> elmnt.id !== selection.id)

@@ -76,11 +76,12 @@
 
 
             &_Img{
-                height: 18rem;  
+                height: 14rem; 
+                width: auto; 
                 
-                @media (width < 600px) {
-                    width: 90%;
-                }
+                // @media (width < 600px) {
+                //     width: 90%;
+                // }
                 
             }
 

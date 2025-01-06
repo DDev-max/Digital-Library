@@ -1,7 +1,9 @@
+"use client"
+
+import { useQueryClient } from "@tanstack/react-query";
+import { useRef, useState } from "react";
 import { SearchSVG } from "../svg/SearchSVG";
 import { nResults } from "../../data/consts";
-import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { subtmitSearch } from "./submitSearch";
 import { selectOptn } from "./selectOptn";
@@ -9,16 +11,19 @@ import { inputChange } from "./inputChange";
 import { useSearch } from "../../hooks/useSearch";
 import { searchOptn } from "./searchOptn";
 import { resetForm } from "./resetForm";
-import { useQueryClient } from "@tanstack/react-query";
 import { ErrorSearch } from "./ErrorSearch";
+import { useRouter } from "next/navigation";
 
+//ver si se puede implementar sin tanstack query
 export function Search() {
 
     const [userSearch, setUserSearch] = useState("")
     const [optnIdx, setOptnIdx] = useState(-1)//-1
     const [fetchNow, setFetchNow] = useState(false)
 
-    const redirect = useNavigate()
+    //ES ASI?
+    const { push } = useRouter()
+
     const inputRef = useRef<HTMLInputElement>(null)
 
     const queryClient = useQueryClient()
@@ -27,7 +32,7 @@ export function Search() {
 
 
 
-    const { data, isLoading, isError, error } = useSearch({ fetchNow, setFetchNow, URL }) 
+    const { data, isLoading, isError, error } = useSearch({ fetchNow, setFetchNow, URL })
 
     const optnsRef = useRef<(HTMLSpanElement | null)[]>([]);
 
@@ -37,9 +42,7 @@ export function Search() {
     const handleKeyDown = useDebounce({
         callback: (event: React.KeyboardEvent<HTMLInputElement>) => {
             if (event.key.length === 1 || event.key === "Backspace") {
-
                 setFetchNow(true);
-
             }
         }
     });
@@ -50,9 +53,9 @@ export function Search() {
         <search className="header_search">
 
             <form
-                onSubmit={(event) => subtmitSearch({ event, inputRef, redirect, setUserSearch, userSearch })}
+                onSubmit={(event) => subtmitSearch({ event, inputRef, push, setUserSearch, userSearch })}
                 tabIndex={0}
-                onKeyDown={(e) => selectOptn({ e, optnsRef, setOptnIdx, setUserSearch,isError,userSearch })}
+                onKeyDown={(e) => selectOptn({ e, optnsRef, setOptnIdx, setUserSearch, isError, userSearch })}
                 onBlur={() => { resetForm({ setOptnIdx, setUserSearch, queryClient }) }}
                 className="header_form"
             >
@@ -63,26 +66,27 @@ export function Search() {
                 <ul aria-live="polite" role="listbox" className="header_form_searchResults">
                     {isLoading && <progress />}
 
-                    <ErrorSearch data={data} error={error} isError={isError} isLoading={isLoading} userSearch={userSearch}/>
+                    <ErrorSearch data={data} error={error} isError={isError} isLoading={isLoading} userSearch={userSearch} />
 
                     {!isError && !fetchNow && userSearch && data && data?.items?.map((elmnt, idx) => {
 
                         const bookName = elmnt?.volumeInfo?.title
-                        
+
 
                         return (
 
 
                             <li
+                                aria-selected={idx == optnIdx}
                                 role="option"
-                                onClick={() => searchOptn({ bookName, inputRef, redirect, setUserSearch })}
+                                onClick={() => searchOptn({ bookName, inputRef, redirect: push, setUserSearch })}
                                 className={`header_form_searchResults_result  ${optnIdx == idx ? "header_form_searchResults_result--selected" : ""}`}
                                 key={elmnt.id}
                                 translate="no"
                             >
 
                                 <span
-                                    ref={(elemento) => optnsRef.current[idx] = elemento}
+                                    ref={(element) => { optnsRef.current[idx] = element }}
                                     className="header_form_searchResults_result_title"
                                 >
                                     {bookName}

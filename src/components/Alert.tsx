@@ -1,12 +1,12 @@
-import { useHighlightCntxt } from "../Context/useHighlightContxt"
+"use client"
 import { AlertProps } from "../data/types"
 
-export function Alert({brdrColor}:AlertProps) {
-    
-    const context = useHighlightCntxt()
-    if (!context) return
 
-    const {alert} = context
+//VER a11y
+export function Alert({brdrColor,alert}:AlertProps) {
+    
+
+    // brdrColor no se usa¿
 
     return(
         alert && 

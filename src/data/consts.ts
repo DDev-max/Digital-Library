@@ -17,8 +17,7 @@ export const emptySpanRegex = /<span class="contextMenu_color--(first|second|thi
 
 export const phoneInputRegx = /^\d{4}-\d{4}$/
 export const nameInputRegex = /^\s*(?=.*\s)[A-Za-záéíóúÁÉÍÓÚñÑ]+(?: [A-Za-záéíóúÁÉÍÓÚñÑ]+)+\s*$/
-export const emailInputRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-
+export const emailInputRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/
 
 
 export const nResults = 5

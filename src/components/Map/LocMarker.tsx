@@ -1,20 +1,32 @@
-import { Marker, Popup, useMap } from "react-leaflet";
-import { LocMarkerProps } from "../../data/types";
+import L from "leaflet"
+import { Marker, Popup, useMapEvents } from "react-leaflet";
+import { useHandleUserLocation } from "Utils/handleUserLocation";
+import { LocationMarkerProps } from "data/types";
 
 
-export function LocMarker({ markerPosition}: LocMarkerProps) {
-  
+export function LocationMarker({markerPosition,setAlert,setMarkerPosition}:LocationMarkerProps) {
 
-    const map = useMap()
-    map.setView(markerPosition)
+  const icon = new L.Icon({ iconUrl: "/marker-icon.webp", iconSize: [40, 40] })
 
 
-    return (
-        <Marker position={markerPosition} >
-            <Popup>
-                Click to set your address
-            </Popup>
-            
-        </Marker>
-    )
+  useHandleUserLocation({ markerPosition, setAlert, setMarkerPosition })
+
+
+  useMapEvents({
+    click(e) {
+      setMarkerPosition([e.latlng.lat, e.latlng.lng])
+    }
+  })
+
+
+
+  return (
+    markerPosition &&
+    <>
+      <Marker position={markerPosition} icon={icon}>
+        <Popup>Click on the map to set your address</Popup>
+      </Marker>
+    </>
+
+  )
 }
