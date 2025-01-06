@@ -7,6 +7,7 @@ import { ellipsisText } from "../../Utils/ellipsisText";
 import Link from "next/link";
 import Image from "next/image";
 
+//cambiar nombre del interface, bookProp na q ver
 export function MultipleProducts({ books, sectionRef,isVisible }: BookProp) {
 
     const context = useHighlightCntxt()

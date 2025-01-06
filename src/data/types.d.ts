@@ -260,7 +260,6 @@ export interface ResetFormProps{
 
 
 export interface ContentErrorProps{
-    isError: boolean
     error: Error | null
 }
 

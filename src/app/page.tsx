@@ -8,30 +8,40 @@ import { fetchFn } from "Utils/fetchFn";
 
 export default async function Page() {
 
-    //QUITAR DESPUES DE QUITAR EL MOCK
-    const books: BooksAPI = await fetchFn<BooksAPI>({ URL: API_URL })
     
+    try {
+        
+        //QUITAR DESPUES DE QUITAR EL MOCK
+        const books: BooksAPI = await fetchFn<BooksAPI>({ URL: API_URL })
+        const horizontalBooks = books?.items?.slice(1, 3)
 
-    const horizontalBooks = books?.items?.slice(1, 3)
+        return (
 
+            <main id="mainContent" className="mainContent">
 
-    //PONER LOADER DE ESTA PAGE (loading.tsx)
-    return (
-        <main id="mainContent" className="mainContent">
-            {
-                //SE MUESTRA EN TODA LA APLICACION, POR QUE SI FALLA EL FETCH, NO HAY NADA QUE MOSTRAR
-            /* <ContentError error={error} isError={isError}/> */}
-
-            <BigSlider />
-
-
-            <div className="mainDiv">
-                <HorizontalProducts books={horizontalBooks} />
-                <IntObserverContent books={books} />
-            </div>
+                <BigSlider />
 
 
-        </main>
+                <div className="mainDiv">
+                    <HorizontalProducts books={horizontalBooks} />
+                    <IntObserverContent books={books} />
+                </div>
 
-    )
+
+            </main>
+            
+        )
+
+
+    } catch (error) {
+
+        return (
+            <main id="mainContent" className="mainContent">
+                <ContentError error={error} />
+            </main>
+        )
+
+    }
+
+
 }

@@ -23,7 +23,7 @@ export function useScrollBtns(sliderRef:  React.RefObject<HTMLDivElement>){
         }
 
 
-        slider!.addEventListener("scrollend", toggleBtns)
+        slider.addEventListener("scrollend", toggleBtns)
 
 
         return ()=>{

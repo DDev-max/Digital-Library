@@ -9,12 +9,13 @@ export function Header() {
     return(
         <>
             <header className="header">
+                <a tabIndex={0} className="skipLink" href="#mainContent">Skip navigation</a>
+                
                 <Link title="Go to home page." className="header_LinkContainer" href={"/"}>
                     <Logo />
                     <h1 className="header_h1">MarkMyBook</h1>
                 </Link>
 
-                <a tabIndex={0} className="skipLink" href="#mainContent">Skip navigation</a>
 
                 <Search/>
 

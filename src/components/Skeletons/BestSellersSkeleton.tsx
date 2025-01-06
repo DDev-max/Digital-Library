@@ -1,12 +1,17 @@
 export function BestSellersSkeleton() {
-    const skeletonsQtty = new Array(15).fill(null); 
+    const skeletonsQtty = new Array(15).fill(null);
 
 
     return (
-        skeletonsQtty.map((_, idx)=>(
-            <article key={idx} className="slider_bookContainer--skeleton">
+        <div className="slider visibleElmnt">
+            <div className="slider_contImgs">
+                {skeletonsQtty.map((_, idx) => (
+                    <article key={idx} className="slider_bookContainer--skeleton visibleElmnt">
 
-            </article>
-        ))
+                    </article>
+                ))}
+
+            </div>
+        </div>
     )
 }

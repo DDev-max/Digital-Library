@@ -2,7 +2,7 @@ export function SingleProductSkeleton() {
 
 
     return (
-        <>
+        <div className="singleProduct visibleElmnt">
             <div className="singleProduct_img--skeleton">
 
             </div>
@@ -13,6 +13,6 @@ export function SingleProductSkeleton() {
                 <div className="singleProduct_infoCont_desc--skeleton"></div>
 
             </div>
-        </>
+        </div>
     )
 }

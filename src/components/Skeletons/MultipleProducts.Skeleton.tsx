@@ -1,15 +1,19 @@
 export function MultipleProductsSkeleton() {
 
-    const skeletonsQtty = new Array(20).fill(null); 
+    const skeletonsQtty = new Array(16).fill(null);
 
     return (
-        skeletonsQtty.map((_, idx)=>(
+        <div className="MultipleProducts_Grid">
 
-            <article key={idx} className="MultipleProducts_article--skeleton">
+            {skeletonsQtty.map((_, idx) => (
 
-            </article>
+                <article key={idx} className="MultipleProducts_article--skeleton">
 
-        ))
+                </article>
+
+            ))}
+
+        </div>
 
     )
 }

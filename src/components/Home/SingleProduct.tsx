@@ -29,9 +29,7 @@ export function SingleProduct({ books, sectionRef,isVisible }: BookProp) {
                 </p>
 
                 <Link className="singleProduct_infoCont_link" href={`/Read/${urlConversion({ title: books[0].volumeInfo.title })}`}>
-
                     Read Now
-
                 </Link>
 
             </div>

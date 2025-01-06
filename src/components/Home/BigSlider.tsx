@@ -5,6 +5,7 @@ import { ads } from "../../data/consts"
 import Image from "next/image"
 
 export function BigSlider() {
+    
     const [imgIdx, setImgIdx] = useState(0)
 
     return(

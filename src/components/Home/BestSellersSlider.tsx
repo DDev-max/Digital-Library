@@ -9,8 +9,9 @@ import { scrollSlider } from "../../Utils/scrollSlider"
 import Link from "next/link"
 import Image from "next/image"
 
+//mapear fetch como los autenticos top mundials
 
-export function BSellerSlider({books, sectionRef,isVisible}: BookProp) {
+export function BSellerSlider({ books, sectionRef, isVisible }: BookProp) {
 
     const sliderRef = useRef<HTMLDivElement>(null)
     const showBtns = useScrollBtns(sliderRef)
@@ -18,60 +19,65 @@ export function BSellerSlider({books, sectionRef,isVisible}: BookProp) {
     const context = useHighlightCntxt()
 
     if (!context) return
-    const {favorites,setFavorites}= context
+    const { favorites, setFavorites } = context
 
 
-    return(
+    return (
         <section ref={sectionRef} className={`slider ${isVisible ? "visibleElmnt" : ""}`}>
             <h2 className="slider_h2">Best Sellers</h2>
             <div ref={sliderRef} className="slider_contImgs">
 
                 {showBtns[0] &&
-                 <button 
-                onClick={()=> scrollSlider({elmntRef: sliderRef, toRight: true})}
-                className="slider_btn"> &lt; </button>
+                    <button
+                        aria-label="Click to scroll the slider to the left."
+                        onClick={() => scrollSlider({ elmntRef: sliderRef, toRight: true })}
+                        className="slider_btn">
+                        <span aria-hidden> &lt;  </span>
+
+
+                    </button>
                 }
 
 
-                { books?.map((elmnt, idx)=>{
-                    const info= elmnt.volumeInfo
+                {books?.map((elmnt, idx) => {
+                    const info = elmnt.volumeInfo
 
-                    const bookLink = urlConversion({title: info.title})                    
+                    const bookLink = urlConversion({ title: info.title })
                     const alreadyAdded = favorites.some(fav => fav.id === elmnt.id)
 
 
-                        return(
+                    return (
 
-                            <article 
+                        <article
                             className="slider_bookContainer" key={idx}
-                            >
-                                <Link className="slider_bookContainer_link" href={`/Read/${bookLink}`} key={info.title}>
-                                    <Image 
+                        >
+                            <Link className="slider_bookContainer_link" href={`/Read/${bookLink}`} key={info.title}>
+                                <Image
                                     width={130}
                                     height={225}
                                     loading="lazy"
                                     className="slider_bookContainer_link_img"
-                                    src={info.imageLinks.smallThumbnail} 
+                                    src={info.imageLinks.smallThumbnail}
                                     alt={`The book cover of "${info.title}"`} />
 
-                                    <h3
+                                <h3
                                     title={info.title}
                                     className="slider_bookContainer_link_title"
-                                    >{info.title}</h3>
+                                >{info.title}</h3>
 
 
-                                </Link>
-                                
-                                <button className="slider_bookContainer_FavBtn" onClick={()=> removeAddFav({alreadyAdded,selection: elmnt,setFavorites})}>
-                                    <FavoriteSVG title={alreadyAdded? "Remove from favorites list": "Add to favorites list"} added={alreadyAdded} />
-                                </button>
-                        
-                            </article>
+                            </Link>
 
-                        )
-                            
+                            <button className="slider_bookContainer_FavBtn" onClick={() => removeAddFav({ alreadyAdded, selection: elmnt, setFavorites })}>
+                                <FavoriteSVG title={alreadyAdded ? "Remove from favorites list" : "Add to favorites list"} added={alreadyAdded} />
+                            </button>
 
-                    })
+                        </article>
+
+                    )
+
+
+                })
 
 
                 }
@@ -79,8 +85,11 @@ export function BSellerSlider({books, sectionRef,isVisible}: BookProp) {
 
 
                 {showBtns[1] &&
-                <button  onClick={()=> scrollSlider({elmntRef: sliderRef})}
-                className="slider_btn slider_btn--der"> &gt; </button>
+                    <button onClick={() => scrollSlider({ elmntRef: sliderRef })}
+                        aria-label="Click to scroll the slider to the left."
+                        className="slider_btn slider_btn--der">
+                        <span aria-hidden> &gt; </span>
+                    </button>
                 }
 
 
