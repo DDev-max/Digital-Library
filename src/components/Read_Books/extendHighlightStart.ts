@@ -1,10 +1,13 @@
+import { spanCloseTag } from "data/consts"
 import { HighlightStart } from "../../data/types"
 
 
-export function extendHighlightStart({hasSpanOpen,selectedParagraph,spanCloseTag,spanOpenRegex,spanOpenTag}:HighlightStart){
+export function extendHighlightStart({hasSpanOpen,selectedParagraph,spanOpenRegex,spanOpenTag}:HighlightStart){
 
-    const htmlSelectionStart = hasSpanOpen!.index
-    const htmlSelectionEnd = htmlSelectionStart + hasSpanOpen![0].length
+    if(!hasSpanOpen) return
+    const htmlSelectionStart = hasSpanOpen.index
+    
+    const htmlSelectionEnd = htmlSelectionStart + hasSpanOpen[0].length
 
     const htmlSelection = selectedParagraph.slice(htmlSelectionStart, htmlSelectionEnd)
 

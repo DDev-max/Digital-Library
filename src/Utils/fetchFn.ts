@@ -23,13 +23,13 @@ export async function fetchFn<T>({ URL, setFetchNow }: FetchFnProps) {
 
   // return format
 
-  // if (URL == URLorem) return ["Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint dolorem dolor sequi ullam dolores soluta corporis cupiditate vel. Commodi vel hic pariatur ab porro delectus a magnam ducimus sequi. Accusamus mollitia sunt quaerat quisquam sit expedita animi eum et dolorum.", "Ut fugit, reiciendis veniam possimus natus sit minima nulla, voluptates impedit, totam magnam explicabo aspernatur laboriosam omnis voluptatibus dicta amet deserunt minus id incidunt? Sint modi, nemo laboriosam nisi doloremque, ea pariatur natus excepturi voluptates odit odio vitae praesentium quaerat omnis vero. Non illo assumenda saepe ea iure aspernatur, officiis porro, numquam ab dolorum est facilis quidem similique cum repellendus, libero sapiente molestiae voluptatum."]
-  // return mock
+  if (URL == URLorem) return ["Lorem ipsum dolor sit amet consectetur HOLA adipisicing elit. Sint dolorem dolor sequi ullam dolores soluta corporis cupiditate vel. Commodi vel hic pariatur ab porro delectus HOLA a magnam ducimus sequi. AcHOLAcusamus mollitia sunt quaerat quisquam sit expedita animi eum et dolorum.", "Ut fugit, reiciendis veniam possimus natus sit minima nulla, voluptates impedit, totam magnam explicabo aspernatur laboriosam omnis voluptatibus dicta amet deserunt minus id incidunt? Sint modi, nemo laboriosam nisi doloremque, ea pariatur natus excepturi voluptates odit odio vitae praesentium quaerat omnis vero. Non illo ADIOS ADIOSassumenda saepe ea iure aspernatur, officiis porro, numquam ab dolorum est facilis quidem similique cum repellendus, libero sapiente molestiae ADIOS voluADIOSptatum."]
+  return mock
 
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(mock);
-    }, 5 * 1000);
+    }, 0 * 1000);
   });
 
 

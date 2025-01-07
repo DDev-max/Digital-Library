@@ -1,18 +1,19 @@
 import { spanCloseTag } from "../../data/consts"
 import { removeHighlightProps } from "../../data/types"
-import { getPreviousContent } from "../../Utils/getPreviousContent"
+import { getPreviousPlainText } from "../../Utils/getPreviousContent"
 
 
-export function removeHighlight({fromHighlight,highlightedContent,setHighlightedContent,setPosition}:removeHighlightProps) {     
+export function removeHighlight({fromHighlight,highlightedContent,setHighlightedContent,setPosition}:removeHighlightProps) {         
         
     const range = window.getSelection()?.getRangeAt(0)
 
     const toRemoveTxt = range?.startContainer.nextSibling?.textContent ?? range?.startContainer.textContent
     
+    
     if (!toRemoveTxt) return
 
     
-    const classToSearch =range?.startContainer.parentElement?.className || (range?.startContainer?.nextSibling as HTMLElement).className ||  undefined     
+    const classToSearch = range?.startContainer.parentElement?.className || (range?.startContainer?.nextSibling as HTMLElement).className ||  undefined     
     
     
     const spanOpenToSearch = `<span class="${classToSearch}">`
@@ -30,11 +31,10 @@ export function removeHighlight({fromHighlight,highlightedContent,setHighlighted
     if (firstIdx === -1) return
 
     if (firstIdx !== lastIdx){
-        const fullPreviousContent = getPreviousContent(range?.startContainer.previousSibling)
+        const fullPreviousContent = getPreviousPlainText(range?.startContainer.previousSibling)
         
         let nOcurrences = 1
-        let fullPreviousIdx = fullPreviousContent.indexOf(toRemoveTxt) // searches the index within the plain text
-
+        let fullPreviousIdx = fullPreviousContent.indexOf(toRemoveTxt)
         
 
         while (fullPreviousIdx !== -1) {
@@ -57,14 +57,11 @@ export function removeHighlight({fromHighlight,highlightedContent,setHighlighted
 
         const lastPart = highlightedContent[paragraphIdx].slice(realIdx + toRemoveTxt.length + spanCloseTag.length)
 
-        if (fromHighlight) {
-            return firsPart+toRemoveTxt+lastPart
-        }
+        if (fromHighlight) return firsPart+toRemoveTxt+lastPart
 
         const copy = [...highlightedContent]
         copy[paragraphIdx] = firsPart+toRemoveTxt+lastPart
 
-        // changeContent({newData:copy, queryClient})   
         setHighlightedContent(copy)
         return  
         
@@ -77,11 +74,9 @@ export function removeHighlight({fromHighlight,highlightedContent,setHighlighted
     copy[paragraphIdx] = firsPart+toRemoveTxt+lastPart
     
 
-    if (fromHighlight) {
-        return firsPart+toRemoveTxt+lastPart
-    }
+    if (fromHighlight) return firsPart+toRemoveTxt+lastPart
 
-    //changeContent({newData:copy, queryClient})   
+
     setHighlightedContent(copy)
     setPosition({display: "none"})
 }

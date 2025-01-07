@@ -2,6 +2,7 @@ import { SVGProps } from "../../data/types";
 
 export function SearchSVG({classNameBtn,classNameSVG,onMouseDown,onClick,title="Search Books"}:SVGProps) {
 
+    //cambiarle los role a todos los svg por uno que si exista y ver si añadir aria label mejor  y quizas usar aria hidden
     return(
     <button className={classNameBtn}
     onClick={onClick} onMouseDown={onMouseDown} type="submit">

@@ -51,7 +51,6 @@ export interface FavoriteSVGProps{
 interface extendHighlightProps{
     selectedParagraph: string
     spanOpenTag: string
-    spanCloseTag: string
 }
 
 export interface HighlightStart extends extendHighlightProps{
@@ -69,7 +68,6 @@ export interface StartEndProps{
     range: Range | undefined
     userSeleccion: string
     spanOpenTag: string
-    spanCloseTag: string
 }
 
 export interface CopyTxProps{
@@ -90,6 +88,7 @@ export interface highlightColorProps{
     setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
     highlightedContent: string[]
     setHighlightedContent: Dispatch<SetStateAction<string[]>>
+    paragraphContainer:  RefObject<HTMLDivElement>
 }
 
 export interface NewAlertProps{
@@ -103,9 +102,7 @@ export interface highlightPlainTextProps{
     htmlContent: string ,
     userSeleccion: string,
     spanOpenTag: string,
-    spanCloseTag: string,
     fullPlainTxt: string | null
-
 }
 
 export interface removeHighlightProps{
@@ -321,6 +318,9 @@ export interface MainContentProps {
 export interface ContxtMenuProps{
     highlightedContent: string[]
     setHighlightedContent : Dispatch<SetStateAction<string[]>>
+    setAlert: React.Dispatch<React.SetStateAction<string>>
+    paragraphContainer:  RefObject<HTMLDivElement>
+
 }
 
 export interface ReadBookProps {

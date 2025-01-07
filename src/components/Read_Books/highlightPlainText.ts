@@ -1,15 +1,16 @@
+import { spanCloseTag } from "data/consts"
 import { highlightPlainTextProps } from "../../data/types"
-import { getPreviousContent } from "../../Utils/getPreviousContent"
+import { getPreviousPlainText } from "../../Utils/getPreviousContent"
 
 
-export function highlightPlainText({range, htmlContent, userSeleccion, spanCloseTag,spanOpenTag, fullPlainTxt}:highlightPlainTextProps) {
+export function highlightPlainText({range, htmlContent, userSeleccion,spanOpenTag, fullPlainTxt}:highlightPlainTextProps) {
     
     if (!fullPlainTxt || !range ) return
 
     let rangeStart =  range.startOffset
 
-    //ver si se puede cambiar esta basura
-    const fullPreviousContent = getPreviousContent(range.startContainer.previousSibling)
+    //ver si se puede cambiar esta basura (.previousSibling)
+    const fullPreviousContent = getPreviousPlainText(range.startContainer.previousSibling)
 
     if (fullPreviousContent) rangeStart += fullPreviousContent.length
     

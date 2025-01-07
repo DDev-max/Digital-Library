@@ -6,7 +6,7 @@ export function ColorsMenu({onClickColor,onUnselectClick}: ColorsMenuProps) {
 
     const colors = ["first","second","third","fourth"]
 
-
+//ver a11y
     return (
         <div className="contextMenu_ColorsCont">
         {

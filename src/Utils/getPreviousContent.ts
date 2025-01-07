@@ -1,4 +1,4 @@
-export function getPreviousContent(from: Node | null | undefined){
+export function getPreviousPlainText(from: Node | null | undefined){
     let  fullPreviousContent = ""
 
     let previousElmnt = from
@@ -8,6 +8,7 @@ export function getPreviousContent(from: Node | null | undefined){
 
         previousElmnt = previousElmnt.previousSibling        
     }
+    
     
     return fullPreviousContent
 }

@@ -1,8 +1,5 @@
-"use client"
-
 import { CopySVG } from "../../components/svg/CopySVG"
 import { SearchSVG } from "../../components/svg/SearchSVG"
-import { useHighlightCntxt } from "../../Context/useHighlightContxt"
 import { ColorsMenu } from "./ColorsMenu"
 import { highlightColor } from "./highlightColor"
 import { removeHighlight } from "./removeHighlight"
@@ -13,26 +10,20 @@ import { copyTxt } from "Utils/copyTxt"
 import { ContxtMenuProps } from "data/types"
 
 
-export function ContxtMenu({highlightedContent,setHighlightedContent}:ContxtMenuProps) {
+export function ContxtMenu({highlightedContent,setHighlightedContent, setAlert, paragraphContainer}:ContxtMenuProps) {
 
-    const menuRef = useRef<HTMLElement | null>(null)
+    const menuRef = useRef<HTMLDivElement | null>(null)
     const {position,setPosition} = useMenuPosition(menuRef)
 
-    const context = useHighlightCntxt()
-    if (!context) return
-
-    const {setAlert} = context 
-
-
-
+    
     return(
         
         position && 
-        <section ref={menuRef} role="menu" style={{...position}} className="contextMenu">
+        <div ref={menuRef} role="menu" style={{...position}} className="contextMenu">
 
             <ColorsMenu
             onClickColor={(e)=>{
-                highlightColor({e,highlightedContent,setAlert,setHighlightedContent,setPosition})
+                highlightColor({e,highlightedContent,setAlert,setHighlightedContent,setPosition, paragraphContainer})
             }}
             
             onUnselectClick={()=> {
@@ -48,6 +39,6 @@ export function ContxtMenu({highlightedContent,setHighlightedContent}:ContxtMenu
                 <SearchSVG title="Search on Google" classNameBtn="contextMenu_searchbtn" onMouseDown={googleSearch}/>
             </div>
 
-        </section>
+        </div>
     )
 }
