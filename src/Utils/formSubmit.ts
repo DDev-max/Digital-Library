@@ -1,7 +1,10 @@
-import { FormSubmitProps } from "../data/types"
+import type { AlertState } from "data/types";
 import { newAlert } from "./newAlert"
 
-//cambiar setAlert a setFormAlert
+ interface FormSubmitProps extends Pick<AlertState, "setAlert">{
+    e: React.FormEvent<HTMLFormElement>
+}
+
 export function formSubmit({e,setAlert}:FormSubmitProps) {
     e.preventDefault()
 

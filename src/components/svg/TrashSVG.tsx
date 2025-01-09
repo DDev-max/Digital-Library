@@ -1,6 +1,6 @@
-import { SVGProps } from "../../data/types";
+import type { ButtonSvgProps } from "../../data/types";
 
-export function TrashSVG({classNameBtn,classNameSVG,onClick}:SVGProps) {
+export function TrashSVG({classNameBtn,classNameSVG,onClick,title}:ButtonSvgProps) {
 
 
     return (
@@ -8,6 +8,7 @@ export function TrashSVG({classNameBtn,classNameSVG,onClick}:SVGProps) {
         onClick={onClick}
         className={classNameBtn}
         >
+            {title && <title>{title}</title>}
             <svg 
             className={classNameSVG}
             fill="currentColor" viewBox="-6.7 0 122.88 122.88" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" enableBackground="new 0 0 109.484 122.88" xmlSpace="preserve">

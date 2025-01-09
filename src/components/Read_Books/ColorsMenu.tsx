@@ -1,12 +1,15 @@
 import { UnselectSVG } from "../../components/svg/UnselectSVG";
-import { ColorsMenuProps } from "../../data/types";
+
+interface ColorsMenuProps{
+    onClickColor: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onUnselectClick: () => void
+}
 
 
 export function ColorsMenu({onClickColor,onUnselectClick}: ColorsMenuProps) {
 
     const colors = ["first","second","third","fourth"]
 
-//ver a11y
     return (
         <div className="contextMenu_ColorsCont">
         {

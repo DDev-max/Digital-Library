@@ -1,7 +1,13 @@
 import { spanCloseTag } from "data/consts"
-import { HighlightEnd } from "../../data/types"
+import type { extendHighlight } from "data/types"
 
-export function extendHighlightEnd({hasSpanClose, selectedParagraph,spanOpenTag, spanOpenRegex}:HighlightEnd){
+interface extendHighlightEndProps extends extendHighlight{
+    hasSpanClose: RegExpExecArray | null
+    spanOpenRegex: RegExp
+}
+
+
+export function extendHighlightEnd({hasSpanClose, selectedParagraph,spanOpenTag, spanOpenRegex}:extendHighlightEndProps){
     
     if (!hasSpanClose) return
     const htmlSelectionStart = hasSpanClose.index

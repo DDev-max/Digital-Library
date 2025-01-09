@@ -5,10 +5,11 @@ import { BSellerSlider } from "./BestSellersSlider";
 import { SingleProduct } from "./SingleProduct";
 import { useEffect, useRef, useState } from "react";
 import { intObserver } from "../../hooks/useIntObserver";
-import { MainContentProps } from "data/types";
+import type { BooksAPI} from "data/types";
 
 
-export function IntObserverContent({ books }: MainContentProps) {
+export function IntObserverContent({books}: {books: BooksAPI}) {
+
 
     const oneProduct = books?.items?.slice(0, 1)
     const sellersBooks = books?.items?.slice(3, 13)

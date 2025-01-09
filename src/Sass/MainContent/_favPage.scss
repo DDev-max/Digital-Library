@@ -22,6 +22,12 @@
         @extend .MultipleProducts_article;
         align-items: center;
 
+        &--skeleton{
+            @include variables.defaultSkeleton;
+            width: 12.5rem;
+            height: 18rem
+        }
+
         &_Img{
             @extend .MultipleProducts_article_link_Img;
             // width: auto;
@@ -29,10 +35,7 @@
         }
     
         &_title{
-    
-    
             @extend .MultipleProducts_article_link_title;
-            
         }
         
     

@@ -1,7 +1,10 @@
+import type { AlertState, LocationMarkerState } from "data/types";
 import L from "leaflet"
 import { Marker, Popup, useMapEvents } from "react-leaflet";
-import { useHandleUserLocation } from "Utils/handleUserLocation";
-import { LocationMarkerProps } from "data/types";
+import { useHandleUserLocation } from "Utils/useHandleUserLocation";
+
+
+interface LocationMarkerProps extends LocationMarkerState, Pick<AlertState, "setAlert">{}
 
 
 export function LocationMarker({markerPosition,setAlert,setMarkerPosition}:LocationMarkerProps) {

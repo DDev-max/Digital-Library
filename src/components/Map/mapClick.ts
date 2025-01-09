@@ -1,8 +1,7 @@
+import type { LocationMarkerState } from "data/types"
 import { useMapEvents } from "react-leaflet"
-import { MapClickProps } from "../../data/types"
 
-
-export function MapClick({setMarkerPosition}:MapClickProps) {
+export function MapClick({setMarkerPosition}: Pick<LocationMarkerState, "setMarkerPosition">) {
     useMapEvents({
         click(e) {
           setMarkerPosition([e.latlng.lat, e.latlng.lng])

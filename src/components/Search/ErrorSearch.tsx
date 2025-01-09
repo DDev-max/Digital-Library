@@ -1,6 +1,12 @@
-import { ErrorSearchProps } from "../../data/types"
+import type { SearchBooksApi } from "data/types"
 
-
+interface ErrorSearchProps{
+    error: Error | null
+    isError: boolean
+    userSearch: string
+    isLoading: boolean
+    data: SearchBooksApi | undefined
+}
 
 export function ErrorSearch({error,isError,data,isLoading,userSearch}: ErrorSearchProps) {
 

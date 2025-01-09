@@ -1,4 +1,5 @@
-import { CSSProperties, useEffect, useRef, useState } from "react"
+import {useEffect, useRef, useState } from "react"
+import type { CSSProperties } from "react"
 import { menuSize } from "../../data/consts"
 
 

@@ -2,13 +2,13 @@
 
 import { Alert } from "@/components/Alert";
 import { ContxtMenu } from "@/components/Read_Books/ContxtMenu"
-import { ReadBookProps } from "data/types"
+import { dataParagraphIdx } from "data/consts";
 import { useRef, useState } from "react"
 
 
-export function ReadBook({ plainBookContent }: ReadBookProps) {    
+export function ReadBook({ plainBookContent }: {plainBookContent: string[]}) {    
 
-    const [highlightedContent, setHighlightedContent] = useState<string[]>(plainBookContent)
+    const [highlightedContent, setHighlightedContent] = useState(plainBookContent)
     const [alert, setAlert] = useState("")
 
     const paragraphContainerRef =  useRef<HTMLDivElement>(null)
@@ -29,7 +29,7 @@ export function ReadBook({ plainBookContent }: ReadBookProps) {
 
                 return (
                     <p 
-                    dangerouslySetInnerHTML={{ __html: elmnt }} data-index={pIndex} key={pIndex}>
+                    dangerouslySetInnerHTML={{ __html: elmnt }}  {...{[dataParagraphIdx]: pIndex}} key={pIndex}>
                     </p>
                 )
             })}

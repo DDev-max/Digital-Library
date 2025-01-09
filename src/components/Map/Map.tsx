@@ -1,11 +1,13 @@
 import { MapContainer, TileLayer} from "react-leaflet";
-import { LocationMarker } from "./LocMarker";
-import { MapProps } from "data/types";
+import { LocationMarker } from "./LocationMarker";
+import type{ AlertState, LocationMarkerState } from "data/types";
+
+interface MapProps extends LocationMarkerState, Pick<AlertState, "setAlert">{
+  divClassName: string
+}
 
 
 export default function Map({divClassName, markerPosition, setMarkerPosition, setAlert}:MapProps) {
-
-  
   
   return (
     <div className={divClassName} role="region" aria-label="Interactive map. Activate the location if you have not already done so.">

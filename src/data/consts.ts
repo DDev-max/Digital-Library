@@ -1,10 +1,9 @@
-import { BookAds } from "./types"
 
 const fields = "title,description,publishedDate,imageLinks,authors,categories"
 
 export const API_URL=  `https://www.googleapis.com/books/v1/volumes?q=subject:fiction&fields=items(id,volumeInfo(${fields}))&maxResults=35`
 
-export const menuSize: number = 160
+export const menuSize = 160
 
 export const URLorem = "https://baconipsum.com/api/?type=all-meat&paras=15&format=json"
 
@@ -15,18 +14,25 @@ export const spanCloseRegex = /<\/span>/g
 
 export const emptySpanRegex = new RegExp(`${spanOpenRegex.source}${spanCloseRegex.source}`, 'g');
 
-
-
-
-
+export const dataParagraphIdx = "data-index"
 
 
 export const phoneInputRegx = /^\d{4}-\d{4}$/
 export const nameInputRegex = /^\s*(?=.*\s)[A-Za-záéíóúÁÉÍÓÚñÑ]+(?: [A-Za-záéíóúÁÉÍÓÚñÑ]+)+\s*$/
+// eslint-disable-next-line no-useless-escape
 export const emailInputRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/
 
 
 export const nResults = 5
+
+
+ interface BookAds {
+    ImgLink: string; 
+    id: string;    
+    alt: string; 
+    bgColor: string  
+    txtColor: string 
+}
 
 export const ads: BookAds[] = [
     {

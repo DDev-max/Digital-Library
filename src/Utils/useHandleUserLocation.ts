@@ -1,11 +1,11 @@
 import { getUserLocation } from "./getUserLocation"
 import { newAlert } from "./newAlert"
 import { useEffect } from "react"
-import { LatLngExpression } from "leaflet"
+import type { LatLngExpression } from "leaflet"
 import { useMap } from "react-leaflet"
-import { UseHandleUserLocationProps } from "data/types"
+import type  { AlertState, LocationMarkerState } from "data/types"
 
-
+interface UseHandleUserLocationProps extends LocationMarkerState, Pick <AlertState, "setAlert">{}
 
 export function useHandleUserLocation({ markerPosition, setAlert, setMarkerPosition}:UseHandleUserLocationProps){
   const map = useMap()

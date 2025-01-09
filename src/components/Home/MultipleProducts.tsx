@@ -1,14 +1,13 @@
 import { FavoriteSVG } from "../svg/Favorite/FavoriteSVG";
 import { removeAddFav } from "../svg/Favorite/removeAddFav";
-import { useHighlightCntxt } from "../../Context/useHighlightContxt";
-import { BookProp } from "../../data/types";
-import { urlConversion } from "../../Utils/urlConversion";
+import type { ObservedBookComponentProps } from "../../data/types";
 import { ellipsisText } from "../../Utils/ellipsisText";
 import Link from "next/link";
 import Image from "next/image";
+import { useHighlightCntxt } from "Context/useHighlightContxt";
 
 //cambiar nombre del interface, bookProp na q ver
-export function MultipleProducts({ books, sectionRef,isVisible }: BookProp) {
+export function MultipleProducts({ books, sectionRef,isVisible }: ObservedBookComponentProps) {
 
     const context = useHighlightCntxt()
     if (!context) return
@@ -24,7 +23,8 @@ export function MultipleProducts({ books, sectionRef,isVisible }: BookProp) {
                 {books?.map(elmnt => {
                         const info = elmnt.volumeInfo
                         const alreadyAdded = favorites.some(fav => fav.id === elmnt.id)
-                        const bookLink = urlConversion({ title: info.title })
+                        // const bookLink = urlConversion({ title: info.title })
+                        const bookLink = encodeURIComponent(info.title)
 
 
                         return (

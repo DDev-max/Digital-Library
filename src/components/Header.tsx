@@ -2,12 +2,13 @@ import { FavoriteSVG } from "./svg/Favorite/FavoriteSVG";
 import { Search } from "./Search/Search";
 import { Logo } from "./svg/Logo";
 import Link from "next/link";
+import { TanstackQueryProvider } from "Context/TanstackQueryProv";
 
 
 export function Header() {
 
     return(
-        <>
+        <TanstackQueryProvider>
             <header className="header">
                 <a tabIndex={0} className="skipLink" href="#mainContent">Skip navigation</a>
                 
@@ -25,6 +26,6 @@ export function Header() {
                     </Link>
                 </div>
             </header>
-        </>
+        </TanstackQueryProvider>
     )
 }

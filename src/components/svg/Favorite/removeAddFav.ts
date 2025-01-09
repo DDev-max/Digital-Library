@@ -1,4 +1,10 @@
-import { RemoveAddFavProps } from "../../../data/types"
+import type { Item } from "data/types"
+
+ interface RemoveAddFavProps{
+    setFavorites: React.Dispatch<React.SetStateAction<Item[]>>
+    selection: Item
+    alreadyAdded: boolean
+}
 
 export function removeAddFav({alreadyAdded,selection,setFavorites}:RemoveAddFavProps){
 
@@ -12,7 +18,6 @@ export function removeAddFav({alreadyAdded,selection,setFavorites}:RemoveAddFavP
         })
         
     }
-
 
 
 }

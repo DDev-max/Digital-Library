@@ -1,8 +1,14 @@
 import { spanCloseTag } from "data/consts"
-import { HighlightStart } from "../../data/types"
+import type { extendHighlight } from "data/types"
 
 
-export function extendHighlightStart({hasSpanOpen,selectedParagraph,spanOpenRegex,spanOpenTag}:HighlightStart){
+interface extendHighlightStartProps extends extendHighlight{
+    hasSpanOpen: RegExpExecArray | null
+    spanOpenRegex: RegExp
+}
+
+
+export function extendHighlightStart({hasSpanOpen,selectedParagraph,spanOpenRegex,spanOpenTag}:extendHighlightStartProps){
 
     if(!hasSpanOpen) return
     const htmlSelectionStart = hasSpanOpen.index

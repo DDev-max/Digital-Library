@@ -1,5 +1,11 @@
-import { UseIntObserverProps } from "../data/types";
+import type { Dispatch, SetStateAction } from "react"
 
+
+ interface UseIntObserverProps{
+    observedElements: React.MutableRefObject<HTMLElement[]>
+    setIsVisible: Dispatch<SetStateAction<boolean[]>>
+    options?: IntersectionObserverInit
+}
 
 export function intObserver({ setIsVisible, observedElements, options }: UseIntObserverProps) {
   const intObserver = new IntersectionObserver((entries) => {

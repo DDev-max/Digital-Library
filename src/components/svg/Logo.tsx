@@ -1,6 +1,5 @@
-import { SVGProps } from "../../data/types";
 
-export function Logo({classNameSVG}: SVGProps) {
+export function Logo({classNameSVG}: {classNameSVG?: string}) {
 
 
     return (

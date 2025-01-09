@@ -1,7 +1,14 @@
 import { spanCloseTag } from "data/consts"
-import { highlightPlainTextProps } from "../../data/types"
 import { getPreviousPlainText } from "../../Utils/getPreviousContent"
 
+
+interface highlightPlainTextProps{
+    range: Range | undefined,
+    htmlContent: string ,
+    userSeleccion: string,
+    spanOpenTag: string,
+    fullPlainTxt: string | null
+}
 
 export function highlightPlainText({range, htmlContent, userSeleccion,spanOpenTag, fullPlainTxt}:highlightPlainTextProps) {
     

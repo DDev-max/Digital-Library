@@ -1,6 +1,12 @@
-import { spanCloseTag } from "../../data/consts"
-import { removeHighlightProps } from "../../data/types"
+import type { HighlightedContentState } from "data/types"
+import { dataParagraphIdx, spanCloseTag } from "../../data/consts"
 import { getPreviousPlainText } from "../../Utils/getPreviousContent"
+import type { CSSProperties } from "react"
+
+interface removeHighlightProps extends HighlightedContentState{
+    fromHighlight: boolean
+    setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
+}
 
 
 export function removeHighlight({fromHighlight,highlightedContent,setHighlightedContent,setPosition}:removeHighlightProps) {         
@@ -22,7 +28,7 @@ export function removeHighlight({fromHighlight,highlightedContent,setHighlighted
     
     const paragraph= range?.startContainer.parentElement?.closest("p")
 
-    const paragraphIdx = Number(paragraph?.getAttribute('data-index'))
+    const paragraphIdx = Number(paragraph?.getAttribute(dataParagraphIdx))
 
     const firstIdx = highlightedContent[paragraphIdx].indexOf(toSearch)
     const lastIdx =  highlightedContent[paragraphIdx].lastIndexOf(toSearch)

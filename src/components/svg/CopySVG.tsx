@@ -1,6 +1,11 @@
-import { SVGProps } from "../../data/types";
 
-export function CopySVG({classNameBtn,classNameSVG,onMouseDown}:SVGProps) {
+interface CopySVGProps{
+    classNameBtn: string
+    classNameSVG: string
+    onMouseDown?: ()=> void
+}
+
+export function CopySVG({classNameBtn,classNameSVG,onMouseDown}:CopySVGProps) {
     // ver si puedo corregir el onMouseDown para que se vuelva onClick
     return(
         <button className={classNameBtn}>

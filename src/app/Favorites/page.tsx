@@ -13,6 +13,7 @@ export default function FavoritePage() {
     
     const {favorites,setFavorites} = context
 
+
     return (
         <main id="mainContent" className="favPage">
             <h1 className="favPage_h2">Favorite List</h1>

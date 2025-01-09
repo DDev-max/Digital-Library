@@ -1,4 +1,10 @@
-import { FavoriteSVGProps } from "../../../data/types";
+
+interface FavoriteSVGProps{
+    added?: boolean
+    title?: string
+    className?: string
+}
+
 
 export function FavoriteSVG({added,title="Favorites List" ,className}: FavoriteSVGProps ) {
 

@@ -1,11 +1,19 @@
+import type { UserSearchState } from "data/types"
 import { nResults } from "../../data/consts"
-import { SelectOptnProps } from "../../data/types";
+
+ interface SelectOptnProps extends UserSearchState{
+    e: React.KeyboardEvent<HTMLFormElement>
+    optnsRef: React.MutableRefObject<(HTMLSpanElement | null)[]>
+    setOptnIdx: React.Dispatch<React.SetStateAction<number>>
+    isError: boolean
+}
 
 export function selectOptn({ e, optnsRef, setOptnIdx, setUserSearch, isError, userSearch }: SelectOptnProps) {
   if (!userSearch) return -1
 
 
   setOptnIdx(previous => {
+    
     let newIdx: number;
 
     if (isError) return -1

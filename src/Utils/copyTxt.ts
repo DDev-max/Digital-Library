@@ -1,7 +1,7 @@
-import { CopyTxProps } from "../data/types";
+import type { AlertState } from "../data/types";
 import { newAlert } from "./newAlert";
 
-export function copyTxt({setAlert}:CopyTxProps){
+export function copyTxt({setAlert}: Pick<AlertState, "setAlert">){
 
     const seleccion = window.getSelection()?.toString()
     if (!seleccion) return

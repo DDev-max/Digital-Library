@@ -1,4 +1,8 @@
-import { NewAlertProps } from "../data/types"
+import type { AlertState } from "data/types"
+
+interface NewAlertProps extends Pick<AlertState, "setAlert">{
+    string: string
+}
 
 export function newAlert({setAlert,string}: NewAlertProps){
 

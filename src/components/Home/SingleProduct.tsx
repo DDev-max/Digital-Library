@@ -1,10 +1,9 @@
-import { BookProp } from "../../data/types";
-import { urlConversion } from "../../Utils/urlConversion";
+import type { ObservedBookComponentProps } from "../../data/types";
 import { ellipsisText } from "../../Utils/ellipsisText";
 import Link from "next/link";
 import Image from "next/image";
 
-export function SingleProduct({ books, sectionRef,isVisible }: BookProp) {
+export function SingleProduct({ books, sectionRef,isVisible }: ObservedBookComponentProps) {
 
     if(!books) return
 
@@ -28,7 +27,9 @@ export function SingleProduct({ books, sectionRef,isVisible }: BookProp) {
                     {ellipsisText({ maxLength: 250, text: books[0].volumeInfo.description })}
                 </p>
 
-                <Link className="singleProduct_infoCont_link" href={`/Read/${urlConversion({ title: books[0].volumeInfo.title })}`}>
+                {/* <Link className="singleProduct_infoCont_link" href={`/Read/${urlConversion({ title: books[0].volumeInfo.title })}`}> */}
+
+                <Link className="singleProduct_infoCont_link" href={`/Read/${encodeURIComponent(books[0].volumeInfo.title)}`}>
                     Read Now
                 </Link>
 

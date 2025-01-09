@@ -1,9 +1,8 @@
-import { BookProp } from "../../data/types";
-import { urlConversion } from "../../Utils/urlConversion";
+import type {Item } from "../../data/types";
 import Link from "next/link";
 import Image from "next/image";
 
-export function HorizontalProducts({ books }: BookProp) {
+export function HorizontalProducts({ books }: {books: Item[]}) {
 
     return (
         <section className="horizontalSctn ">
@@ -11,7 +10,8 @@ export function HorizontalProducts({ books }: BookProp) {
             {
                 books?.map(elmnt => {
                     const info = elmnt.volumeInfo
-                    const nameForUrl = urlConversion({ title: info.title })
+                    // const nameForUrl = urlConversion({ title: info.title })
+                    const nameForUrl = encodeURIComponent(info.title)
 
                     return (
 

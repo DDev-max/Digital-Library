@@ -1,4 +1,8 @@
-import { PhoneInputChangeProps } from "../../data/types";
+
+interface PhoneInputChangeProps{
+    e: React.ChangeEvent<HTMLInputElement>
+    phoneRef:  React.RefObject<HTMLInputElement>
+}
 
 
 export function phoneInputChange({e,phoneRef}:PhoneInputChangeProps) {

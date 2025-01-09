@@ -2,7 +2,7 @@
 
 import { ReactNode, useState } from "react"
 import { HighlightedCntxt } from "./contextAPI"
-import { Item } from "../data/types"
+import type { Item } from "../data/types"
 
 
 //CAMBIAR NOMBRE POR QUE NADA QUE VER

@@ -31,6 +31,12 @@
     flex-direction: column;
     gap: .5rem;
 
+    &--skeleton{
+      height: 130vh;
+      border-radius: 2rem;
+      @include variables.defaultSkeleton;
+    }
+
     &_label{
       display: flex;
       align-items: center;

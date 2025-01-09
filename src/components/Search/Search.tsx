@@ -5,12 +5,10 @@ import { useRef, useState } from "react";
 import { SearchSVG } from "../svg/SearchSVG";
 import { nResults } from "../../data/consts";
 import { useDebounce } from "../../hooks/useDebounce";
-import { subtmitSearch } from "./submitSearch";
 import { selectOptn } from "./selectOptn";
 import { inputChange } from "./inputChange";
 import { useSearch } from "../../hooks/useSearch";
 import { searchOptn } from "./searchOptn";
-import { resetForm } from "./resetForm";
 import { ErrorSearch } from "./ErrorSearch";
 import { useRouter } from "next/navigation";
 
@@ -22,7 +20,7 @@ export function Search() {
     const [fetchNow, setFetchNow] = useState(false)
 
     //ES ASI?
-    const { push } = useRouter()
+    const router = useRouter()
 
     const inputRef = useRef<HTMLInputElement>(null)
 
@@ -32,7 +30,7 @@ export function Search() {
 
 
 
-    const { data, isLoading, isError, error } = useSearch({ fetchNow, setFetchNow, URL })
+    const { data, isLoading, isError, error } = useSearch({ URL, fetchNow, setFetchNow })
 
     const optnsRef = useRef<(HTMLSpanElement | null)[]>([]);
 
@@ -41,34 +39,43 @@ export function Search() {
 
     const handleKeyDown = useDebounce({
         callback: (event: React.KeyboardEvent<HTMLInputElement>) => {
-            if (event.key.length === 1 || event.key === "Backspace") {
+            //OSEA, SI SE ESCRIBE EN LA BARRA DE BUSQUEDA
+            if(!(event.target as HTMLInputElement).value) return
+            
+            if (event.key.length === 1 || event.key === "Backspace")  {
+                console.log(userSearch);
                 setFetchNow(true);
             }
         }
     });
 
 
+    //si pongo algo como how to, salen keys repetidas, error del propio google
+
 
     return (
-        <search className="header_search">
-
+        <search
+            className="header_search">
             <form
-                onSubmit={(event) => subtmitSearch({ event, inputRef, push, setUserSearch, userSearch })}
+
+                onFocus={() => {
+                    inputRef.current?.focus()
+                }}
                 tabIndex={0}
                 onKeyDown={(e) => selectOptn({ e, optnsRef, setOptnIdx, setUserSearch, isError, userSearch })}
-                onBlur={() => { resetForm({ setOptnIdx, setUserSearch, queryClient }) }}
                 className="header_form"
             >
 
 
 
+                {/*                     {!isError && !fetchNow && !isLoading && userSearch && data && data?.items?.map((elmnt, idx) => { */}
 
                 <ul aria-live="polite" role="listbox" className="header_form_searchResults">
-                    {isLoading && <progress />}
+                    {(isLoading || fetchNow) && <progress />}
 
                     <ErrorSearch data={data} error={error} isError={isError} isLoading={isLoading} userSearch={userSearch} />
 
-                    {!isError && !fetchNow && userSearch && data && data?.items?.map((elmnt, idx) => {
+                    {!isError && !fetchNow && userSearch && data && data.items?.map((elmnt, idx) => {
 
                         const bookName = elmnt?.volumeInfo?.title
 
@@ -79,7 +86,7 @@ export function Search() {
                             <li
                                 aria-selected={idx == optnIdx}
                                 role="option"
-                                onClick={() => searchOptn({ bookName, inputRef, redirect: push, setUserSearch })}
+                                onClick={() => searchOptn({ bookName, inputRef, router, setUserSearch })}
                                 className={`header_form_searchResults_result  ${optnIdx == idx ? "header_form_searchResults_result--selected" : ""}`}
                                 key={elmnt.id}
                                 translate="no"
@@ -107,7 +114,7 @@ export function Search() {
 
                 <div className="header_inputCont">
 
-                    <SearchSVG classNameBtn="header_inputCont_searchBtn" />
+                    <SearchSVG />
 
                     <input
                         ref={inputRef}

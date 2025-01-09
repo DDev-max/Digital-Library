@@ -1,10 +1,18 @@
-import { emptySpanRegex, spanCloseRegex, spanOpenRegex } from "../../data/consts"
-import { highlightColorProps } from "../../data/types"
+import { emptySpanRegex, dataParagraphIdx, spanCloseRegex, spanOpenRegex } from "../../data/consts"
 import { extendHighlightEnd } from "./extendHighlightEnd"
 import { extendHighlightStart } from "./extendHighlightStart"
 import { highlightPlainText } from "./highlightPlainText"
 import { newAlert } from "../../Utils/newAlert"
 import { removeHighlight } from "./removeHighlight"
+import { AlertState, HighlightedContentState } from "data/types"
+import { CSSProperties, RefObject } from "react"
+
+
+export interface highlightColorProps extends HighlightedContentState, Pick<AlertState , "setAlert">{
+    e: React.MouseEvent<HTMLButtonElement>
+    setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
+    paragraphContainer:  RefObject<HTMLDivElement>
+}
 
 
 export function highlightColor({ e, highlightedContent, setAlert, setHighlightedContent, setPosition, paragraphContainer }: highlightColorProps) {
@@ -20,8 +28,8 @@ export function highlightColor({ e, highlightedContent, setAlert, setHighlighted
     const spanOpenTag = `<span class="${eTarget.classList[1]}">`
 
     const paragraphIdx = Number(comnAncestor?.parentElement?.nodeName === "P" ? 
-        comnAncestor.parentElement.getAttribute('data-index') : 
-        (comnAncestor as HTMLElement).getAttribute('data-index'))
+        comnAncestor.parentElement.getAttribute(dataParagraphIdx) : 
+        (comnAncestor as HTMLElement).getAttribute(dataParagraphIdx))
 
     if(isNaN(paragraphIdx)) return
 

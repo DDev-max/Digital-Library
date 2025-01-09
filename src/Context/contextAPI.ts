@@ -1,6 +1,11 @@
+import type { AlertState, Item } from "data/types";
 import { createContext } from "react";
-import { HighlightedCntxtType } from "../data/types";
 
+ interface HighlightedCntxtType extends AlertState{
+    favorites: Item[]
+    setFavorites:  React.Dispatch<React.SetStateAction<Item[]>>
+ }
+ 
 
 export const HighlightedCntxt = createContext<HighlightedCntxtType | undefined>(undefined);
 

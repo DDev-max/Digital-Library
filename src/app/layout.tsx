@@ -2,7 +2,6 @@ import { Header } from "@/components/Header"
 import "../Sass/styles.scss"
 import "leaflet/dist/leaflet.css"
 import { HighlightsProvider } from "Context/HighlightsProvider"
-import { TanstackQueryProvider } from "Context/TanstackQueryProv"
 
 export const metadata = {
   title: 'Next.js',
@@ -15,13 +14,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
           {/* VER SI REALMENETE TODOS LO NECESITAN*/}
-          <TanstackQueryProvider>
             <HighlightsProvider>
               <Header />
               {children}
             </HighlightsProvider>
-          </TanstackQueryProvider>
-
       </body>
     </html>
   )

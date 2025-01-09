@@ -1,6 +1,4 @@
-import { ContentErrorProps } from "../../data/types";
-
-export function ContentError({error}: ContentErrorProps) {
+export function ContentError({error}: {error: Error | null}) {
 
     
     if ( error instanceof Error ) {

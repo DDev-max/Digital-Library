@@ -6,17 +6,19 @@ import { nameInputChange } from "@/components/Pre-Order/nameInputChange"
 import { phoneInputChange } from "@/components/Pre-Order/phoneInputChange"
 import { useRef, useState } from "react"
 import { formSubmit } from "Utils/formSubmit"
-import { urlConversion } from "Utils/urlConversion"
 import { useParams } from "next/navigation"
-import { OrderPageParams } from "data/types"
 import { Alert } from "@/components/Alert"
-import { DynamicMap } from "./PRUEBA"
-import { LatLngExpression } from "leaflet"
+import  type { LatLngExpression } from "leaflet"
+import { DynamicMap } from "@/components/Map/DynamicMap"
+
+
 
 export default function PreOrderPage() {
 
-    const params = useParams<OrderPageParams>()
-    const bookNameConv = urlConversion({ title: params.book || "", fromURL: true })
+    const params = useParams<{book: string}>()
+    // const bookNameConv = urlConversion({ title: params.book || "", fromURL: true })
+    const bookNameConv = decodeURIComponent(params.book)
+
     const phoneRef = useRef<HTMLInputElement>(null)
 
     const [formAlert, setFormAlert] = useState("")
