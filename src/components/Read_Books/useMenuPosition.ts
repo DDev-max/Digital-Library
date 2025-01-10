@@ -26,6 +26,8 @@ export function useMenuPosition(menuRef: React.MutableRefObject<HTMLElement | nu
         const moveContextMenu = (e: MouseEvent)=>{
           
             const isSelected = window.getSelection()?.toString() != ""
+            console.log("click derecho");
+            
 
             const commonAncestor = window.getSelection()?.getRangeAt(0).commonAncestorContainer as HTMLElement
 

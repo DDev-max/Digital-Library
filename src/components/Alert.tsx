@@ -6,7 +6,6 @@ interface AlertProps {
 }
 
 
-//VER a11y
 export function Alert({ brdrColor, alert }: AlertProps) {
 
 

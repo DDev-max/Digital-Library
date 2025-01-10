@@ -1,12 +1,7 @@
 //import mock from "../data/apiMock.json"
 //import { URLorem } from "data/consts";
 
- interface FetchFnProps{
-    URL: string
-    setFetchNow?:  React.Dispatch<React.SetStateAction<boolean>>
-}
-
-export async function fetchFn<TFetchReturn>({ URL, setFetchNow }: FetchFnProps) {
+export async function fetchFn<TFetchReturn>(URL: string) {
     console.log(URL);
 
   
@@ -16,7 +11,7 @@ export async function fetchFn<TFetchReturn>({ URL, setFetchNow }: FetchFnProps) 
 //   return mockSearch
 
 
-  const response = await fetch("") //URL
+  const response = await fetch("URL")
 
   const format: TFetchReturn = await response.json()
 
@@ -27,9 +22,9 @@ export async function fetchFn<TFetchReturn>({ URL, setFetchNow }: FetchFnProps) 
 
 
 
-  if (setFetchNow) {
-      setFetchNow(false)
-  }
+  // if (setFetchNow) {
+  //     setFetchNow(false)
+  // }
 
 
   return format

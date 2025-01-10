@@ -1,4 +1,3 @@
-import { URLorem } from "data/consts"
 import { fetchFn } from "Utils/fetchFn"
 import { ReadBook } from "./ReadBook"
 import type { NextJsPageProps } from "data/types"
@@ -9,10 +8,11 @@ export default async function ReadBookPage(props: NextJsPageProps<{title: string
     const params = await props.params
     const bookTitle = params?.title
 
-    const plainBookContent = await fetchFn<string[]>({ URL: URLorem })
+    const paragraphs = 15
+    const URLorem = `https://baconipsum.com/api/?type=all-meat&paras=${paragraphs}&format=json`
+    const plainBookContent = await fetchFn<string[]>(URLorem)
 
 
-    // const bookName = urlConversion({ title: bookTitle, fromURL: true })
     const bookName =  decodeURIComponent(bookTitle || "")
 
     return (

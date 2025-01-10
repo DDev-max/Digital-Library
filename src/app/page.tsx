@@ -1,16 +1,14 @@
-import { API_URL } from "data/consts";
-import type { BooksAPI } from "data/types";
 import { BigSlider } from "@/components/Home/BigSlider";
 import { ContentError } from "@/components/Home/ContentError";
 import { HorizontalProducts } from "@/components/Home/HorizontalProducts";
 import { IntObserverContent } from "@/components/Home/IntObserverContent";
-import { fetchFn } from "Utils/fetchFn";
+import { getAllBooks } from "Utils/getAllBooks";
 
 export default async function Page() {
 
     try {
 
-        const books: BooksAPI = await fetchFn<BooksAPI>({ URL: API_URL })
+        const books = await getAllBooks()
         const horizontalBooks = books.items.slice(1, 3)
 
         return (

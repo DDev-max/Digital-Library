@@ -1,7 +1,7 @@
 
 interface CopySVGProps{
-    classNameBtn: string
-    classNameSVG: string
+    classNameBtn?: string
+    classNameSVG?: string
     onMouseDown?: ()=> void
 }
 

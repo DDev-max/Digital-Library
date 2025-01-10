@@ -16,7 +16,6 @@ import { DynamicMap } from "@/components/Map/DynamicMap"
 export default function PreOrderPage() {
 
     const params = useParams<{book: string}>()
-    // const bookNameConv = urlConversion({ title: params.book || "", fromURL: true })
     const bookNameConv = decodeURIComponent(params.book)
 
     const phoneRef = useRef<HTMLInputElement>(null)
@@ -25,7 +24,6 @@ export default function PreOrderPage() {
     const [markerPosition, setMarkerPosition] = useState<LatLngExpression>()
 
 
-    //USAR REDUX PARA CONTEXTO POR QUE SOY UN PRO Y NO QUIERO HACER PROP DRILLING
     return (
         <main id="mainContent" className="orderMain">
 

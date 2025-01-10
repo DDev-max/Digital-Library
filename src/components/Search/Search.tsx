@@ -1,6 +1,5 @@
 "use client"
 
-import { useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { SearchSVG } from "../svg/SearchSVG";
 import { nResults } from "../../data/consts";
@@ -24,7 +23,6 @@ export function Search() {
 
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const queryClient = useQueryClient()
 
     const URL = `https://www.googleapis.com/books/v1/volumes?q=${userSearch}&maxResults=${nResults}&fields=items(id,volumeInfo(title,authors))`
 

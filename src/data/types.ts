@@ -12,8 +12,8 @@ export interface BooksAPI {
 }
 
 export interface Item {
-    readonly volumeInfo: VolumeInfo;
     readonly id: string
+    readonly volumeInfo: VolumeInfo;
 }
 
 interface VolumeInfo {

@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchFn } from "../Utils/fetchFn";
-import type { SearchBooksApi } from "../data/types";
+import { getSearchBook } from "Utils/getSearchBook";
 
 
 interface UseSearchProps {
@@ -14,7 +13,7 @@ export function useSearch({ URL, fetchNow, setFetchNow }: UseSearchProps) {
 
     return useQuery({
         queryKey: ["searchBooks"],
-        queryFn: () => fetchFn<SearchBooksApi>({ URL, setFetchNow }),
+        queryFn: () => getSearchBook({setFetchNow,URL}),
         enabled: fetchNow
     })
 

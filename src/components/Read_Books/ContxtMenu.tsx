@@ -40,7 +40,7 @@ export function ContxtMenu({highlightedContent,setHighlightedContent, setAlert, 
             <div className="contextMenu_btnsCont">
                 <CopySVG classNameBtn="contextMenu_copyBtn" onMouseDown={()=>{copyTxt({setAlert})}}/>
                     
-                <SearchSVG title="Search on Google" classNameBtn="contextMenu_searchbtn" onMouseDown={googleSearch}/>
+                <SearchSVG title="Search on Google" onClick={googleSearch}/>
             </div>
 
         </div>

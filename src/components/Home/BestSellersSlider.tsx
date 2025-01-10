@@ -41,7 +41,6 @@ export function BSellerSlider({ books, sectionRef, isVisible }: ObservedBookComp
                 {books?.map((elmnt, idx) => {
                     const info = elmnt.volumeInfo
 
-                    // const bookLink = urlConversion({ title: info.title })
                     const bookLink = encodeURIComponent(info.title)
                     const alreadyAdded = favorites.some(fav => fav.id === elmnt.id)
 

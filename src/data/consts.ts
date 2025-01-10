@@ -1,11 +1,5 @@
 
-const fields = "title,description,publishedDate,imageLinks,authors,categories"
-
-export const API_URL=  `https://www.googleapis.com/books/v1/volumes?q=subject:fiction&fields=items(id,volumeInfo(${fields}))&maxResults=35`
-
 export const menuSize = 160
-
-export const URLorem = "https://baconipsum.com/api/?type=all-meat&paras=15&format=json"
 
 export const spanCloseTag = "</span>"
 
