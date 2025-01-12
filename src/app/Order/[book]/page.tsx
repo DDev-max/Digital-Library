@@ -1,13 +1,13 @@
 "use client"
 
 import { emailInputRegex, nameInputRegex } from "data/consts"
-import { emailInputChange } from "@/components/Pre-Order/emailInputChange"
-import { nameInputChange } from "@/components/Pre-Order/nameInputChange"
-import { phoneInputChange } from "@/components/Pre-Order/phoneInputChange"
+import { emailInputChange } from "app/Order/[book]/emailInputChange"
+import { nameInputChange } from "app/Order/[book]/nameInputChange"
+import { phoneInputChange } from "app/Order/[book]/phoneInputChange"
 import { useRef, useState } from "react"
 import { formSubmit } from "Utils/formSubmit"
 import { useParams } from "next/navigation"
-import { Alert } from "@/components/Alert"
+import { Alert } from "@/components/Alert/Alert"
 import  type { LatLngExpression } from "leaflet"
 import { DynamicMap } from "@/components/Map/DynamicMap"
 
@@ -27,7 +27,7 @@ export default function PreOrderPage() {
     return (
         <main id="mainContent" className="orderMain">
 
-            <form aria-labelledby="formName" className="orderForm" onSubmit={(e) => formSubmit({ e, setAlert: setFormAlert })}>
+            <form aria-labelledby="formName" id="orderForm" className="orderForm" onSubmit={(e) => formSubmit({ e, setAlert: setFormAlert })}>
 
                 <h1 id="formName" className="orderForm_h1">Pre-order a book</h1>
 

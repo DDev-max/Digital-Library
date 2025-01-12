@@ -12,7 +12,6 @@ export default async function ReadBookPage(props: NextJsPageProps<{title: string
     const URLorem = `https://baconipsum.com/api/?type=all-meat&paras=${paragraphs}&format=json`
     const plainBookContent = await fetchFn<string[]>(URLorem)
 
-
     const bookName =  decodeURIComponent(bookTitle || "")
 
     return (

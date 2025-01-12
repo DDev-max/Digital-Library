@@ -2,11 +2,10 @@
 export const menuSize = 160
 
 export const spanCloseTag = "</span>"
-
 export const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/g
 export const spanCloseRegex = /<\/span>/g
+export const emptySpanRegex =  new RegExp(`${spanOpenRegex.source}${spanCloseRegex.source}`, 'g');
 
-export const emptySpanRegex = new RegExp(`${spanOpenRegex.source}${spanCloseRegex.source}`, 'g');
 
 export const dataParagraphIdx = "data-index"
 
@@ -18,6 +17,7 @@ export const emailInputRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,
 
 
 export const nResults = 5
+
 
 
  interface BookAds {

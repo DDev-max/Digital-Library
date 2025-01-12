@@ -1,0 +1,47 @@
+@use "../../Sass/variables";
+@use "../../components/Home/MultipleProducts/MultipleProducts";
+
+.favPage{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+
+    &_h2{
+        padding: 1rem;
+        margin: 1rem;
+        background-color: variables.$SecColor
+    }
+
+    &_Grid{
+        @include variables.gridResponsive;
+    }
+
+
+    &_article{
+
+        @extend .MultipleProducts_article;
+        align-items: center;
+
+        &--skeleton{
+            @include variables.defaultSkeleton;
+            width: 12.5rem;
+            height: 18rem
+        }
+
+        &_Img{
+            @extend .MultipleProducts_article_link_Img;
+        }
+    
+        &_title{
+            @extend .MultipleProducts_article_link_title;
+        }
+        
+    
+    
+        &_trashBtn{
+            @include variables.defaultBtn;
+        }
+    }
+
+
+}

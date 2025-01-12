@@ -1,0 +1,66 @@
+@use "../../../Sass/variables";
+
+
+.singleProduct{
+    background-color: variables.$SectionBgClr;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 2rem;
+    padding: .5rem;
+    transform: variables.$defaultPosition;
+
+
+
+    &_img{
+        border-radius: 2rem;
+        height: clamp(8rem,53vw,19rem);
+        margin: 1rem auto;
+        width: auto;
+
+        &--skeleton{
+            @include variables.defaultSkeleton;
+            width: clamp(13rem,40%,18rem);
+        }
+    }
+
+    &_infoCont{
+        display: flex;
+        row-gap: 1rem;
+        flex-direction: column;
+        justify-content: space-evenly;
+        flex: 1;
+        padding: 0 clamp(1rem,4vw,7rem);
+        text-align: center;
+
+        &_title{
+            @include variables.shadedHeading;
+            padding: 1rem;
+            font-size: variables.$bookTitleFntSize; 
+
+            &--skeleton{
+                @include variables.defaultSkeleton;
+                width: clamp(10rem, 30vw,20rem);
+                height: 2rem;
+                margin: 0 auto;
+
+            }
+        }
+
+        &_desc{
+            font-size: variables.$secTxtFntSize;
+
+            &--skeleton{
+                @include variables.defaultSkeleton;
+                height: 50%;
+                width: 100%;
+            }
+        }
+        
+        &_link{
+            @include variables.btnStyles;
+            margin: 1rem auto;
+        }
+
+    }
+
+}

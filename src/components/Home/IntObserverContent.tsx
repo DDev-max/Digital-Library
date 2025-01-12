@@ -1,8 +1,8 @@
 "use client"
 
-import { MultipleProducts } from "./MultipleProducts";
-import { BSellerSlider } from "./BestSellersSlider";
-import { SingleProduct } from "./SingleProduct";
+import { MultipleProducts } from "./MultipleProducts/MultipleProducts";
+import { BSellerSlider } from "./BestSellersSlider/BestSellersSlider";
+import { SingleProduct } from "./SingleProduct/SingleProduct";
 import { useEffect, useRef, useState } from "react";
 import { intObserver } from "../../hooks/useIntObserver";
 import type { BooksAPI} from "data/types";

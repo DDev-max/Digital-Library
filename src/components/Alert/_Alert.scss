@@ -1,0 +1,36 @@
+@use "../../Sass/variables";
+
+
+.alert{
+    background-color:variables.$SecColor;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    width: 70vw;
+    margin: .5rem 0;
+    padding: 1rem;
+    border-color: rgb(255, 0, 0);
+    animation: flick .5s infinite;
+    border-radius: .5rem;
+    z-index: 1000;
+
+    &--green{
+        animation: none;
+        border-color: rgb(42, 194, 123);
+    }
+
+}
+
+
+
+
+@keyframes flick {
+    0%{
+        border-color: rgb(255, 0, 0);
+    }
+    50%{
+        border-color: variables.$SecColor;
+    }
+}

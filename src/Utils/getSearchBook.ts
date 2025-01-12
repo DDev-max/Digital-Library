@@ -9,9 +9,18 @@ interface GetSearchBookProps {
 export async function getSearchBook({setFetchNow,URL}: GetSearchBookProps) {
     const results = await fetchFn<SearchBooksApi>(URL)
     setFetchNow(false)
+    
+    //👇 sometimes API returns repeated id
+    const idsObj = {};
+    const uniqueBooks = results?.items.filter(item => {
+      if (idsObj[item.id])  return false
+      idsObj[item.id] = true;
+      return true;
+    });
+
 
     const mappedResults: SearchBooksApi = {
-        items: results.items.map(elmnt=>({
+        items: uniqueBooks.map(elmnt=>({
             id: elmnt.id,
             volumeInfo: {
                 authors: elmnt.volumeInfo.authors,
@@ -19,6 +28,8 @@ export async function getSearchBook({setFetchNow,URL}: GetSearchBookProps) {
             }
         }))
     }
+
+    
 
     return mappedResults
 }

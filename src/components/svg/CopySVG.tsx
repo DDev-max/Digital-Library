@@ -6,7 +6,6 @@ interface CopySVGProps{
 }
 
 export function CopySVG({classNameBtn,classNameSVG,onMouseDown}:CopySVGProps) {
-    // ver si puedo corregir el onMouseDown para que se vuelva onClick
     return(
         <button className={classNameBtn}>
             <svg className={classNameSVG} fill="#000000" onMouseDown={onMouseDown} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 352.804 352.804" xmlSpace="preserve">

@@ -14,7 +14,7 @@ export function FavoriteSVG({added,title="Favorites List" ,className}: FavoriteS
             className={`${added? "svg--added": "" } ${className}`}
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 32 32"
-            role="graphics-symbol"
+            role="img"
             >
                 <title>{title}</title>
                 <desc>Check your favorites list </desc>

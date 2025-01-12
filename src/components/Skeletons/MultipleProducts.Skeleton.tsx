@@ -7,7 +7,7 @@ export function MultipleProductsSkeleton() {
 
             {skeletonsQtty.map((_, idx) => (
 
-                <article key={idx} className="MultipleProducts_article--skeleton">
+                <article key={idx} className="MultipleProducts_article MultipleProducts_article--skeleton">
 
                 </article>
 

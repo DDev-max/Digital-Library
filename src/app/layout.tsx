@@ -1,7 +1,7 @@
-import { Header } from "@/components/Header"
+import { Header } from "@/components/Header/Header"
 import "../Sass/styles.scss"
 import "leaflet/dist/leaflet.css"
-import { HighlightsProvider } from "Context/HighlightsProvider"
+import { FavoritesContextProvider } from "Context/FavoritesContextProvider"
 
 export const metadata = {
   title: 'Next.js',
@@ -13,11 +13,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-          {/* VER SI REALMENETE TODOS LO NECESITAN*/}
-            <HighlightsProvider>
+            <FavoritesContextProvider>
               <Header />
               {children}
-            </HighlightsProvider>
+            </FavoritesContextProvider>
       </body>
     </html>
   )

@@ -1,3 +1,15 @@
-@forward "globals";
-@forward "header";
-@forward "mainContent";
+@forward "../app/notFound";
+@forward "../app/landing";
+@forward "../app/notFound";
+@forward "../app/Read/[title]/ReadBook";
+@forward '../app/Order/[book]/Order' ;
+@forward '../app/Favorites/favPage' ;
+@forward '../components/Alert/Alert';
+@forward '../components/ContextMenu/ContxtMenu' ; 
+@forward '../components/Header/header' ; 
+@forward '../components/Home/BestSellersSlider/BestSellersSlider' ; 
+@forward '../components/Home/BigSlider/BigSlider' ; 
+@forward '../components/Home/HorizontalProducts/HorizontalProducts' ; 
+@forward '../components/Home/MultipleProducts/MultipleProducts' ; 
+@forward '../components/Home/SingleProduct/SingleProduct' ; 
+@forward './normalize'; 

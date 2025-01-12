@@ -2,13 +2,13 @@
 
 import { removeAddFav } from "@/components/svg/Favorite/removeAddFav";
 import { TrashSVG } from "@/components/svg/TrashSVG";
-import { useHighlightCntxt } from "Context/useHighlightContxt";
+import { useFavoritesContext } from "Context/useFavoritesContext";
 import Image from "next/image";
 import { ellipsisText } from "Utils/ellipsisText";
 
 export default function FavoritePage() {
 
-    const context = useHighlightCntxt()
+    const context = useFavoritesContext()
     if (!context) return
     
     const {favorites,setFavorites} = context

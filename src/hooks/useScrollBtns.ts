@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-//ARREGLAR
 export function useScrollBtns(sliderRef:  React.RefObject<HTMLDivElement>){
     
     const [showBtns, setShowBtns] = useState([false, true])

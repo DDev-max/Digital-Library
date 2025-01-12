@@ -1,0 +1,91 @@
+@use "../../../Sass/variables";
+
+$border: .2rem;
+
+.horizontalSctn{
+    display: flex;
+    justify-content: space-between;
+    font-size: .8rem;
+    text-align: center;
+    flex-wrap: wrap;
+    gap: $border;
+
+
+
+
+
+    &_Article{
+        background-color: variables.$SectionBgClr;
+        width: 100%;
+        max-height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        border-right: $border solid variables.$SecColor;
+        border-radius: 3rem;
+
+        &--skeleton{
+            height: 11rem;
+        }
+
+        @media (width > 800px) {
+            width: 49.3%;
+        }
+
+
+        &_Img{
+            border-radius: 1rem;
+
+            &--skeleton{
+                @include variables.defaultSkeleton;
+            }
+
+            @media (width < 350px) {
+                margin: auto;
+            }
+
+
+        }
+
+
+        &_infoDiv{
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+
+            &_title{
+                font-size: variables.$bookTitleFntSize;
+                padding: .5rem;
+                margin: auto;
+
+                &--skeleton{
+                    @include variables.defaultSkeleton;
+                    height: 1rem;
+                    width: clamp(10rem,30vw,17rem);
+
+                }
+                
+            }
+
+            &_btn{
+                @include variables.btnStyles;
+
+                &--skeleton{
+                    @include variables.defaultSkeleton;
+                }
+            }
+        }
+    
+
+    }
+
+    &_Article:nth-of-type(even){
+        flex-direction: row-reverse;
+        border-left: $border solid variables.$SecColor;
+        border-right: none;
+        border-bottom-right-radius: 2rem;
+    }
+}

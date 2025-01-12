@@ -1,6 +1,6 @@
-import { BigSlider } from "@/components/Home/BigSlider";
+import { BigSlider } from "@/components/Home/BigSlider/BigSlider";
 import { ContentError } from "@/components/Home/ContentError";
-import { HorizontalProducts } from "@/components/Home/HorizontalProducts";
+import { HorizontalProducts } from "@/components/Home/HorizontalProducts/HorizontalProducts";
 import { IntObserverContent } from "@/components/Home/IntObserverContent";
 import { getAllBooks } from "Utils/getAllBooks";
 

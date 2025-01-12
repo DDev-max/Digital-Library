@@ -6,7 +6,7 @@ export function BestSellersSkeleton() {
         <div className="slider visibleElmnt">
             <div className="slider_contImgs">
                 {skeletonsQtty.map((_, idx) => (
-                    <article key={idx} className="slider_bookContainer--skeleton visibleElmnt">
+                    <article key={idx} className="slider_bookContainer slider_bookContainer--skeleton visibleElmnt">
 
                     </article>
                 ))}

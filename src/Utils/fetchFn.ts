@@ -1,33 +1,31 @@
-//import mock from "../data/apiMock.json"
+import mock from "../data/apiMock.json"
 //import { URLorem } from "data/consts";
 
 export async function fetchFn<TFetchReturn>(URL: string) {
     console.log(URL);
 
+
+    return ["Lorem ipsum dolor sit amet consectetur HOLA adipisicing elit. Sint dolorem dolor sequi ullam dolores soluta corporis cupiditate vel. Commodi vel hic pariatur ab porro delectus HOLA a magnam ducimus sequi. AcHOLAcusamus mollitia sunt quaerat quisquam sit expedita animi eum et dolorum.", "Ut fugit, reiciendis veniam possimus natus sit minima nulla, voluptates impedit, totam magnam explicabo aspernatur laboriosam omnis voluptatibus dicta amet deserunt minus id incidunt? Sint modi, nemo laboriosam nisi doloremque, ea pariatur natus excepturi voluptates odit odio vitae praesentium quaerat omnis vero. Non illo ADIOS ADIOSassumenda saepe ea iure aspernatur, officiis porro, numquam ab dolorum est facilis quidem similique cum repellendus, libero sapiente molestiae ADIOS voluADIOSptatum."]
+    return mock
+
+  return repeatedMock
   
-  
-//   if (URL == URLorem) return ["Lorem ipsum dolor sit amet consectetur HOLA adipisicing elit. Sint dolorem dolor sequi ullam dolores soluta corporis cupiditate vel. Commodi vel hic pariatur ab porro delectus HOLA a magnam ducimus sequi. AcHOLAcusamus mollitia sunt quaerat quisquam sit expedita animi eum et dolorum.", "Ut fugit, reiciendis veniam possimus natus sit minima nulla, voluptates impedit, totam magnam explicabo aspernatur laboriosam omnis voluptatibus dicta amet deserunt minus id incidunt? Sint modi, nemo laboriosam nisi doloremque, ea pariatur natus excepturi voluptates odit odio vitae praesentium quaerat omnis vero. Non illo ADIOS ADIOSassumenda saepe ea iure aspernatur, officiis porro, numquam ab dolorum est facilis quidem similique cum repellendus, libero sapiente molestiae ADIOS voluADIOSptatum."]
 
 //   return mockSearch
 
 
-  const response = await fetch("URL")
+  // const response = await fetch("URL")
 
-  const format: TFetchReturn = await response.json()
-
-
-  if (!response.ok) {        
-        throw new Error(`Fetch error: ${response.status}, ${response.statusText}`);
-    }
+  // const format: TFetchReturn = await response.json()
 
 
+  // if (!response.ok) {        
+  //       throw new Error(`Fetch error: ${response.status}, ${response.statusText}`);
+  //   }
 
-  // if (setFetchNow) {
-  //     setFetchNow(false)
-  // }
 
 
-  return format
+  //return format
 
 
 
@@ -85,44 +83,44 @@ export async function fetchFn<TFetchReturn>(URL: string) {
 //   }
 // ]}
 
-// const repeatedMock = {items:[
-//     {
-//         "id": "A5TKAwAAQBAJ",
-//         "volumeInfo": {
-//             "title": "En sólo 20 horas",
-//             "authors": [
-//                 "Josh Kaufman"
-//             ]
-//         }
-//     },
-//     {
-//         "id": "n4WeBAAAQBAJ",
-//         "volumeInfo": {
-//             "title": "How to Manage Difficult People",
-//             "authors": [
-//                 "Alan Fairweather"
-//             ]
-//         }
-//     },
-//     {
-//         "id": "y94DAAAAMBAJ",
-//         "volumeInfo": {
-//             "title": "Popular Mechanics"
-//         }
-//     },
-//     {
-//         "id": "xFuREAAAQBAJ",
-//         "volumeInfo": {
-//             "title": "El explicador de cosas: cosas difíciles explicadas con palabras fáciles / Thing Explainer: Complicated Stuff in Simple Words",
-//             "authors": [
-//                 "Randall Munroe"
-//             ]
-//         }
-//     },
-//     {
-//         "id": "y94DAAAAMBAJ",
-//         "volumeInfo": {
-//             "title": "Popular Mechanics"
-//         }
-//     }
-// ]}
+const repeatedMock = {items:[
+    {
+        "id": "A5TKAwAAQBAJ",
+        "volumeInfo": {
+            "title": "En sólo 20 horas",
+            "authors": [
+                "Josh Kaufman"
+            ]
+        }
+    },
+    {
+        "id": "n4WeBAAAQBAJ",
+        "volumeInfo": {
+            "title": "How to Manage Difficult People",
+            "authors": [
+                "Alan Fairweather"
+            ]
+        }
+    },
+    {
+        "id": "y94DAAAAMBAJ",
+        "volumeInfo": {
+            "title": "Popular Mechanics"
+        }
+    },
+    {
+        "id": "xFuREAAAQBAJ",
+        "volumeInfo": {
+            "title": "El explicador de cosas: cosas difíciles explicadas con palabras fáciles / Thing Explainer: Complicated Stuff in Simple Words",
+            "authors": [
+                "Randall Munroe"
+            ]
+        }
+    },
+    {
+        "id": "y94DAAAAMBAJ",
+        "volumeInfo": {
+            "title": "Popular Mechanics"
+        }
+    }
+]}
