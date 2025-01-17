@@ -5,6 +5,8 @@ interface NewAlertProps extends Pick<AlertState, "setAlert">{
 }
 
 export function newAlert({setAlert,string}: NewAlertProps){
+    
+
 
     setAlert(string)
         

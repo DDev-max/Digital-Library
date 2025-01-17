@@ -1,4 +1,4 @@
-import { fetchFn } from "Utils/fetchFn"
+import { fetchFn } from "Utils/fetchFn/fetchFn"
 import { ReadBook } from "./ReadBook"
 import type { NextJsPageProps } from "data/types"
 

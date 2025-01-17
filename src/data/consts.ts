@@ -7,7 +7,6 @@ export const spanCloseRegex = /<\/span>/g
 export const emptySpanRegex =  new RegExp(`${spanOpenRegex.source}${spanCloseRegex.source}`, 'g');
 
 
-export const dataParagraphIdx = "data-index"
 
 
 export const phoneInputRegx = /^\d{4}-\d{4}$/

@@ -19,7 +19,7 @@ export interface Item {
 interface VolumeInfo {
     readonly title: string;
     readonly authors: readonly string[];
-    readonly publishedDate?: Date;
+    readonly publishedDate?: string;
     readonly categories?:readonly  string[];
     readonly imageLinks: ImageLinks;
     readonly description: string;
@@ -68,7 +68,7 @@ export interface ButtonSvgProps extends SvgProps {
 
 
 export interface extendHighlight {
-    selectedParagraph: string
+    selectedParagraphHtml: string
     spanOpenTag: string
 }
 

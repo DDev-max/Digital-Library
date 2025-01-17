@@ -1,7 +1,7 @@
 import { FavoriteSVG } from "../../svg/Favorite/FavoriteSVG";
 import { removeAddFav } from "../../svg/Favorite/removeAddFav";
 import type { ObservedBookComponentProps } from "../../../data/types";
-import { ellipsisText } from "../../../Utils/ellipsisText";
+import { ellipsisText } from "../../../Utils/ellipsisText/ellipsisText";
 import Link from "next/link";
 import Image from "next/image";
 import { useFavoritesContext } from "Context/useFavoritesContext";

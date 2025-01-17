@@ -2,7 +2,9 @@ import { BigSlider } from "@/components/Home/BigSlider/BigSlider";
 import { ContentError } from "@/components/Home/ContentError";
 import { HorizontalProducts } from "@/components/Home/HorizontalProducts/HorizontalProducts";
 import { IntObserverContent } from "@/components/Home/IntObserverContent";
-import { getAllBooks } from "Utils/getAllBooks";
+import { getAllBooks } from "Utils/getAllBooks/getAllBooks";
+
+
 
 export default async function Page() {
 

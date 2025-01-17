@@ -1,17 +1,26 @@
 import { spanCloseTag } from "data/consts"
-import { getPreviousPlainText } from "../../Utils/getPreviousContent"
+import { getPreviousPlainText } from "../../Utils/getPreviousPlainText/getPreviousPlainText"
 
 
 interface highlightPlainTextProps{
-    range: Range | undefined,
     htmlContent: string ,
-    userSeleccion: string,
     spanOpenTag: string,
     fullPlainTxt: string | null
 }
 
-export function highlightPlainText({range, htmlContent, userSeleccion,spanOpenTag, fullPlainTxt}:highlightPlainTextProps) {
+export function highlightPlainText({htmlContent,spanOpenTag, fullPlainTxt}:highlightPlainTextProps) {
+    //when the whole paragraph is selected by triple-clicking on it, some additional spaces are added in the selection
+
+    const originalSelection = window.getSelection()?.toString()
+    const range = window.getSelection()?.getRangeAt(0)
+
+    if(!originalSelection) return
+
+    const userSeleccion = originalSelection.slice(0, -2) === fullPlainTxt 
+                        ? originalSelection.slice(0, -2)
+                        : originalSelection
     
+
     if (!fullPlainTxt || !range ) return
 
     let rangeStart =  range.startOffset
@@ -19,19 +28,18 @@ export function highlightPlainText({range, htmlContent, userSeleccion,spanOpenTa
     const fullPreviousContent = getPreviousPlainText(range.startContainer.previousSibling)
 
     if (fullPreviousContent) rangeStart += fullPreviousContent.length
-    
-    let currentIdxPlainTxt = fullPlainTxt.indexOf(userSeleccion)
+        
+
+    let currentIdxPlainTxt =  fullPlainTxt.indexOf(userSeleccion)
+
+
     let nMatchPlainTxt = 1 
     
-    if (currentIdxPlainTxt === -1) return
     
-    while (currentIdxPlainTxt !== rangeStart) {        
-
+    while (currentIdxPlainTxt !== rangeStart) {
         nMatchPlainTxt++
-        
-        currentIdxPlainTxt = fullPlainTxt?.indexOf(userSeleccion, currentIdxPlainTxt + 1)
 
-        
+        currentIdxPlainTxt = fullPlainTxt?.indexOf(userSeleccion, currentIdxPlainTxt + 1)
         if (currentIdxPlainTxt === -1) return
 
     }
@@ -41,7 +49,6 @@ export function highlightPlainText({range, htmlContent, userSeleccion,spanOpenTa
     
     
     let nMatchHtml = 1
-
 
     
     if (currentIdxHtml === -1) return
@@ -56,11 +63,13 @@ export function highlightPlainText({range, htmlContent, userSeleccion,spanOpenTa
     }
     
     const firstPart = htmlContent.slice(0, currentIdxHtml)
-    const spanHighlight = spanOpenTag + userSeleccion + spanCloseTag
+    const highLightedSelection = spanOpenTag + userSeleccion + spanCloseTag
     const lastPart= htmlContent.slice(currentIdxHtml + userSeleccion.length)
     
-    const newHighlight = firstPart + spanHighlight + lastPart
+    const newHighlight = firstPart + highLightedSelection + lastPart
 
+    
+    
     return newHighlight
 
 }

@@ -1,5 +1,6 @@
 import type { SearchBooksApi } from "data/types"
-import { fetchFn } from "./fetchFn"
+import { fetchFn } from "Utils/fetchFn/fetchFn"
+
 
 interface GetSearchBookProps {
     URL: string
@@ -12,6 +13,7 @@ export async function getSearchBook({setFetchNow,URL}: GetSearchBookProps) {
     
     //👇 sometimes API returns repeated id
     const idsObj = {};
+
     const uniqueBooks = results?.items.filter(item => {
       if (idsObj[item.id])  return false
       idsObj[item.id] = true;

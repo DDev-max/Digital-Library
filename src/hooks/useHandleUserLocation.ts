@@ -16,7 +16,6 @@ export function useHandleUserLocation({ markerPosition, setAlert, setMarkerPosit
 
     getUserLocation().then((loc: LatLngExpression) => {
       setMarkerPosition(loc)
-      console.log("puesto en :", loc);
       map.setView(loc)
     }).catch((error: GeolocationPositionError) => {
       switch (error.code) {

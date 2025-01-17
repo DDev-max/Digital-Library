@@ -2,25 +2,25 @@ import { spanCloseTag } from "data/consts"
 import type { extendHighlight } from "data/types"
 
 interface extendHighlightEndProps extends extendHighlight{
-    hasSpanClose: RegExpExecArray | null
+    matchedClosingSpan: RegExpExecArray | null
     spanOpenRegex: RegExp
 }
 
 
-export function extendHighlightEnd({hasSpanClose, selectedParagraph,spanOpenTag, spanOpenRegex}:extendHighlightEndProps){
+export function extendHighlightEnd({matchedClosingSpan, selectedParagraphHtml,spanOpenTag, spanOpenRegex}:extendHighlightEndProps){
     
-    if (!hasSpanClose) return
-    const htmlSelectionStart = hasSpanClose.index
+    if (!matchedClosingSpan) return
+    const htmlSelectionStart = matchedClosingSpan.index
 
-    const htmlSelectionEnd = htmlSelectionStart + hasSpanClose[0].length
+    const htmlSelectionEnd = htmlSelectionStart + matchedClosingSpan[0].length
 
-    const htmlSelection = selectedParagraph.slice(htmlSelectionStart, htmlSelectionEnd)
+    const htmlSelection = selectedParagraphHtml.slice(htmlSelectionStart, htmlSelectionEnd)
 
     const noSpanClose = htmlSelection.replace(spanCloseTag, "")
 
-    const firstPart = selectedParagraph.slice(0, htmlSelectionStart)
+    const firstPart = selectedParagraphHtml.slice(0, htmlSelectionStart)
 
-    const lastPart = selectedParagraph.slice(htmlSelectionEnd)
+    const lastPart = selectedParagraphHtml.slice(htmlSelectionEnd)
 
     const existingSpanOpen = firstPart.match(spanOpenRegex)
     if(!existingSpanOpen) return

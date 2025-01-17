@@ -4,7 +4,7 @@ import { removeAddFav } from "@/components/svg/Favorite/removeAddFav";
 import { TrashSVG } from "@/components/svg/TrashSVG";
 import { useFavoritesContext } from "Context/useFavoritesContext";
 import Image from "next/image";
-import { ellipsisText } from "Utils/ellipsisText";
+import { ellipsisText } from "Utils/ellipsisText/ellipsisText";
 
 export default function FavoritePage() {
 

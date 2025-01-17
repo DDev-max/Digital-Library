@@ -1,19 +1,22 @@
 import type { HighlightedContentState } from "data/types"
-import { dataParagraphIdx, spanCloseTag } from "../../data/consts"
-import { getPreviousPlainText } from "../../Utils/getPreviousContent"
-import type { CSSProperties } from "react"
+import { spanCloseTag } from "../../data/consts"
+import { getPreviousPlainText } from "../../Utils/getPreviousPlainText/getPreviousPlainText"
+import type { CSSProperties, RefObject } from "react"
+import { getParagraphIdx } from "./getParagraphIdx"
 
 interface removeHighlightProps extends HighlightedContentState{
     fromHighlight: boolean
     setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
+    paragraphContainer: RefObject<HTMLDivElement>
 }
 
 
-export function removeHighlight({fromHighlight,highlightedContent,setHighlightedContent,setPosition}:removeHighlightProps) {         
+export function removeHighlight({fromHighlight,highlightedContent,setHighlightedContent,setPosition,paragraphContainer}:removeHighlightProps) {         
         
     const range = window.getSelection()?.getRangeAt(0)
-
     const toRemoveTxt = range?.startContainer.nextSibling?.textContent ?? range?.startContainer.textContent
+
+    const paragraphIdx = getParagraphIdx({paragraphContainer})
     
     
     if (!toRemoveTxt) return
@@ -25,10 +28,6 @@ export function removeHighlight({fromHighlight,highlightedContent,setHighlighted
     const spanOpenToSearch = `<span class="${classToSearch}">`
 
     const toSearch = spanOpenToSearch+toRemoveTxt+spanCloseTag
-    
-    const paragraph= range?.startContainer.parentElement?.closest("p")
-
-    const paragraphIdx = Number(paragraph?.getAttribute(dataParagraphIdx))
 
     const firstIdx = highlightedContent[paragraphIdx].indexOf(toSearch)
     const lastIdx =  highlightedContent[paragraphIdx].lastIndexOf(toSearch)
@@ -85,4 +84,6 @@ export function removeHighlight({fromHighlight,highlightedContent,setHighlighted
 
     setHighlightedContent(copy)
     setPosition({display: "none"})
+    window.getSelection()?.removeAllRanges()
+
 }

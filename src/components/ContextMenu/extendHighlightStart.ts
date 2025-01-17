@@ -3,19 +3,19 @@ import type { extendHighlight } from "data/types"
 
 
 interface extendHighlightStartProps extends extendHighlight{
-    hasSpanOpen: RegExpExecArray | null
+    matchedOpeningSpan: RegExpExecArray | null
     spanOpenRegex: RegExp
 }
 
 
-export function extendHighlightStart({hasSpanOpen,selectedParagraph,spanOpenRegex,spanOpenTag}:extendHighlightStartProps){
+export function extendHighlightStart({matchedOpeningSpan,selectedParagraphHtml,spanOpenRegex,spanOpenTag}:extendHighlightStartProps){
 
-    if(!hasSpanOpen) return
-    const htmlSelectionStart = hasSpanOpen.index
+    if(!matchedOpeningSpan) return
+    const htmlSelectionStart = matchedOpeningSpan.index
     
-    const htmlSelectionEnd = htmlSelectionStart + hasSpanOpen[0].length
+    const htmlSelectionEnd = htmlSelectionStart + matchedOpeningSpan[0].length
 
-    const htmlSelection = selectedParagraph.slice(htmlSelectionStart, htmlSelectionEnd)
+    const htmlSelection = selectedParagraphHtml.slice(htmlSelectionStart, htmlSelectionEnd)
 
     const searchSpan = spanOpenRegex.exec(htmlSelection)
     if (!searchSpan) return
@@ -33,8 +33,8 @@ export function extendHighlightStart({hasSpanOpen,selectedParagraph,spanOpenRege
     : `${spanOpenTag}${noOpenTag}${spanCloseTag}`
 
     
-    const firstPart = selectedParagraph.slice(0, htmlSelectionStart)
-    const lastPart= selectedParagraph.slice(htmlSelectionEnd)
+    const firstPart = selectedParagraphHtml.slice(0, htmlSelectionStart)
+    const lastPart= selectedParagraphHtml.slice(htmlSelectionEnd)
     
     const newHtml = sameColor
     ? firstPart+newHighlight+lastPart

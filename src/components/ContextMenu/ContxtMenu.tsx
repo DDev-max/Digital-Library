@@ -1,12 +1,12 @@
 import { CopySVG } from "../svg/CopySVG"
 import { SearchSVG } from "../svg/SearchSVG"
 import { ColorsMenu } from "./ColorsMenu"
-import { highlightColor } from "./highlightColor"
+import { highlightParagraph } from "./highlightParagraph"
 import { removeHighlight } from "./removeHighlight"
 import { useMenuPosition } from "./useMenuPosition"
 import { RefObject, useEffect, useRef } from "react"
 import { googleSearch } from "Utils/googleSearch"
-import { copyTxt } from "Utils/copyTxt"
+import { copyTxt } from "Utils/copyText/copyTxt"
 import type { AlertState, HighlightedContentState } from "data/types"
 
 interface ContxtMenuProps extends HighlightedContentState, Pick<AlertState, "setAlert"> {
@@ -33,11 +33,11 @@ export function ContxtMenu({ highlightedContent, setHighlightedContent, setAlert
 
             <ColorsMenu
                 onClickColor={(e) => {
-                    highlightColor({ e, highlightedContent, setAlert, setHighlightedContent, setPosition, paragraphContainer })
+                    highlightParagraph({ e, highlightedContent, setAlert, setHighlightedContent, setPosition, paragraphContainer })
                 }}
 
                 onUnselectClick={() => {
-                    removeHighlight({ fromHighlight: false, highlightedContent, setPosition, setHighlightedContent })
+                    removeHighlight({ fromHighlight: false, highlightedContent, setPosition, setHighlightedContent,paragraphContainer })
                 }}
 
             />

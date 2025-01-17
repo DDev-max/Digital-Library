@@ -1,5 +1,6 @@
 import type { BooksAPI } from "data/types"
-import { fetchFn } from "./fetchFn"
+import { fetchFn } from "Utils/fetchFn/fetchFn"
+
 
 export async function getAllBooks() {
 

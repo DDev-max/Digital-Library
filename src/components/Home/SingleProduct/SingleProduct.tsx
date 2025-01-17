@@ -1,5 +1,5 @@
 import type { ObservedBookComponentProps } from "../../../data/types";
-import { ellipsisText } from "../../../Utils/ellipsisText";
+import { ellipsisText } from "../../../Utils/ellipsisText/ellipsisText";
 import Link from "next/link";
 import Image from "next/image";
 

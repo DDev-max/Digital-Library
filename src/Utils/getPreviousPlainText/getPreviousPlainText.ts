@@ -3,7 +3,11 @@ export function getPreviousPlainText(from: Node | null | undefined){
 
     let previousElmnt = from
 
+    
+
     while (previousElmnt) {
+        
+
         fullPreviousContent = previousElmnt.textContent + fullPreviousContent
 
         previousElmnt = previousElmnt.previousSibling        
