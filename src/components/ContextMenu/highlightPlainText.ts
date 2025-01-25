@@ -1,5 +1,5 @@
 import { spanCloseTag } from "data/consts"
-import { getPreviousPlainText } from "../../Utils/getPreviousPlainText/getPreviousPlainText"
+import { getPreviousContent } from "Utils/getPreviousContent/getPreviousContent"
 
 
 interface highlightPlainTextProps{
@@ -9,13 +9,13 @@ interface highlightPlainTextProps{
 }
 
 export function highlightPlainText({htmlContent,spanOpenTag, fullPlainTxt}:highlightPlainTextProps) {
-    //when the whole paragraph is selected by triple-clicking on it, some additional spaces are added in the selection
-
+    
     const originalSelection = window.getSelection()?.toString()
     const range = window.getSelection()?.getRangeAt(0)
-
+    
     if(!originalSelection) return
-
+    
+    //when the whole paragraph is selected by triple-clicking on it, some additional spaces are added in the selection
     const userSeleccion = originalSelection.slice(0, -2) === fullPlainTxt 
                         ? originalSelection.slice(0, -2)
                         : originalSelection
@@ -25,9 +25,9 @@ export function highlightPlainText({htmlContent,spanOpenTag, fullPlainTxt}:highl
 
     let rangeStart =  range.startOffset
 
-    const fullPreviousContent = getPreviousPlainText(range.startContainer.previousSibling)
+    const {fullPreviousPlainText} = getPreviousContent(range.startContainer.previousSibling)
 
-    if (fullPreviousContent) rangeStart += fullPreviousContent.length
+    if (fullPreviousPlainText) rangeStart += fullPreviousPlainText.length
         
 
     let currentIdxPlainTxt =  fullPlainTxt.indexOf(userSeleccion)

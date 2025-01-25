@@ -4,7 +4,7 @@ import { MultipleProducts } from "./MultipleProducts/MultipleProducts";
 import { BSellerSlider } from "./BestSellersSlider/BestSellersSlider";
 import { SingleProduct } from "./SingleProduct/SingleProduct";
 import { useEffect, useRef, useState } from "react";
-import { intObserver } from "../../hooks/useIntObserver";
+import { intObserver } from "../../Utils/intObserver/intObserver";
 import type { BooksAPI} from "data/types";
 
 

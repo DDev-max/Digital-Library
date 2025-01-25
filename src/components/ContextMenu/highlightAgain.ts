@@ -1,14 +1,15 @@
-import { emptySpanRegex, spanCloseRegex, spanOpenRegex } from "data/consts";
+import { emptySpanRegex, regexSpecialCharacters, spanCloseRegex, spanOpenRegex } from "data/consts";
 import { extendHighlightStart } from "./extendHighlightStart";
 import { extendHighlightEnd } from "./extendHighlightEnd";
-import { removeHighlight } from "./removeHighlight";
+import { removeHighlight } from "./removeHighlight/removeHighlight";
 import { highlightPlainText } from "./highlightPlainText";
 import type { CSSProperties, Dispatch, RefObject, SetStateAction } from "react";
-import { HighlightedContentState } from "data/types";
+import { BookContentState } from "data/types";
+import { getParagraphIdx } from "./getParagraphIdx";
 
 //sacar propr comunes
 
-interface HighlightAgainProps extends HighlightedContentState {
+interface HighlightAgainProps extends BookContentState {
     selectedParagraphHtml: string
     spanOpenTag: string
     paragraphContainer: RefObject<HTMLDivElement>
@@ -16,12 +17,11 @@ interface HighlightAgainProps extends HighlightedContentState {
     setPosition: Dispatch<SetStateAction<CSSProperties | undefined>>
 }
 
-export function highlightAgain({ selectedParagraphHtml, spanOpenTag, highlightedContent, paragraphContainer, setHighlightedContent, fullPlainTxt, setPosition }: HighlightAgainProps) {
+export function highlightAgain({ selectedParagraphHtml, spanOpenTag, bookContent, paragraphContainer, setBookContent, fullPlainTxt, setPosition }: HighlightAgainProps) {
 
     const userSeleccion =  window.getSelection()?.toString()
     if (!userSeleccion) return
 
-    const regexSpecialCharacters = /[.*+?^${}()|[\]\\]/g
 
     let bothTags = true
     for (let i = 0; i <= userSeleccion.length; i++) {
@@ -56,7 +56,20 @@ export function highlightAgain({ selectedParagraphHtml, spanOpenTag, highlighted
     }
 
     if (bothTags) {
-        const paragraphNoHighlight = removeHighlight({ paragraphContainer, fromHighlight: true, highlightedContent, setPosition, setHighlightedContent })
+        //SACAR O PASAR
+        const range = window.getSelection()?.getRangeAt(0)
+        const highlightToRemove =  range?.startContainer.nextSibling?.textContent ?? range?.startContainer.textContent
+        if(!highlightToRemove) return
+
+        // como que || undefined
+        const classToSearch = range?.startContainer.parentElement?.className || (range?.startContainer?.nextSibling as HTMLElement).className ||  undefined     
+
+        const spanOpenHighlight = `<span class="${classToSearch}">`
+
+        const paragraphIdx = getParagraphIdx({paragraphContainer})
+        
+        const paragraphNoHighlight = removeHighlight({bookContent,highlightToRemove,spanOpenHighlight,paragraphIdx})
+        setPosition({display: "none"})
         if (!paragraphNoHighlight) return
 
         const newHighlighting = highlightPlainText({ fullPlainTxt, spanOpenTag, htmlContent: paragraphNoHighlight })

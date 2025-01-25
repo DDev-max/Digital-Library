@@ -2,7 +2,7 @@
 //import { URLorem } from "data/consts";
 
 export async function fetchFn<TFetchReturn>(URL: string) {
-    console.log(URL);
+    // console.log(URL);
 
 
     return [
@@ -18,7 +18,7 @@ export async function fetchFn<TFetchReturn>(URL: string) {
     //   return mockSearch
 
 
-    const response = await fetch("URL")
+    const response = await fetch(URL)
 
     if (!response.ok) {
         throw new Error(`Fetch error: ${response.status}, ${response.statusText}`);

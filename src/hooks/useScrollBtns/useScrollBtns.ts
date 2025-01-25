@@ -9,6 +9,7 @@ export function useScrollBtns(sliderRef:  React.RefObject<HTMLDivElement>){
         if(!slider) return
 
         const toggleBtns = ()=>{
+            
 
             const scrollLeft = slider.scrollLeft;
             const scrollWidth = slider.scrollWidth;
@@ -17,16 +18,17 @@ export function useScrollBtns(sliderRef:  React.RefObject<HTMLDivElement>){
             const showLeftBtn = scrollLeft > 0;
             const showRightBtn = scrollLeft < (scrollWidth - clientWidth);
 
+
             setShowBtns([showLeftBtn, showRightBtn]);
 
         }
 
 
-        slider.addEventListener("scrollend", toggleBtns)
-
+        slider.addEventListener("scroll", toggleBtns)
+        
 
         return ()=>{
-            slider!.removeEventListener("scrollend", toggleBtns)
+            slider.removeEventListener("scroll", toggleBtns)
 
         }
     }, [sliderRef])

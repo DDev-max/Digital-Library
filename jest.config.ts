@@ -25,7 +25,7 @@ const config: Config = {
   clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
-  // collectCoverage: false,
+  collectCoverage: false,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   // collectCoverageFrom: undefined,
@@ -98,7 +98,8 @@ const config: Config = {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     '^@/components/(.*)$': '<rootDir>/components/$1', 
-    '^Utils/(.*)$': '<rootDir>/src/Utils/$1'
+    '^Utils/(.*)$': '<rootDir>/src/Utils/$1',
+    "react-leaflet": "<rootDir>/src/mocks/reactLeafletMock.ts"
   },
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],

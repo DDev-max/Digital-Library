@@ -2,6 +2,8 @@
 export const menuSize = 160
 
 export const spanCloseTag = "</span>"
+//QUITAR PORK
+export const highlightTagWords = /(span|class|contextMenu|color|first|second|third|fourth)/g
 export const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/g
 export const spanCloseRegex = /<\/span>/g
 export const emptySpanRegex =  new RegExp(`${spanOpenRegex.source}${spanCloseRegex.source}`, 'g');
@@ -13,6 +15,7 @@ export const phoneInputRegx = /^\d{4}-\d{4}$/
 export const nameInputRegex = /^\s*(?=.*\s)[A-Za-záéíóúÁÉÍÓÚñÑ]+(?: [A-Za-záéíóúÁÉÍÓÚñÑ]+)+\s*$/
 // eslint-disable-next-line no-useless-escape
 export const emailInputRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/
+export const regexSpecialCharacters = /[.*+?^${}()|[\]\\]/g
 
 
 export const nResults = 5

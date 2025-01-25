@@ -7,7 +7,7 @@ import { useRef, useState } from "react"
 
 export function ReadBook({ plainBookContent }: { plainBookContent: string[] }) {
 
-    const [highlightedContent, setHighlightedContent] = useState(plainBookContent)
+    const [bookContent, setBookContent] = useState(plainBookContent)
     const [alert, setAlert] = useState("")
 
     const paragraphContainerRef = useRef<HTMLDivElement>(null)
@@ -17,8 +17,8 @@ export function ReadBook({ plainBookContent }: { plainBookContent: string[] }) {
             <ContxtMenu
                 paragraphContainer={paragraphContainerRef}
                 setAlert={setAlert}
-                highlightedContent={highlightedContent}
-                setHighlightedContent={setHighlightedContent} />
+                bookContent={bookContent}
+                setBookContent={setBookContent} />
 
             <div
                 ref={paragraphContainerRef}
@@ -29,7 +29,7 @@ export function ReadBook({ plainBookContent }: { plainBookContent: string[] }) {
 
 
 
-                {highlightedContent?.map((elmnt, pIndex) => {
+                {bookContent?.map((elmnt, pIndex) => {
 
                     return (
                         <p

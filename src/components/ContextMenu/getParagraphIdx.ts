@@ -4,8 +4,10 @@ interface GetParagraphIdxProps {
     paragraphContainer: RefObject<HTMLDivElement>
 }
 
-export function getParagraphIdx({ paragraphContainer }: GetParagraphIdxProps) {
+//HACER EN LINEA SI SOLO ES UNO
 
+export function getParagraphIdx({ paragraphContainer }: GetParagraphIdxProps) {
+    
     const range = window.getSelection()?.getRangeAt(0)
     const comnAncestor = range?.commonAncestorContainer
     const ancestorIsHtml = comnAncestor instanceof HTMLElement
@@ -35,9 +37,6 @@ export function getParagraphIdx({ paragraphContainer }: GetParagraphIdxProps) {
 
 
     const index = Array.from(paragraphContainer.current.childNodes).findIndex((el) => el === currentParagraph)
-
-
-    console.log(index);
     
     return index
 

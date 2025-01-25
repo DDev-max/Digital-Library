@@ -83,9 +83,9 @@ export interface AlertState {
     setAlert: React.Dispatch<React.SetStateAction<string>>
 }
 
-export interface HighlightedContentState {
-    highlightedContent: string[]
-    setHighlightedContent: Dispatch<SetStateAction<string[]>>
+export interface BookContentState {
+    bookContent: string[]
+    setBookContent: Dispatch<SetStateAction<string[]>>
 }
 
 export interface UserSearchState {

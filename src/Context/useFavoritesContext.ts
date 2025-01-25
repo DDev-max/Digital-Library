@@ -7,6 +7,7 @@ export function useFavoritesContext(){
     try {
         const context = useContext(FavoritesContext);
 
+        
         if (context === undefined) {
             throw new NoProviderError("'FavoritesContext' should be used inside of 'FavoritesContextProvider'");
         }
@@ -16,12 +17,13 @@ export function useFavoritesContext(){
     } catch (error) {
         if (error instanceof NoProviderError) {
             console.error(error)
-            
+            throw(error)
         }
 
         return 
     }
-    
+
+
  }
 
 

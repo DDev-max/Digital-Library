@@ -1,6 +1,6 @@
 import { highlightPlainText } from "./highlightPlainText"
 import { newAlert } from "../../Utils/newAlert"
-import type { AlertState, HighlightedContentState } from "data/types"
+import type { AlertState, BookContentState } from "data/types"
 import { CSSProperties, RefObject } from "react"
 import { getParagraphIdx } from "./getParagraphIdx"
 import { highlightAgain } from "./highlightAgain"
@@ -10,14 +10,14 @@ import { highlightAgain } from "./highlightAgain"
 //cambiar de userSeleccion ==> userSelection o a originalSelection mejor
 
 
-interface HighlightParagraphProps extends HighlightedContentState, Pick<AlertState, "setAlert"> {
+interface HighlightParagraphProps extends BookContentState, Pick<AlertState, "setAlert"> {
     e: React.MouseEvent<HTMLButtonElement>
     setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
     paragraphContainer: RefObject<HTMLDivElement>
 }
 
 
-export function highlightParagraph({ e, highlightedContent, setAlert, setHighlightedContent, setPosition, paragraphContainer }: HighlightParagraphProps) {
+export function highlightParagraph({ e, setAlert, bookContent, setPosition, paragraphContainer,setBookContent }: HighlightParagraphProps) {
 
     const eTarget = e.target as HTMLElement
     const wSelect = window.getSelection()
@@ -31,7 +31,7 @@ export function highlightParagraph({ e, highlightedContent, setAlert, setHighlig
     }
 
 
-    const selectedParagraphHtml = highlightedContent[paragraphIdx]
+    const selectedParagraphHtml = bookContent[paragraphIdx]
 
     const tempDiv = document.createElement("div")
     tempDiv.innerHTML = selectedParagraphHtml
@@ -41,12 +41,12 @@ export function highlightParagraph({ e, highlightedContent, setAlert, setHighlig
     const newHtml = 
         highlightPlainText({ spanOpenTag, htmlContent: selectedParagraphHtml, fullPlainTxt })
         || 
-        highlightAgain({fullPlainTxt, highlightedContent, paragraphContainer, selectedParagraphHtml, setHighlightedContent, setPosition, spanOpenTag })
+        highlightAgain({fullPlainTxt, bookContent, paragraphContainer, selectedParagraphHtml, setBookContent, setPosition, spanOpenTag })
 
 
 
 
-    const copy = [...highlightedContent]
+    const copy = [...bookContent]
 
     tempDiv.innerHTML = newHtml ?? ""
 
@@ -58,7 +58,7 @@ export function highlightParagraph({ e, highlightedContent, setAlert, setHighlig
     }
 
     copy[paragraphIdx] = newHtml
-    setHighlightedContent(copy)
+    setBookContent(copy)
     setPosition({ display: "none" })
     wSelect?.removeAllRanges()
 

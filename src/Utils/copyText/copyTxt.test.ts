@@ -5,6 +5,9 @@ import { waitFor } from "@testing-library/react";
 const setAlert = jest.fn();
 jest.mock("Utils/newAlert");
 
+
+//USAR SPYON
+
 Object.assign(navigator, {
     clipboard: {
         writeText: jest.fn().mockResolvedValue(undefined)

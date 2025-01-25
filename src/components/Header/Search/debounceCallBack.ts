@@ -12,4 +12,5 @@ export const debounceCallBack = ({e,setFetchNow}: DebounceCallBackProps) => {
     if (e.key.length === 1 || e.key === "Backspace") {
         setFetchNow(true);
     }
+    
 }

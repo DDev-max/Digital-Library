@@ -2,42 +2,65 @@ import { CopySVG } from "../svg/CopySVG"
 import { SearchSVG } from "../svg/SearchSVG"
 import { ColorsMenu } from "./ColorsMenu"
 import { highlightParagraph } from "./highlightParagraph"
-import { removeHighlight } from "./removeHighlight"
+import { removeHighlight } from "./removeHighlight/removeHighlight"
 import { useMenuPosition } from "./useMenuPosition"
 import { RefObject, useEffect, useRef } from "react"
 import { googleSearch } from "Utils/googleSearch"
 import { copyTxt } from "Utils/copyText/copyTxt"
-import type { AlertState, HighlightedContentState } from "data/types"
+import type { AlertState, BookContentState } from "data/types"
+import { getParagraphIdx } from "./getParagraphIdx"
 
-interface ContxtMenuProps extends HighlightedContentState, Pick<AlertState, "setAlert"> {
+interface ContxtMenuProps extends BookContentState, Pick<AlertState, "setAlert"> {
     paragraphContainer: RefObject<HTMLDivElement>
 }
 
 
 
-export function ContxtMenu({ highlightedContent, setHighlightedContent, setAlert, paragraphContainer }: ContxtMenuProps) {
+export function ContxtMenu({ bookContent,setBookContent,setAlert, paragraphContainer }: ContxtMenuProps) {
 
     const menuRef = useRef<HTMLDivElement | null>(null)
-    const { position, setPosition } = useMenuPosition({menuRef, paragraphContainer})
+    const { position, setPosition } = useMenuPosition({ menuRef, paragraphContainer })
 
     useEffect(() => {
         if (position?.display === 'block' && menuRef.current) {
             menuRef.current.focus();
         }
-      }, [position]); 
+    }, [position]);
 
     return (
 
         position &&
-        <div tabIndex={0} onKeyDown={(e)=>{if(e.key=="Escape")setPosition(undefined)}} ref={menuRef} role="menu" style={{ ...position }} className={`contextMenu`}>
+        <div tabIndex={0} onKeyDown={(e) => { if (e.key == "Escape") setPosition(undefined) }} ref={menuRef} role="menu" style={{ ...position }} className={`contextMenu`}>
 
             <ColorsMenu
                 onClickColor={(e) => {
-                    highlightParagraph({ e, highlightedContent, setAlert, setHighlightedContent, setPosition, paragraphContainer })
+                    highlightParagraph({ e, bookContent, setAlert, setBookContent, setPosition, paragraphContainer })
                 }}
 
                 onUnselectClick={() => {
-                    removeHighlight({ fromHighlight: false, highlightedContent, setPosition, setHighlightedContent,paragraphContainer })
+                    //REPETIDO EN HIGHLIGHT AGAIN. VER SI LOS PARAMETROS PUEDEN SER LIGERAMENTE DISTINTOS
+
+                    const range = window.getSelection()?.getRangeAt(0)
+                    const highlightToRemove = range?.startContainer.nextSibling?.textContent ?? range?.startContainer.textContent
+                    if (!highlightToRemove) return
+
+                    const classToSearch = range?.startContainer.parentElement?.className || (range?.startContainer?.nextSibling as HTMLElement).className || undefined
+
+                    const spanOpenHighlight = `<span class="${classToSearch}">`
+
+
+                    const paragraphIdx =  getParagraphIdx({paragraphContainer})
+                    const noHighlight = removeHighlight({ bookContent, highlightToRemove, paragraphIdx, spanOpenHighlight })
+                    setPosition({display: "none"})
+
+
+                    const copy = [...bookContent]
+                    
+                    if(!noHighlight) return
+                    copy[paragraphIdx] = noHighlight
+
+                    setBookContent(copy)
+
                 }}
 
             />
