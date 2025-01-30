@@ -22,7 +22,7 @@ export function getParagraphIdx({ paragraphContainer }: GetParagraphIdxProps) {
     if (comnAncestor === paragraphContainer.current) {
         
         //when the paragraph is selected by triple clicking on it👇
-        if (range.startOffset === 0 && range.endOffset === 0) {
+        if (range.startOffset === 0 && range.endOffset === 0) {            
             currentParagraph = range.startContainer.parentElement
         } else return -1
         

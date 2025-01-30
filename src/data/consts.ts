@@ -2,8 +2,10 @@
 export const menuSize = 160
 
 export const spanCloseTag = "</span>"
-//QUITAR PORK
-export const highlightTagWords = /(span|class|contextMenu|color|first|second|third|fourth)/g
+// QUITAR Y EN VEZ DE ESO, PONER \\b  ...  \\b 👇
+//MENTIRA, YA SE HACE  SUBIENDO EL nMatch (ver higlight plaint text 70)
+export const highlightTagWords = /(span|class|context|Menu|color|first|second|third|fourth)/g
+
 export const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/g
 export const spanCloseRegex = /<\/span>/g
 export const emptySpanRegex =  new RegExp(`${spanOpenRegex.source}${spanCloseRegex.source}`, 'g');

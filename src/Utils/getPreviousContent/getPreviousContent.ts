@@ -1,6 +1,6 @@
 
 export function getPreviousContent(from: Node | null) {
-
+    
     let fullPreviousPlainText = ""
     let fullPreviousHtml = ""
     let previousElmnt = from
@@ -16,7 +16,7 @@ export function getPreviousContent(from: Node | null) {
         previousElmnt = previousElmnt.previousSibling
     }
 
-
+    
     return { fullPreviousPlainText, fullPreviousHtml }
 
 

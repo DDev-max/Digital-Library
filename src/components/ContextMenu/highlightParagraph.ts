@@ -1,4 +1,4 @@
-import { highlightPlainText } from "./highlightPlainText"
+import { highlightPlainText } from "./highlightPlainText/highlightPlainText"
 import { newAlert } from "../../Utils/newAlert"
 import type { AlertState, BookContentState } from "data/types"
 import { CSSProperties, RefObject } from "react"
@@ -21,6 +21,7 @@ export function highlightParagraph({ e, setAlert, bookContent, setPosition, para
 
     const eTarget = e.target as HTMLElement
     const wSelect = window.getSelection()
+    if(!wSelect?.toString().trim()) return
     const spanOpenTag = `<span class="${eTarget.classList[1]}">`
     const paragraphIdx = getParagraphIdx({  paragraphContainer })
 
@@ -33,26 +34,24 @@ export function highlightParagraph({ e, setAlert, bookContent, setPosition, para
 
     const selectedParagraphHtml = bookContent[paragraphIdx]
 
-    const tempDiv = document.createElement("div")
-    tempDiv.innerHTML = selectedParagraphHtml
 
-    const fullPlainTxt = tempDiv.textContent
 
     const newHtml = 
-        highlightPlainText({ spanOpenTag, htmlContent: selectedParagraphHtml, fullPlainTxt })
+        highlightPlainText({ spanOpenTag, htmlContent: selectedParagraphHtml })
         || 
-        highlightAgain({fullPlainTxt, bookContent, paragraphContainer, selectedParagraphHtml, setBookContent, setPosition, spanOpenTag })
+        highlightAgain({ bookContent, paragraphContainer, selectedParagraphHtml, setBookContent, setPosition, spanOpenTag })
 
 
 
 
     const copy = [...bookContent]
 
-    tempDiv.innerHTML = newHtml ?? ""
+
 
 
     // when user tries to nest more than one highlighted text
-    if (tempDiv.textContent != fullPlainTxt || !newHtml) {
+    if (!newHtml) {
+        
         newAlert({ setAlert, string: "First try removing some highlighting from the selection." })
         return
     }

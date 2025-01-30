@@ -1,23 +1,23 @@
 import { emptySpanRegex, regexSpecialCharacters, spanCloseRegex, spanOpenRegex } from "data/consts";
-import { extendHighlightStart } from "./extendHighlightStart";
-import { extendHighlightEnd } from "./extendHighlightEnd";
+import { extendHighlightStart } from "./extendHighlightStart/extendHighlightStart";
+import { extendHighlightEnd } from "./extendHighlightEnd/extendHighlightEnd";
 import { removeHighlight } from "./removeHighlight/removeHighlight";
-import { highlightPlainText } from "./highlightPlainText";
+import { highlightPlainText } from "./highlightPlainText/highlightPlainText";
 import type { CSSProperties, Dispatch, RefObject, SetStateAction } from "react";
 import { BookContentState } from "data/types";
 import { getParagraphIdx } from "./getParagraphIdx";
 
 //sacar propr comunes
 
-interface HighlightAgainProps extends BookContentState {
+interface HighlightAgainProps extends Pick<BookContentState, "bookContent"> {
     selectedParagraphHtml: string
     spanOpenTag: string
     paragraphContainer: RefObject<HTMLDivElement>
-    fullPlainTxt: string | null
     setPosition: Dispatch<SetStateAction<CSSProperties | undefined>>
 }
 
-export function highlightAgain({ selectedParagraphHtml, spanOpenTag, bookContent, paragraphContainer, setBookContent, fullPlainTxt, setPosition }: HighlightAgainProps) {
+export function highlightAgain({ selectedParagraphHtml, spanOpenTag, bookContent, paragraphContainer, setPosition }: HighlightAgainProps) {
+    
 
     const userSeleccion =  window.getSelection()?.toString()
     if (!userSeleccion) return
@@ -37,16 +37,17 @@ export function highlightAgain({ selectedParagraphHtml, spanOpenTag, bookContent
 
         const matchedOpeningSpan = textSpanOpenRegex.exec(selectedParagraphHtml)
         const matchedClosingSpan = textSpanCloseRegex.exec(selectedParagraphHtml)
-
+        
+        
 
 
         if (matchedOpeningSpan || matchedClosingSpan) {
 
             const extendedHighlighting = matchedOpeningSpan
-                ? extendHighlightStart({ matchedOpeningSpan, selectedParagraphHtml, spanOpenRegex, spanOpenTag })
-                : extendHighlightEnd({ matchedClosingSpan, selectedParagraphHtml, spanOpenTag, spanOpenRegex })
+                ? extendHighlightStart({ matchedOpeningSpan, spanOpenTag })
+                : extendHighlightEnd({ matchedClosingSpan, spanOpenTag })
 
-            if (!extendedHighlighting || extendedHighlighting.match(emptySpanRegex)) return
+            if (!extendedHighlighting || extendedHighlighting.match(emptySpanRegex)) return //USAR TEST en VEZ DE MATCH?
 
             bothTags = false
             return extendedHighlighting
@@ -56,23 +57,25 @@ export function highlightAgain({ selectedParagraphHtml, spanOpenTag, bookContent
     }
 
     if (bothTags) {
-        //SACAR O PASAR
+        //SACAR O PASAR 👇
         const range = window.getSelection()?.getRangeAt(0)
         const highlightToRemove =  range?.startContainer.nextSibling?.textContent ?? range?.startContainer.textContent
-        if(!highlightToRemove) return
+        if(!highlightToRemove) return        
+        
 
         // como que || undefined
         const classToSearch = range?.startContainer.parentElement?.className || (range?.startContainer?.nextSibling as HTMLElement).className ||  undefined     
 
         const spanOpenHighlight = `<span class="${classToSearch}">`
 
-        const paragraphIdx = getParagraphIdx({paragraphContainer})
+        const htmlParagraph = bookContent[getParagraphIdx({paragraphContainer})]
         
-        const paragraphNoHighlight = removeHighlight({bookContent,highlightToRemove,spanOpenHighlight,paragraphIdx})
+        const paragraphNoHighlight = removeHighlight({htmlParagraph,highlightToRemove,spanOpenHighlight,})
         setPosition({display: "none"})
+        
         if (!paragraphNoHighlight) return
 
-        const newHighlighting = highlightPlainText({ fullPlainTxt, spanOpenTag, htmlContent: paragraphNoHighlight })
+        const newHighlighting = highlightPlainText({ spanOpenTag, htmlContent: paragraphNoHighlight })
 
         return newHighlighting
     }

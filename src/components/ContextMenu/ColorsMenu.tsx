@@ -2,7 +2,7 @@ import { UnselectSVG } from "../svg/UnselectSVG";
 
 interface ColorsMenuProps{
     onClickColor: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    onUnselectClick: () => void
+    onUnselectClick: () => void //CAMBIAR NOMBRE
 }
 
 

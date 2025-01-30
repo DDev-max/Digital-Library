@@ -15,6 +15,7 @@ interface ContxtMenuProps extends BookContentState, Pick<AlertState, "setAlert">
 }
 
 
+//SEPARAR LOGICA DE COMPONENTES
 
 export function ContxtMenu({ bookContent,setBookContent,setAlert, paragraphContainer }: ContxtMenuProps) {
 
@@ -50,7 +51,7 @@ export function ContxtMenu({ bookContent,setBookContent,setAlert, paragraphConta
 
 
                     const paragraphIdx =  getParagraphIdx({paragraphContainer})
-                    const noHighlight = removeHighlight({ bookContent, highlightToRemove, paragraphIdx, spanOpenHighlight })
+                    const noHighlight = removeHighlight({  htmlParagraph: bookContent[paragraphIdx],highlightToRemove, spanOpenHighlight })
                     setPosition({display: "none"})
 
 

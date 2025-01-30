@@ -1,71 +1,74 @@
-import { getPreviousContent } from "Utils/getPreviousContent/getPreviousContent";
+import {getPreviousContent} from "Utils/getPreviousContent/getPreviousContent";
 import { removeHighlight } from "./removeHighlight"
 
-//AÑADIR PARA CARACTERES FEOS DE LAS REGEX COMO : '?'
-
-const bookContent = [
-    'This <span class="contextMenu_color--first">text</span> has some <span class="contextMenu_color--first">highlighted text</span> but not everything should be removed. Also, some words are repeated, but <span class="contextMenu_color--first">text</span> should be the same'
-]
 const spanOpenHighlight = '<span class="contextMenu_color--first">'
-
-const paragraphIdx = 0
-
-
-const mockPreviousPlainText = 'This text has some highlighted text but not everything should be removed. Also, some words are repeated, but '
-const mockPreviousHtml = 'This <span class="contextMenu_color--first">text</span> has some <span class="contextMenu_color--first">highlighted text</span> but not everything should be removed. Also, some words are repeated, but '
-
-jest.mock("Utils/getPreviousContent/getPreviousContent");
-(getPreviousContent as jest.Mock).mockReturnValue({fullPreviousHtml:mockPreviousHtml,fullPreviousPlainText:mockPreviousPlainText})
+//ESTA MAL EL MOCK DE getPreviousConten ? EN EL TEST SE DA LA ETIQUETA MISMA Y EL TEXTO ANTERIOR, PERO AQUI SOLO SE DA EL TEXTO ANTERIOR SIN LA 
 
 
-const mockRange = {
-    startContainer: {},
-    startOffset: 0,
-    endOffset: 0,
-    commonAncestorContainer: {
-        parentElement: {
-            previousSibling: {}
+jest.spyOn(window, 'getSelection').mockImplementation(() => ({
+    getRangeAt: jest.fn(() => ({
+        startContainer: {
+            parentElement: {
+                previousSibling: {}
+            }
         }
-    }
-};
+    })),
+} as unknown as Selection));
 
-const mockSelection = {
-    getRangeAt: jest.fn(() => mockRange),
-};
-
-
-global.window.getSelection = jest.fn(() => mockSelection) as jest.Mock;
-
-
-
-//USAR SPYYYY
+jest.mock("Utils/getPreviousContent/getPreviousContent")
 
 it("should remove a specific highlight from a text", () => {
-    const highlightToRemove = "highlighted text"
+    const htmlParagraph = `This is a simple ${spanOpenHighlight}highlighted text</span> :D`
+    const highlightToRemove = 'highlighted text'
+    const newHtml = removeHighlight({highlightToRemove,htmlParagraph,spanOpenHighlight})
 
-    const returnedValue = removeHighlight({ bookContent, highlightToRemove, paragraphIdx, spanOpenHighlight })
+    const highlightRemoved = 'This is a simple highlighted text :D'
 
-    const highlightRemoved =    'This <span class="contextMenu_color--first">text</span> has some highlighted text but not everything should be removed. Also, some words are repeated, but <span class="contextMenu_color--first">text</span> should be the same'
-
-    expect(returnedValue).toBe(highlightRemoved)
+    expect(newHtml).toBe(highlightRemoved)
 })
 
-
 it("should remove a specific highlight from a text even if the highlight is repeated",()=>{
-    const highlightToRemove = 'text'
-    const returnedValue = removeHighlight({bookContent,highlightToRemove,paragraphIdx,spanOpenHighlight})
 
-    const lastHighlightRemoved ='This <span class="contextMenu_color--first">text</span> has some <span class="contextMenu_color--first">highlighted text</span> but not everything should be removed. Also, some words are repeated, but text should be the same'
+    const htmlParagraph = `A ${spanOpenHighlight}highlighted word</span>. The same ${spanOpenHighlight}highlighted word</span>`;
+
+    const fullPreviousHtml = `'A ${spanOpenHighlight}highlighted word</span>. The same '`;
+    const fullPreviousPlainText = 'A highlighted word. The same ';
+    (getPreviousContent as jest.MockedFunction<typeof getPreviousContent>).mockReturnValue({fullPreviousHtml, fullPreviousPlainText})
+
+    const highlightToRemove = 'highlighted word';
+    const newHtml = removeHighlight({highlightToRemove, htmlParagraph,  spanOpenHighlight})
+    
+    const highlightRemoved = `A ${spanOpenHighlight}highlighted word</span>. The same highlighted word`;
+
+    
+
+    expect(newHtml).toBe(highlightRemoved)
+
+})
+
+it("should remove a specific highlight from a text even if the selection is repeated and its in the highlight tag", ()=>{
+    const highlightToRemove = 'context'
+    const htmlParagraph = `The word "${spanOpenHighlight}context</span>" is inside the highlight tag. But we want to remove the second "${spanOpenHighlight}context</span>" word`;
 
 
+    const fullPreviousHtml = `The word "${spanOpenHighlight}context</span>" is inside the highlight tag. But we want to remove the second "`;
+    const fullPreviousPlainText = 'The word "context" is inside the highlight tag. But we want to remove the second "';
+    (getPreviousContent as jest.MockedFunction<typeof getPreviousContent>).mockReturnValue({fullPreviousHtml, fullPreviousPlainText})
 
-    expect(returnedValue).toBe(lastHighlightRemoved)
+
+    const newHtml = removeHighlight({highlightToRemove,htmlParagraph,spanOpenHighlight})
+
+    const highlightRemoved = `The word "${spanOpenHighlight}context</span>" is inside the highlight tag. But we want to remove the second "context" word`
+
+    expect(newHtml).toBe(highlightRemoved)
+
 })
 
 it("should return nothing if no text with highlighting is selected", () => {
+    const htmlParagraph = "text should be the same"
     const highlightToRemove = "text should be the same"
 
-    const returnedValue = removeHighlight({ bookContent, highlightToRemove, paragraphIdx, spanOpenHighlight })
+    const returnedValue = removeHighlight({ highlightToRemove, htmlParagraph, spanOpenHighlight })
 
     expect(returnedValue).toBeUndefined()
 
