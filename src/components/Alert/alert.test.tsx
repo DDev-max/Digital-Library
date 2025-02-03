@@ -11,7 +11,7 @@ describe("render alert", () => {
         expect(alert).toHaveTextContent(alertMsg)
     })
 
-    it("shouldn render an alert if theres no alert", () => {
+    it("shouldnt render an alert if theres no alert", () => {
         render(<Alert alert="" />)
 
         const alert = screen.queryByRole("alert")

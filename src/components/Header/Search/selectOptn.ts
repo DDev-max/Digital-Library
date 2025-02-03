@@ -1,24 +1,19 @@
-import { nResults } from "data/consts"
 import type { UserSearchState } from "data/types"
 
 
- interface SelectOptnProps extends UserSearchState{
-    e: React.KeyboardEvent<HTMLFormElement>
-    optnsRef: React.MutableRefObject<(HTMLSpanElement | null)[]>
-    setOptnIdx: React.Dispatch<React.SetStateAction<number>>
-    isError: boolean
+interface SelectOptnProps extends Pick<UserSearchState, "setUserSearch"> {
+  e: React.KeyboardEvent<HTMLFormElement>
+  optnsRef: React.MutableRefObject<(HTMLSpanElement | null)[]>
+  setOptnIdx: React.Dispatch<React.SetStateAction<number>>
+  nResults: number
 }
 
-export function selectOptn({ e, optnsRef, setOptnIdx, setUserSearch, isError, userSearch }: SelectOptnProps) {
-  if (!userSearch) return -1
-
+export function selectOptn({ e, optnsRef, setOptnIdx, setUserSearch, nResults }: SelectOptnProps) {
 
   setOptnIdx(previous => {
-    
+    if (!optnsRef.current.length || !nResults) return -1
+
     let newIdx: number;
-
-    if (isError) return -1
-
 
     if (e.key === "ArrowDown") {
       newIdx = (previous + 1) % nResults
@@ -38,15 +33,7 @@ export function selectOptn({ e, optnsRef, setOptnIdx, setUserSearch, isError, us
       return newIdx
 
     }
-
-
     return previous
-
-
   })
-
-
-
-
 
 }

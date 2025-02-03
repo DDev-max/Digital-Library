@@ -19,17 +19,14 @@ export default async function Page() {
 
                 <BigSlider />
 
-
                 <div className="mainDiv">
                     <HorizontalProducts books={horizontalBooks} />
                     <IntObserverContent books={books} />
                 </div>
 
-
             </main>
 
         )
-
 
     } catch (error) {
 

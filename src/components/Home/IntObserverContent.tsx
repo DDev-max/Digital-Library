@@ -10,7 +10,6 @@ import type { BooksAPI} from "data/types";
 
 export function IntObserverContent({books}: {books: BooksAPI}) {
 
-
     const oneProduct = books?.items?.slice(0, 1)
     const sellersBooks = books?.items?.slice(3, 13)
     const multipleBooks = books?.items?.slice(15)

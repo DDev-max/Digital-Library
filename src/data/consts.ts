@@ -1,15 +1,9 @@
 
 export const menuSize = 160
-
 export const spanCloseTag = "</span>"
-// QUITAR Y EN VEZ DE ESO, PONER \\b  ...  \\b 👇
-//MENTIRA, YA SE HACE  SUBIENDO EL nMatch (ver higlight plaint text 70)
-export const highlightTagWords = /(span|class|context|Menu|color|first|second|third|fourth)/g
-
 export const spanOpenRegex = /<span class="contextMenu_color--(first|second|third|fourth)">/g
 export const spanCloseRegex = /<\/span>/g
 export const emptySpanRegex =  new RegExp(`${spanOpenRegex.source}${spanCloseRegex.source}`, 'g');
-
 
 
 
@@ -18,11 +12,6 @@ export const nameInputRegex = /^\s*(?=.*\s)[A-Za-záéíóúÁÉÍÓÚñÑ]+(?: 
 // eslint-disable-next-line no-useless-escape
 export const emailInputRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/
 export const regexSpecialCharacters = /[.*+?^${}()|[\]\\]/g
-
-
-export const nResults = 5
-
-
 
  interface BookAds {
     ImgLink: string; 

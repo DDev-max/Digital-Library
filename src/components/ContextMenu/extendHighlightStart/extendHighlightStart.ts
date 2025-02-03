@@ -7,9 +7,7 @@ interface extendHighlightStartProps extends Pick<extendHighlight ,"spanOpenTag">
 }
 
 
-export function extendHighlightStart({matchedOpeningSpan,spanOpenTag}:extendHighlightStartProps){
-//LO MISMO QUE EL DEL END
-    
+export function extendHighlightStart({matchedOpeningSpan,spanOpenTag}:extendHighlightStartProps){    
 
     if(!matchedOpeningSpan) return
     

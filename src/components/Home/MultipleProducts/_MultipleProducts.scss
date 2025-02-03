@@ -24,7 +24,7 @@
         @include variables.gridResponsive;
         row-gap: 1.5rem;
 
-        @media (width < 600px) {
+        @media (width < variables.$mediumBreakpoint) {
             grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
         }
     }
@@ -55,7 +55,7 @@
             align-items: center;
             padding: .5rem;
     
-            @media (width < 600px) {
+            @media (width < variables.$mediumBreakpoint) {
                 padding: 0;
             }
 

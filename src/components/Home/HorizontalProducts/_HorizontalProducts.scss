@@ -28,7 +28,7 @@ $border: .2rem;
             height: 11rem;
         }
 
-        @media (width > 800px) {
+        @media (width > variables.$bigBreakPoint) {
             width: 49.3%;
         }
 
@@ -40,7 +40,7 @@ $border: .2rem;
                 @include variables.defaultSkeleton;
             }
 
-            @media (width < 350px) {
+            @media (width < variables.$smallBreakPoint) {
                 margin: auto;
             }
 
@@ -58,7 +58,6 @@ $border: .2rem;
 
             &_title{
                 font-size: variables.$bookTitleFntSize;
-                padding: .5rem;
                 margin: auto;
 
                 &--skeleton{

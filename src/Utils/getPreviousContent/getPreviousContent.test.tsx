@@ -1,21 +1,19 @@
 import { render, screen } from "@testing-library/react"
 import { getPreviousContent } from "./getPreviousContent"
 
-//RECIBE EL ULTIMO HIGLIGHT (SOLO HAY UNO), DEVUELVO ESE MISMO HIGLIGHT Y TODO LO QUE ESTA DETRAS
 
 
 const ParagraphWithNestedElements = () => (
     <p>
         This is an paragraph
-        <span> with some </span>
+        <span className="contextMenu_color--first"> with some </span>
         nested tags
         we are simulating a
-        <span> highlighted</span>
+        <span className="contextMenu_color--first"> highlighted</span>
         paragraph
     </p>
 )
 
-//PONERLE NOMBRES DE CLASES
 
 
 it("should return all previous plain text of a nested element", () => {
@@ -38,5 +36,5 @@ it("should return all previous html of a nested element", () => {
 
     const { fullPreviousHtml } = getPreviousContent(nestedElement)
 
-    expect(fullPreviousHtml).toBe("This is an paragraph<span> with some </span>nested tags we are simulating a<span> highlighted</span>")
+    expect(fullPreviousHtml).toBe('This is an paragraph<span class="contextMenu_color--first"> with some </span>nested tags we are simulating a<span class="contextMenu_color--first"> highlighted</span>')
 })

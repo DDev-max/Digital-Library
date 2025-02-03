@@ -2,7 +2,6 @@ import {getPreviousContent} from "Utils/getPreviousContent/getPreviousContent";
 import { removeHighlight } from "./removeHighlight"
 
 const spanOpenHighlight = '<span class="contextMenu_color--first">'
-//ESTA MAL EL MOCK DE getPreviousConten ? EN EL TEST SE DA LA ETIQUETA MISMA Y EL TEXTO ANTERIOR, PERO AQUI SOLO SE DA EL TEXTO ANTERIOR SIN LA 
 
 
 jest.spyOn(window, 'getSelection').mockImplementation(() => ({
@@ -69,6 +68,19 @@ it("should return nothing if no text with highlighting is selected", () => {
     const highlightToRemove = "text should be the same"
 
     const returnedValue = removeHighlight({ highlightToRemove, htmlParagraph, spanOpenHighlight })
+
+    expect(returnedValue).toBeUndefined()
+
+})
+
+it("shouldnt return if no previous content was found", ()=>{
+    const highlightToRemove = 'content'
+    const htmlParagraph = `Assume no prev ${spanOpenHighlight}content</span> was found. Assume no prev ${spanOpenHighlight}content</span> was found.`;
+
+    (getPreviousContent as jest.MockedFunction<typeof getPreviousContent>).mockReturnValue({fullPreviousHtml:"", fullPreviousPlainText:""})
+
+
+    const returnedValue = removeHighlight({highlightToRemove,htmlParagraph,spanOpenHighlight})
 
     expect(returnedValue).toBeUndefined()
 

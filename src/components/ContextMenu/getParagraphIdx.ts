@@ -1,12 +1,6 @@
 import type { RefObject } from "react";
 
-interface GetParagraphIdxProps {
-    paragraphContainer: RefObject<HTMLDivElement>
-}
-
-//HACER EN LINEA SI SOLO ES UNO
-
-export function getParagraphIdx({ paragraphContainer }: GetParagraphIdxProps) {
+export function getParagraphIdx( paragraphContainer: RefObject<HTMLDivElement>) {
     
     const range = window.getSelection()?.getRangeAt(0)
     const comnAncestor = range?.commonAncestorContainer

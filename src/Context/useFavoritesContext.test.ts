@@ -11,7 +11,7 @@ jest.mock("react", () => ({
 jest.spyOn(console, "error").mockImplementation(jest.fn())
 
 it("should thow error if context is undefined", () => {
-    (useContext as jest.Mock).mockReturnValue(undefined);
+    (useContext as jest.Mock).mockReturnValueOnce(undefined);
 
     expect(()=> renderHook(useFavoritesContext)).toThrow(NoProviderError)
     
@@ -19,7 +19,7 @@ it("should thow error if context is undefined", () => {
 
 it("should return context", () => {
     const mockContextValue = {favorites: [{id:1}]};
-    (useContext as jest.Mock).mockReturnValue(mockContextValue);
+    (useContext as jest.Mock).mockReturnValueOnce(mockContextValue);
 
     const {result}= renderHook(useFavoritesContext)
 

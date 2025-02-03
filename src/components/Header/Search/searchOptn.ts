@@ -9,6 +9,7 @@ import type { UserSearchState } from "data/types"
 }
 
 export function searchOptn({bookName, router,inputRef,setUserSearch}: SearchOptnProps) {
+    
     setUserSearch("")
     const urlBook = encodeURIComponent(bookName)
     router.push(`/Read/${urlBook}`)

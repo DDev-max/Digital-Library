@@ -7,11 +7,8 @@ interface DebounceProps {
 
 export function useDebounce({ callback, delay = 1000 }: DebounceProps) {
     const timer = useRef<ReturnType<typeof setTimeout> | null>(undefined);
-
-    console.log("DEBOUNCE");
     
     return (...args: unknown[]) => {
-        console.log("RETURN");
         
 
         if (timer.current === null) return

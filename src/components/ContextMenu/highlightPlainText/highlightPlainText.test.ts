@@ -6,9 +6,6 @@ const spanOpenTag = '<span class="contextMenu_color--first">'
 jest.mock("Utils/getPreviousContent/getPreviousContent");
 
 
-//PONER RETURN VALUE ONCE EN TOODOO
-
-
 it("should highlight a plain text", () => {
     jest.spyOn(window, 'getSelection').mockImplementation(() => ({
         toString: () => 'text with no highlight',

@@ -19,8 +19,6 @@ export function useFavoritesContext(){
             console.error(error)
             throw(error)
         }
-
-        return 
     }
 
 

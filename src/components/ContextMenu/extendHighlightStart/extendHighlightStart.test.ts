@@ -26,3 +26,12 @@ it("should extend the end of the highlight of a selection of a different color",
 
     expect(returnedHtml).toBe(extendedHighlight)
 })
+
+it("shouldnt return if theres no matchedOpeningSpan", ()=>{
+    const matchedOpeningSpan = null;
+
+    const spanOpenTag = '<span class="contextMenu_color--first">'
+    const returnedHtml = extendHighlightStart({matchedOpeningSpan,spanOpenTag})
+
+    expect(returnedHtml).toBeUndefined()
+})

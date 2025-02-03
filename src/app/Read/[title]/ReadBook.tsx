@@ -23,8 +23,6 @@ export function ReadBook({ plainBookContent }: { plainBookContent: string[] }) {
             <div
                 ref={paragraphContainerRef}
                 className="readBook_paragraphsContainer"
-                // 👇 to avoid an error when selecting the whole paragraph by triple-clicking on it
-                //onMouseDown={(e) => { if (e.detail >= 3) e.preventDefault() }}
                 >
 
 

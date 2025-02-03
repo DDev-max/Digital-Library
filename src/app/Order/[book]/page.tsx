@@ -90,7 +90,7 @@ export default function PreOrderPage() {
                         <label
                             className="orderForm_AllInputs_label"
                             htmlFor="book">
-                            Book name
+                            Book title
                             <input
                                 required
                                 className="orderForm_AllInputs_input"
@@ -102,9 +102,7 @@ export default function PreOrderPage() {
                         </label>
                     </p>
 
-
                     <input readOnly name="coordinates" hidden value={markerPosition ? markerPosition.toString() : ""} type="text" />
-
 
                 </div>
 

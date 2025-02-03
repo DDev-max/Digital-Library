@@ -8,7 +8,6 @@ interface extendHighlightEndProps extends Pick<extendHighlight, "spanOpenTag">{
 
 export function extendHighlightEnd({matchedClosingSpan,spanOpenTag}:extendHighlightEndProps){
     
-    //VERIFICAR ANTES DE LLAMAR 👇, PARA NO TESTEARLO AUQI
     if (!matchedClosingSpan) return
     
     const noSpanClose = matchedClosingSpan[0].replace(spanCloseTag, "")
@@ -18,7 +17,7 @@ export function extendHighlightEnd({matchedClosingSpan,spanOpenTag}:extendHighli
 
     const firstPart = matchedClosingSpan.input.slice(0, htmlSelectionStart)
     const lastPart = matchedClosingSpan.input.slice(htmlSelectionEnd)
-
+        
     const existingSpanOpen = firstPart.match(spanOpenRegex)
     if(!existingSpanOpen) return
     

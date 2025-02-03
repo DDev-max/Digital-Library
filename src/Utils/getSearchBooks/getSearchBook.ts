@@ -11,9 +11,9 @@ export async function getSearchBook({setFetchNow,URL}: GetSearchBookProps) {
     const results = await fetchFn<SearchBooksApi>(URL)
     setFetchNow(false)
     
-    //👇 sometimes API returns repeated id
     const idsObj = {};
-
+    
+    //👇 some searches may return repeated ids
     const uniqueBooks = results?.items.filter(item => {
       if (idsObj[item.id])  return false
       idsObj[item.id] = true;

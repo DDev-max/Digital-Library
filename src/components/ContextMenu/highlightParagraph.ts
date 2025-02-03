@@ -7,9 +7,6 @@ import { highlightAgain } from "./highlightAgain"
 
 
 
-//cambiar de userSeleccion ==> userSelection o a originalSelection mejor
-
-
 interface HighlightParagraphProps extends BookContentState, Pick<AlertState, "setAlert"> {
     e: React.MouseEvent<HTMLButtonElement>
     setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
@@ -23,7 +20,7 @@ export function highlightParagraph({ e, setAlert, bookContent, setPosition, para
     const wSelect = window.getSelection()
     if(!wSelect?.toString().trim()) return
     const spanOpenTag = `<span class="${eTarget.classList[1]}">`
-    const paragraphIdx = getParagraphIdx({  paragraphContainer })
+    const paragraphIdx = getParagraphIdx(paragraphContainer)
 
     if (paragraphIdx < 0) {
         wSelect?.removeAllRanges()
@@ -39,7 +36,7 @@ export function highlightParagraph({ e, setAlert, bookContent, setPosition, para
     const newHtml = 
         highlightPlainText({ spanOpenTag, htmlContent: selectedParagraphHtml })
         || 
-        highlightAgain({ bookContent, paragraphContainer, selectedParagraphHtml, setBookContent, setPosition, spanOpenTag })
+        highlightAgain({ bookContent, paragraphContainer, selectedParagraphHtml, setPosition, spanOpenTag })
 
 
 

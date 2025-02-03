@@ -8,8 +8,6 @@ interface removeHighlightProps {
 }
 
 
-//ERROR: cuando se le da a borrar a un texto sin highlight
-
 export function removeHighlight({ highlightToRemove, spanOpenHighlight, htmlParagraph }: removeHighlightProps) {
 
 

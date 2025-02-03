@@ -8,10 +8,11 @@ import { ErrorSearch } from "./ErrorSearch";
 import { useRouter } from "next/navigation";
 import { useSearch } from "hooks/useSearch";
 import { useDebounce } from "hooks/useDebounce";
-import { nResults } from "data/consts";
 import { SearchSVG } from "@/components/svg/SearchSVG";
 import { resetForm } from "./resetForm";
 import { debounceCallBack } from "./debounceCallBack";
+
+
 
 export function Search() {
 
@@ -25,9 +26,10 @@ export function Search() {
     const inputRef = useRef<HTMLInputElement>(null)
 
 
-    const URL = `https://www.googleapis.com/books/v1/volumes?q=${userSearch}&maxResults=${nResults}&fields=items(id,volumeInfo(title,authors))`
+    const URL = `https://www.googleapis.com/books/v1/volumes?q=${userSearch}&maxResults=5&fields=items(id,volumeInfo(title,authors))`
 
     const { data, isLoading, isError, error } = useSearch({ URL, fetchNow, setFetchNow })
+    
     
     const optnsRef = useRef<(HTMLSpanElement | null)[]>([]);
 
@@ -42,6 +44,8 @@ export function Search() {
         return () => document.removeEventListener("click", handleResetForm)
     }, [])
 
+    const nResults = data?.items?.length ?? 0
+    const showError = isError && (userSearch || !isLoading)
 
     return (
         <search
@@ -58,7 +62,7 @@ export function Search() {
 
                 onFocus={() => inputRef.current?.focus()}
                 tabIndex={0}
-                onKeyDown={(e) => selectOptn({ e, optnsRef, setOptnIdx, setUserSearch, isError, userSearch })}
+                onKeyDown={(e) => selectOptn({e,nResults,optnsRef,setOptnIdx,setUserSearch})}
                 className="header_form"
             >
 
@@ -67,7 +71,8 @@ export function Search() {
                 <ul aria-label="Search results" role="listbox" aria-live="polite" className="header_form_searchResults">
                     {(isLoading || fetchNow) && <progress />}
 
-                    <ErrorSearch data={data} error={error} isError={isError} isLoading={isLoading} userSearch={userSearch} />
+                    
+                     {showError && <ErrorSearch data={data} error={error} />}
 
                     {!isError && !fetchNow && userSearch && data && data.items?.map((elmnt, idx) => {
 
@@ -108,7 +113,7 @@ export function Search() {
 
                 <div className="header_inputCont">
 
-                    <button aria-label="Search Books" type="submit">
+                    <button className="header_inputCont_searchBtn" aria-label="Search Books" type="submit">
                         <SearchSVG />
                     </button>
 

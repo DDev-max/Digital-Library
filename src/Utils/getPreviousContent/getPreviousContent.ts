@@ -11,8 +11,7 @@ export function getPreviousContent(from: Node | null) {
 
         fullPreviousHtml =
             (previousElmnt instanceof HTMLElement ? previousElmnt.outerHTML : previousElmnt.textContent || "") +
-            fullPreviousHtml;
-
+            fullPreviousHtml;            
         previousElmnt = previousElmnt.previousSibling
     }
 

@@ -8,8 +8,6 @@ import type { Item } from "data/types"
 
 export function removeAddFav({alreadyAdded,selection,setFavorites}:RemoveAddFavProps){
 
-    if (!selection) return false
-
     if (!alreadyAdded) {
         setFavorites(prev => [...prev, selection])
     }else{

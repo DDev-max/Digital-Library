@@ -8,6 +8,5 @@ interface ResetFormProps{
 
 export function resetForm({e,searchRef,setUserSearch}:ResetFormProps) {
     const targetIsNode = e.target instanceof Node
-
     if (targetIsNode && !searchRef.current?.contains(e.target)) setUserSearch("")
 }

@@ -7,8 +7,6 @@ import type { CSSProperties, Dispatch, RefObject, SetStateAction } from "react";
 import { BookContentState } from "data/types";
 import { getParagraphIdx } from "./getParagraphIdx";
 
-//sacar propr comunes
-
 interface HighlightAgainProps extends Pick<BookContentState, "bookContent"> {
     selectedParagraphHtml: string
     spanOpenTag: string
@@ -47,7 +45,7 @@ export function highlightAgain({ selectedParagraphHtml, spanOpenTag, bookContent
                 ? extendHighlightStart({ matchedOpeningSpan, spanOpenTag })
                 : extendHighlightEnd({ matchedClosingSpan, spanOpenTag })
 
-            if (!extendedHighlighting || extendedHighlighting.match(emptySpanRegex)) return //USAR TEST en VEZ DE MATCH?
+            if (!extendedHighlighting || extendedHighlighting.match(emptySpanRegex)) return
 
             bothTags = false
             return extendedHighlighting
@@ -57,18 +55,16 @@ export function highlightAgain({ selectedParagraphHtml, spanOpenTag, bookContent
     }
 
     if (bothTags) {
-        //SACAR O PASAR 👇
         const range = window.getSelection()?.getRangeAt(0)
         const highlightToRemove =  range?.startContainer.nextSibling?.textContent ?? range?.startContainer.textContent
         if(!highlightToRemove) return        
         
 
-        // como que || undefined
-        const classToSearch = range?.startContainer.parentElement?.className || (range?.startContainer?.nextSibling as HTMLElement).className ||  undefined     
+        const classToSearch = range?.startContainer.parentElement?.className || (range?.startContainer?.nextSibling as HTMLElement).className
 
         const spanOpenHighlight = `<span class="${classToSearch}">`
 
-        const htmlParagraph = bookContent[getParagraphIdx({paragraphContainer})]
+        const htmlParagraph = bookContent[getParagraphIdx(paragraphContainer)]
         
         const paragraphNoHighlight = removeHighlight({htmlParagraph,highlightToRemove,spanOpenHighlight,})
         setPosition({display: "none"})
