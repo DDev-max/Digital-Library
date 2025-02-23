@@ -3,7 +3,7 @@ export default function Loading() {
     <main id='mainContent' className='orderMain'>
       <div className='orderForm'>
         <h1 className='orderForm_h1'>Pre-order a book</h1>
-        <div className='orderForm_AllInputs orderForm_AllInputs--skeleton'></div>
+        <div className='orderForm_inputCont orderForm_inputCont--skeleton'></div>
       </div>
     </main>
   )

@@ -27,45 +27,45 @@ $border: 0.2rem;
     @media (width > variables.$bigBreakPoint) {
       width: 49.3%;
     }
+  }
 
-    &_Img {
-      border-radius: 1rem;
+  &_Img {
+    border-radius: 1rem;
 
-      &--skeleton {
-        @include variables.defaultSkeleton;
-      }
-
-      @media (width < variables.$smallBreakPoint) {
-        margin: auto;
-      }
+    &--skeleton {
+      @include variables.defaultSkeleton;
     }
 
-    &_infoDiv {
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
+    @media (width < variables.$smallBreakPoint) {
+      margin: auto;
+    }
+  }
 
-      &_title {
-        font-size: variables.$bookTitleFntSize;
-        margin: auto;
+  &_infoDiv {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
 
-        &--skeleton {
-          @include variables.defaultSkeleton;
-          height: 1rem;
-          width: clamp(10rem, 30vw, 17rem);
-        }
-      }
+  &_title {
+    font-size: variables.$bookTitleFntSize;
+    margin: auto;
 
-      &_btn {
-        @include variables.btnStyles;
+    &--skeleton {
+      @include variables.defaultSkeleton;
+      height: 1rem;
+      width: clamp(10rem, 30vw, 17rem);
+    }
+  }
 
-        &--skeleton {
-          @include variables.defaultSkeleton;
-        }
-      }
+  &_btn {
+    @include variables.btnStyles;
+
+    &--skeleton {
+      @include variables.defaultSkeleton;
     }
   }
 

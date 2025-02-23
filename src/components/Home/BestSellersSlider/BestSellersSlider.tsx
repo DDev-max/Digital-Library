@@ -39,22 +39,22 @@ export function BSellerSlider({ books, sectionRef, isVisible }: ObservedBookComp
 
           return (
             <article className='slider_bookContainer' key={idx}>
-              <Link className='slider_bookContainer_link' href={`/Read/${bookLink}`} key={info.title}>
+              <Link href={`/Read/${bookLink}`} key={info.title}>
                 <Image
-                  width={130}
+                  width={140}
                   height={225}
                   loading='lazy'
-                  className='slider_bookContainer_link_img'
+                  className='slider_img'
                   src={info.imageLinks.smallThumbnail}
                   alt={`The book cover of "${info.title}"`}
                 />
 
-                <h3 title={info.title} className='slider_bookContainer_link_title'>
+                <h3 title={info.title} className='slider_title'>
                   {info.title}
                 </h3>
               </Link>
 
-              <button className='slider_bookContainer_FavBtn' onClick={() => removeAddFav({ alreadyAdded, selection: elmnt, setFavorites })}>
+              <button className='slider_FavBtn' onClick={() => removeAddFav({ alreadyAdded, selection: elmnt, setFavorites })}>
                 <FavoriteSVG title={alreadyAdded ? 'Remove from favorites list' : 'Add to favorites list'} added={alreadyAdded} />
               </button>
             </article>

@@ -28,33 +28,33 @@
     flex: 1;
     padding: 0 clamp(1rem, 4vw, 7rem);
     text-align: center;
+  }
 
-    &_title {
-      @include variables.shadedHeading;
-      padding: 1rem;
-      font-size: variables.$bookTitleFntSize;
+  &_title {
+    @include variables.shadedHeading;
+    padding: 1rem;
+    font-size: variables.$bookTitleFntSize;
 
-      &--skeleton {
-        @include variables.defaultSkeleton;
-        width: clamp(10rem, 30vw, 20rem);
-        height: 2rem;
-        margin: 0 auto;
-      }
+    &--skeleton {
+      @include variables.defaultSkeleton;
+      width: clamp(10rem, 30vw, 20rem);
+      height: 2rem;
+      margin: 0 auto;
     }
+  }
 
-    &_desc {
-      font-size: variables.$secTxtFntSize;
+  &_link {
+    @include variables.btnStyles;
+    margin: 1rem auto;
+  }
 
-      &--skeleton {
-        @include variables.defaultSkeleton;
-        height: 50%;
-        width: 100%;
-      }
-    }
+  &_desc {
+    font-size: variables.$secTxtFntSize;
 
-    &_link {
-      @include variables.btnStyles;
-      margin: 1rem auto;
+    &--skeleton {
+      @include variables.defaultSkeleton;
+      height: 50%;
+      width: 100%;
     }
   }
 }

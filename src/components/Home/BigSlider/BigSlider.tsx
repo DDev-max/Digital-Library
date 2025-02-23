@@ -17,10 +17,10 @@ export function BigSlider() {
               className='bigSlider_bg'
               style={{ display: imgIdx === idx ? 'flex' : 'none', background: `linear-gradient(${elmnt.bgColor})` }}
             >
-              <div className='bigSlider_bg_contInfo'>
-                <Image priority width={480} height={300} className='bigSlider_bg_contInfo_Img' key={elmnt.id} src={elmnt.ImgLink} alt={elmnt.alt} />
+              <div className='bigSlider_contInfo'>
+                <Image priority width={480} height={300} className='bigSlider_Img' key={elmnt.id} src={elmnt.ImgLink} alt={elmnt.alt} />
 
-                <h2 style={{ color: elmnt.txtColor }} className='bigSlider_bg_contInfo_title'>
+                <h2 style={{ color: elmnt.txtColor }} className='bigSlider_title'>
                   {elmnt.alt}
                 </h2>
               </div>
@@ -39,7 +39,7 @@ export function BigSlider() {
               aria-controls='slider'
               key={idx}
               onClick={() => setImgIdx(idx)}
-              className={`bigSlider_footer_imgNumber ${imgIdx === idx ? ' bigSlider_footer_imgNumber--selected' : ''}`}
+              className={`bigSlider_imgNumber ${imgIdx === idx ? ' bigSlider_imgNumber--selected' : ''}`}
             ></button>
           )
         })}

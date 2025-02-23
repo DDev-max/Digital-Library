@@ -7,6 +7,21 @@
   border-radius: 1rem;
   transform: variables.$defaultPosition;
 
+  &_img {
+    // height: 14rem;
+    // width: auto;
+    display: flex;
+    margin: auto;
+  }
+
+  &_title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: variables.$bookTitleFntSize;
+    text-align: center;
+  }
+
   &_h2 {
     @include variables.shadedHeading;
 
@@ -51,26 +66,9 @@
       height: 15rem;
       @include variables.defaultSkeleton;
     }
+  }
 
-    &_link {
-      &_img {
-        height: 14rem;
-        width: auto;
-        display: flex;
-        margin: auto;
-      }
-
-      &_title {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        font-size: variables.$bookTitleFntSize;
-        text-align: center;
-      }
-    }
-
-    &_FavBtn {
-      @include variables.favBtn;
-    }
+  &_FavBtn {
+    @include variables.favBtn;
   }
 }

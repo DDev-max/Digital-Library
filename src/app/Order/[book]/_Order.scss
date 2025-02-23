@@ -18,7 +18,7 @@
     margin: 0.5rem;
   }
 
-  &_AllInputs {
+  &_inputCont {
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -29,22 +29,22 @@
       border-radius: 2rem;
       @include variables.defaultSkeleton;
     }
+  }
 
-    &_label {
-      display: flex;
-      align-items: center;
-    }
+  &_label {
+    display: flex;
+    align-items: center;
+  }
 
-    &_input {
-      margin-left: auto;
-      padding: 1rem;
-      border-radius: 0.7rem;
-      background-color: variables.$SecColor;
-      color: white;
+  &_input {
+    margin-left: auto;
+    padding: 1rem;
+    border-radius: 0.7rem;
+    background-color: variables.$SecColor;
+    color: white;
 
-      &::placeholder {
-        color: variables.$TxtColor;
-      }
+    &::placeholder {
+      color: variables.$TxtColor;
     }
   }
 

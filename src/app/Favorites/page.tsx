@@ -22,17 +22,17 @@ export default function FavoritePage() {
           const alreadyAdded = favorites.some(fav => fav.id === elmnt.id)
 
           return (
-            <article key={elmnt.id} className='favPage_article'>
+            <article key={elmnt.id} className='bookElmnt'>
               <Image
-                className='favPage_article_Img'
+                className='bookElmnt_img'
                 width={150}
                 height={224}
                 src={elmnt.volumeInfo.imageLinks.smallThumbnail}
                 alt={elmnt.volumeInfo.title}
               />
-              <p className='favPage_article_title'>{ellipsisText({ maxLength: 23, text: elmnt.volumeInfo.title })}</p>
+              <p className='bookElmnt_title'>{ellipsisText({ maxLength: 23, text: elmnt.volumeInfo.title })}</p>
 
-              <TrashSVG classNameBtn='favPage_article_trashBtn' onClick={() => removeAddFav({ alreadyAdded, selection: elmnt, setFavorites })} />
+              <TrashSVG classNameBtn='bookElmnt_trashBtn' onClick={() => removeAddFav({ alreadyAdded, selection: elmnt, setFavorites })} />
             </article>
           )
         })}

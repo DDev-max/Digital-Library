@@ -15,27 +15,36 @@
   &_Grid {
     @include variables.gridResponsive;
   }
+}
 
-  &_article {
-    @extend .MultipleProducts_article;
+.bookElmnt {
+  @extend .MultipleProducts_article;
+  align-items: center;
+
+  &--skeleton {
+    @include variables.defaultSkeleton;
+    width: 12.5rem;
+    height: 18rem;
+  }
+
+  &_img {
+    height: 14rem;
+    width: auto;
+  }
+
+  &_title {
+    padding: 0.8rem 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
     align-items: center;
 
-    &--skeleton {
-      @include variables.defaultSkeleton;
-      width: 12.5rem;
-      height: 18rem;
-    }
+    width: 12rem;
+    height: 3rem;
+    font-size: variables.$bookTitleFntSize;
+  }
 
-    &_Img {
-      @extend .MultipleProducts_article_link_Img;
-    }
-
-    &_title {
-      @extend .MultipleProducts_article_link_title;
-    }
-
-    &_trashBtn {
-      @include variables.defaultBtn;
-    }
+  &_trashBtn {
+    @include variables.defaultBtn;
   }
 }

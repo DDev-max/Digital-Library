@@ -1,0 +1,108 @@
+@use "../../../Sass/variables";
+
+$borders: 0.2rem;
+
+.search {
+  margin-left: auto;
+  margin: auto 0 auto auto;
+
+  &_form {
+    width: 100%;
+    position: relative;
+    display: flex;
+    margin-left: auto;
+
+    &:focus-within .search_input {
+      width: 100%;
+      opacity: 1;
+      visibility: visible;
+      border-left: $borders solid variables.$SecColor;
+      border-top: 0;
+      border-bottom: 0;
+    }
+
+    &:focus-within .search_searchResults {
+      display: flex;
+      opacity: 1;
+      width: 100%;
+      pointer-events: auto;
+    }
+
+    &:focus-within .search_searchBtn {
+      border-right: $borders solid variables.$SecColor;
+    }
+  }
+
+  &_searchResults {
+    list-style: none;
+    transition: 0.1s all ease;
+    opacity: 0;
+    width: 0;
+    background-color: variables.$SecColor;
+    color: variables.$TxtColor;
+    height: auto;
+    position: absolute;
+    z-index: 1;
+    text-wrap: nowrap;
+    flex-direction: column;
+    gap: 0.2rem;
+    top: 100%;
+    right: 0;
+    border: $borders solid variables.$SecColor;
+    border-top: 0;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    box-sizing: border-box;
+    pointer-events: none;
+  }
+
+  &_error {
+    text-wrap: auto;
+    padding: 0.5rem;
+  }
+
+  &_result {
+    background-color: variables.$PrimaryColor;
+    padding: 0.5rem;
+
+    &--selected {
+      background-color: variables.$SecColor;
+      padding: 0.5rem;
+    }
+  }
+
+  &_title {
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  &_author {
+    font-size: 0.5em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    margin: 0.3rem 0;
+  }
+
+  &_inputCont {
+    display: flex;
+    flex-direction: row-reverse;
+    pointer-events: all;
+  }
+
+  &_searchBtn {
+    background-color: transparent;
+    color: rgb(167, 167, 167);
+    border: none;
+    cursor: pointer;
+  }
+
+  &_input {
+    transition: 0.2s width ease;
+    width: 0;
+    opacity: 0;
+    visibility: hidden;
+  }
+}

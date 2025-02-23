@@ -43,7 +43,7 @@ export function Search() {
   const showError = isError && (userSearch || !isLoading)
 
   return (
-    <search ref={searchRef} className='header_search'>
+    <search ref={searchRef} className='search'>
       <form
         id='searchForm'
         onSubmit={e => {
@@ -55,9 +55,9 @@ export function Search() {
         onFocus={() => inputRef.current?.focus()}
         tabIndex={0}
         onKeyDown={e => selectOptn({ e, nResults, optnsRef, setOptnIdx, setUserSearch })}
-        className='header_form'
+        className='search_form'
       >
-        <ul aria-label='Search results' role='listbox' aria-live='polite' className='header_form_searchResults'>
+        <ul aria-label='Search results' role='listbox' aria-live='polite' className='search_searchResults'>
           {(isLoading || fetchNow) && <progress />}
 
           {showError && <ErrorSearch data={data} error={error} />}
@@ -74,7 +74,7 @@ export function Search() {
                   aria-selected={idx === optnIdx}
                   role='option'
                   onClick={() => searchOptn({ bookName, inputRef, router, setUserSearch })}
-                  className={`header_form_searchResults_result  ${optnIdx == idx ? 'header_form_searchResults_result--selected' : ''}`}
+                  className={`search_result  ${optnIdx == idx ? 'search_result--selected' : ''}`}
                   key={elmnt.id}
                   translate='no'
                 >
@@ -82,19 +82,19 @@ export function Search() {
                     ref={element => {
                       optnsRef.current[idx] = element
                     }}
-                    className='header_form_searchResults_result_title'
+                    className='search_title'
                   >
                     {bookName}
                   </span>
 
-                  {elmnt.volumeInfo.authors?.[0] && <span className='header_form_searchResults_result_author'>{elmnt?.volumeInfo?.authors[0]}</span>}
+                  {elmnt.volumeInfo.authors?.[0] && <span className='search_author'>{elmnt?.volumeInfo?.authors[0]}</span>}
                 </li>
               )
             })}
         </ul>
 
-        <div className='header_inputCont'>
-          <button className='header_inputCont_searchBtn' aria-label='Search Books' type='submit'>
+        <div className='search_inputCont'>
+          <button className='search_searchBtn' aria-label='Search Books' type='submit'>
             <SearchSVG />
           </button>
 
@@ -103,7 +103,7 @@ export function Search() {
             value={userSearch}
             onChange={event => inputChange({ event, setUserSearch })}
             onKeyDown={handleKeyDown}
-            className='header_inputCont_input'
+            className='search_input'
             aria-label='Search for a book'
             placeholder='Search books'
             type='search'

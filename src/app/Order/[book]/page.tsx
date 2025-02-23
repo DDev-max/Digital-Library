@@ -27,12 +27,12 @@ export default function PreOrderPage() {
           Pre-order a book
         </h1>
 
-        <div className='orderForm_AllInputs'>
+        <div className='orderForm_inputCont'>
           <p>
-            <label className='orderForm_AllInputs_label' htmlFor='name'>
+            <label className='orderForm_label' htmlFor='name'>
               Name
               <input
-                className='orderForm_AllInputs_input'
+                className='orderForm_input'
                 onChange={nameInputChange}
                 pattern={nameInputRegex.source}
                 required
@@ -46,10 +46,10 @@ export default function PreOrderPage() {
           </p>
 
           <p>
-            <label className='orderForm_AllInputs_label' htmlFor='phone'>
+            <label className='orderForm_label' htmlFor='phone'>
               Phone
               <input
-                className='orderForm_AllInputs_input'
+                className='orderForm_input'
                 minLength={9}
                 maxLength={9}
                 placeholder='1234-5678'
@@ -64,10 +64,10 @@ export default function PreOrderPage() {
           </p>
 
           <p>
-            <label className='orderForm_AllInputs_label' htmlFor='email'>
+            <label className='orderForm_label' htmlFor='email'>
               Email
               <input
-                className='orderForm_AllInputs_input'
+                className='orderForm_input'
                 onChange={emailInputChange}
                 placeholder='example@gmail.com'
                 pattern={emailInputRegex.source}
@@ -80,9 +80,9 @@ export default function PreOrderPage() {
           </p>
 
           <p>
-            <label className='orderForm_AllInputs_label' htmlFor='book'>
+            <label className='orderForm_label' htmlFor='book'>
               Book title
-              <input required className='orderForm_AllInputs_input' type='text' name='book' id='book' defaultValue={bookNameConv} />
+              <input required className='orderForm_input' type='text' name='book' id='book' defaultValue={bookNameConv} />
             </label>
           </p>
 

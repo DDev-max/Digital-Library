@@ -23,8 +23,8 @@ export function MultipleProducts({ books, sectionRef, isVisible }: ObservedBookC
 
           return (
             <article key={info.title} className='MultipleProducts_article'>
-              <Link className='MultipleProducts_article_link' href={`/Read/${bookLink}`}>
-                <h3 title={info.title} className='MultipleProducts_article_link_title'>
+              <Link className='MultipleProducts_link' href={`/Read/${bookLink}`}>
+                <h3 title={info.title} className='bookElmnt_title'>
                   {ellipsisText({ maxLength: 23, text: info.title })}
                 </h3>
 
@@ -32,13 +32,13 @@ export function MultipleProducts({ books, sectionRef, isVisible }: ObservedBookC
                   width={172}
                   height={288}
                   loading='lazy'
-                  className='MultipleProducts_article_link_Img'
+                  className='bookElmnt_img'
                   src={info.imageLinks.smallThumbnail}
                   alt={`The book cover of "${info.title}"`}
                 />
               </Link>
 
-              <button className='MultipleProducts_article_FavBtn' onClick={() => removeAddFav({ alreadyAdded, selection: elmnt, setFavorites })}>
+              <button className='MultipleProducts_FavBtn' onClick={() => removeAddFav({ alreadyAdded, selection: elmnt, setFavorites })}>
                 <FavoriteSVG added={alreadyAdded} title={alreadyAdded ? 'Remove from favorites list' : 'Add to favorites list'} />
               </button>
             </article>

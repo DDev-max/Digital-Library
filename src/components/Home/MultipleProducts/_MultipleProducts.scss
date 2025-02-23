@@ -39,40 +39,23 @@
       height: 20rem;
       width: 12rem;
     }
+  }
 
-    &_link {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0.5rem;
+  &_link {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
 
-      @media (width < variables.$mediumBreakpoint) {
-        padding: 0;
-      }
-
-      &_title {
-        padding: 0.8rem 0;
-        margin: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        width: 12rem;
-        height: 3rem;
-        font-size: variables.$bookTitleFntSize;
-      }
-
-      &_Img {
-        height: 14rem;
-        width: auto;
-      }
+    @media (width < variables.$mediumBreakpoint) {
+      padding: 0;
     }
+  }
 
-    &_FavBtn {
-      @include variables.favBtn;
-      border-bottom: solid 0.2rem variables.$SecColor;
-      border-radius: 1rem;
-    }
+  &_FavBtn {
+    @include variables.favBtn;
+    border-bottom: solid 0.2rem variables.$SecColor;
+    border-radius: 1rem;
   }
 }

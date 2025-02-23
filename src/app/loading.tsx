@@ -1,8 +1,8 @@
-import { BestSellersSkeleton } from '@/components/Skeletons/BestSellersSkeleton'
-import { BigSliderSkeleton } from '@/components/Skeletons/BigSliderSkeleton'
-import { HorizontalProductsSkeleton } from '@/components/Skeletons/HorizontalProductsSkeleton'
-import { MultipleProductsSkeleton } from '@/components/Skeletons/MultipleProducts.Skeleton'
-import { SingleProductSkeleton } from '@/components/Skeletons/SingleProductSkeleton'
+import { BestSellersSkeleton } from '@/components/Home/BestSellersSlider/BestSellersSkeleton'
+import { BigSliderSkeleton } from '@/components/Home/BigSlider/BigSliderSkeleton'
+import { HorizontalProductsSkeleton } from '@/components/Home/HorizontalProducts/HorizontalProductsSkeleton'
+import { MultipleProductsSkeleton } from '@/components/Home/MultipleProducts/MultipleProducts.Skeleton'
+import { SingleProductSkeleton } from '@/components/Home/SingleProduct/SingleProductSkeleton'
 
 export default function Loading() {
   return (

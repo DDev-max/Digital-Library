@@ -18,11 +18,11 @@ export function SingleProduct({ books, sectionRef, isVisible }: ObservedBookComp
       />
 
       <div className='singleProduct_infoCont'>
-        <h2 className='singleProduct_infoCont_title'>{books[0].volumeInfo.title}</h2>
+        <h2 className='singleProduct_title'>{books[0].volumeInfo.title}</h2>
 
-        <p className='singleProduct_infoCont_desc'>{ellipsisText({ maxLength: 250, text: books[0].volumeInfo.description })}</p>
+        <p className='singleProduct_desc'>{ellipsisText({ maxLength: 250, text: books[0].volumeInfo.description })}</p>
 
-        <Link className='singleProduct_infoCont_link' href={`/Read/${encodeURIComponent(books[0].volumeInfo.title)}`}>
+        <Link className='singleProduct_link' href={`/Read/${encodeURIComponent(books[0].volumeInfo.title)}`}>
           Read Now
         </Link>
       </div>
