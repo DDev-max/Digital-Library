@@ -1,43 +1,38 @@
 @use "../../../Sass/variables";
 
+.readBook {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-.readBook{
+  &_h1 {
+    text-align: center;
+    margin: 1rem;
+    position: relative;
+    background-color: variables.$SecColor;
+    padding: 0.5rem;
+
+    &--skeleton {
+      height: 2rem;
+      width: clamp(10rem, 50vw, 30rem);
+      @include variables.defaultSkeleton;
+    }
+  }
+
+  &_paragraphsContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    
-    
-    
-    
-    &_h1{
-        text-align: center;
-        margin: 1rem;
-        position: relative;
-        background-color: variables.$SecColor;
-        padding: .5rem;
+    gap: 0.9rem;
+    white-space: pre-wrap;
+    margin-top: 1rem;
+    padding: 0 1rem 1rem 1rem;
+    line-height: 1.2rem;
+    max-width: 70rem;
 
-        &--skeleton{
-            height: 2rem;
-            width: clamp(10rem, 50vw, 30rem);
-            @include variables.defaultSkeleton;
-        }
+    &--skeleton {
+      height: 100vh;
+      width: 80vw;
+      @include variables.defaultSkeleton;
     }
-
-    &_paragraphsContainer{
-        display: flex;
-        flex-direction: column;
-        gap: .9rem;
-        white-space: pre-wrap;
-        margin-top: 1rem;
-        padding: 0 1rem 1rem 1rem;
-        line-height: 1.2rem;
-        max-width: 70rem;
-
-        &--skeleton{
-            height: 100vh;
-            width: 80vw;
-            @include variables.defaultSkeleton;
-        }
-    }
+  }
 }
-

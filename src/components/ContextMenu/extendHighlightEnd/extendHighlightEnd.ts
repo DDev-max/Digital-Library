@@ -1,30 +1,28 @@
-import { spanCloseTag, spanOpenRegex } from "data/consts"
-import type { extendHighlight } from "data/types"
+import { spanCloseTag, spanOpenRegex } from 'data/consts'
+import type { extendHighlight } from 'data/types'
 
-interface extendHighlightEndProps extends Pick<extendHighlight, "spanOpenTag">{
-    matchedClosingSpan: RegExpExecArray | null
+interface extendHighlightEndProps extends Pick<extendHighlight, 'spanOpenTag'> {
+  matchedClosingSpan: RegExpExecArray | null
 }
 
+export function extendHighlightEnd({ matchedClosingSpan, spanOpenTag }: extendHighlightEndProps) {
+  if (!matchedClosingSpan) return
 
-export function extendHighlightEnd({matchedClosingSpan,spanOpenTag}:extendHighlightEndProps){
-    
-    if (!matchedClosingSpan) return
-    
-    const noSpanClose = matchedClosingSpan[0].replace(spanCloseTag, "")
+  const noSpanClose = matchedClosingSpan[0].replace(spanCloseTag, '')
 
-    const htmlSelectionStart = matchedClosingSpan.index
-    const htmlSelectionEnd = htmlSelectionStart + matchedClosingSpan[0].length
+  const htmlSelectionStart = matchedClosingSpan.index
+  const htmlSelectionEnd = htmlSelectionStart + matchedClosingSpan[0].length
 
-    const firstPart = matchedClosingSpan.input.slice(0, htmlSelectionStart)
-    const lastPart = matchedClosingSpan.input.slice(htmlSelectionEnd)
-        
-    const existingSpanOpen = firstPart.match(spanOpenRegex)
-    if(!existingSpanOpen) return
-    
+  const firstPart = matchedClosingSpan.input.slice(0, htmlSelectionStart)
+  const lastPart = matchedClosingSpan.input.slice(htmlSelectionEnd)
 
-    const newHMTL = existingSpanOpen[existingSpanOpen.length - 1] == spanOpenTag
-    ? firstPart+noSpanClose+spanCloseTag+lastPart
-    : firstPart+spanCloseTag+spanOpenTag+noSpanClose+spanCloseTag+lastPart
+  const existingSpanOpen = firstPart.match(spanOpenRegex)
+  if (!existingSpanOpen) return
 
-    return newHMTL
+  const newHTML =
+    existingSpanOpen[existingSpanOpen.length - 1] == spanOpenTag
+      ? firstPart + noSpanClose + spanCloseTag + lastPart
+      : firstPart + spanCloseTag + spanOpenTag + noSpanClose + spanCloseTag + lastPart
+
+  return newHTML
 }

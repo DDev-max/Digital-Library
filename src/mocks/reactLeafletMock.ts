@@ -1,9 +1,9 @@
-const setView = jest.fn();
+const setView = jest.fn()
 
 const useMap = jest.fn(() => ({
-    setView,
-}));
+  setView,
+}))
 
 module.exports = {
-    useMap,
-};
+  useMap,
+}

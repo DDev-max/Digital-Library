@@ -4,16 +4,14 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: clamp(.7rem, 2vw, 1.5rem);
+  padding: clamp(0.7rem, 2vw, 1.5rem);
 }
-
 
 .fullError {
   padding: 1rem;
   margin: 1rem;
-  background-color: variables.$SecColor
+  background-color: variables.$SecColor;
 }
-
 
 .skipLink {
   @include variables.btnStyles;
@@ -27,9 +25,7 @@
   left: 11rem;
 }
 
-
 main .visibleElmnt {
   transform: translateX(0);
-  transition: transform .7s ease-out;
-
+  transition: transform 0.7s ease-out;
 }

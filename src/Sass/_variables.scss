@@ -1,11 +1,11 @@
 $PrimaryColor: rgb(17, 10, 43);
 $SecColor: #2e278b;
 $TxtColor: rgb(167, 167, 167);
-$SectionBgClr:  #201644;
-$marginSectn : 0 1rem;
+$SectionBgClr: #201644;
+$marginSectn: 0 1rem;
 $bookTitleFntSize: clamp(1.1rem, 2vw, 1.5rem);
-$secTxtFntSize: clamp(1rem,1vw,1.2rem);
-$headingsFntSize: clamp(1.9rem, 3vw ,2.1rem);
+$secTxtFntSize: clamp(1rem, 1vw, 1.2rem);
+$headingsFntSize: clamp(1.9rem, 3vw, 2.1rem);
 $defaultPosition: translateX(-90%);
 
 $mediumBreakpoint: 600px;
@@ -13,90 +13,87 @@ $mediumBreakpoint2: 535px;
 $bigBreakPoint: 800px;
 $smallBreakPoint: 350px;
 
-
 $highlightColors: (
-    "first" : (
-        bgColor: rgb(98, 144, 228),
-        txtColor: rgb(0, 0, 0)
-    ),
-    "second": (
-        bgColor: rgb(235, 162, 4),
-        txtColor: rgb(0, 0, 0)
-    ),
-    "third" : (
-        bgColor: rgb(67, 175, 67),
-        txtColor: rgb(0, 0, 0)
-    ),
-    "fourth": (
-        bgColor: rgb(209, 31, 40),
-        txtColor: rgb(255, 255, 255)
-    )
+  "first": (
+    bgColor: rgb(98, 144, 228),
+    txtColor: rgb(0, 0, 0),
+  ),
+  "second": (
+    bgColor: rgb(235, 162, 4),
+    txtColor: rgb(0, 0, 0),
+  ),
+  "third": (
+    bgColor: rgb(67, 175, 67),
+    txtColor: rgb(0, 0, 0),
+  ),
+  "fourth": (
+    bgColor: rgb(209, 31, 40),
+    txtColor: rgb(255, 255, 255),
+  ),
 );
 
-
-@mixin favBtn{
-    margin-top: auto;
-    background-color: transparent;
-    border: none;
-    color: $TxtColor;
+@mixin favBtn {
+  margin-top: auto;
+  background-color: transparent;
+  border: none;
+  color: $TxtColor;
 }
 
-@mixin colorBtn($size, $bgColor, $padding){
-    background-color: $bgColor;
-    width: $size;
-    height: $size;
-    padding: $padding;
-    border-radius: 50%;
-    border: 2px solid rgb(0, 0, 0);
+@mixin colorBtn($size, $bgColor, $padding) {
+  background-color: $bgColor;
+  width: $size;
+  height: $size;
+  padding: $padding;
+  border-radius: 50%;
+  border: 2px solid rgb(0, 0, 0);
 }
 
-@mixin defaultBtn{
-    background-color: transparent;
-    border: none;
-    color: $TxtColor;
-    cursor: pointer;
+@mixin defaultBtn {
+  background-color: transparent;
+  border: none;
+  color: $TxtColor;
+  cursor: pointer;
 }
 
-@mixin gridResponsive{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 1rem;
-    place-items: center;
+@mixin gridResponsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+  place-items: center;
 }
 
-@mixin btnStyles{
-    border: .1rem solid;
-    padding: .7rem;
-    border-radius: 1rem;
-    background-color: transparent;
-    margin: auto 1rem 2rem 1rem;
-    color: $TxtColor;
-    width: 6rem;
-    cursor: pointer;
+@mixin btnStyles {
+  border: 0.1rem solid;
+  padding: 0.7rem;
+  border-radius: 1rem;
+  background-color: transparent;
+  margin: auto 1rem 2rem 1rem;
+  color: $TxtColor;
+  width: 6rem;
+  cursor: pointer;
 
-    font-size: $secTxtFntSize;
+  font-size: $secTxtFntSize;
 }
 
-@mixin shadedHeading{
-    display: inline-block;
-    background-color: $PrimaryColor;
-    box-shadow: inset .3rem .3rem .3rem #000;
-    border-radius: 2rem;
-    font-size: $headingsFntSize;
+@mixin shadedHeading {
+  display: inline-block;
+  background-color: $PrimaryColor;
+  box-shadow: inset 0.3rem 0.3rem 0.3rem #000;
+  border-radius: 2rem;
+  font-size: $headingsFntSize;
 }
 
-
-@mixin defaultSkeleton{
-    background-color: #382c66;
-    animation:  skeletonFlick 1.2s infinite ease-in-out;
+@mixin defaultSkeleton {
+  background-color: #382c66;
+  animation: skeletonFlick 1.2s infinite ease-in-out;
 }
-
 
 @keyframes skeletonFlick {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }

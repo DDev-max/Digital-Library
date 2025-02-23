@@ -1,18 +1,12 @@
-import type { AlertState } from "../../data/types";
-import { newAlert } from "../newAlert";
+import type { AlertState } from '../../data/types'
+import { newAlert } from '../newAlert'
 
-export function copyTxt({ setAlert }: Pick<AlertState, "setAlert">) {
+export function copyTxt({ setAlert }: Pick<AlertState, 'setAlert'>) {
+  const selection = window.getSelection()?.toString()
 
-    const selection = window.getSelection()?.toString()
-    
-    if (!selection) return
+  if (!selection) return
 
-    
-
-    navigator.clipboard.writeText(selection)
-        .then(() => {
-            
-            newAlert({ setAlert, string: "Text Copied" })
-        })
-
+  navigator.clipboard.writeText(selection).then(() => {
+    newAlert({ setAlert, string: 'Text Copied' })
+  })
 }

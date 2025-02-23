@@ -1,11 +1,11 @@
 @use "../../Sass/variables";
 
-$borders: .2rem;
+$borders: 0.2rem;
 
 .header {
   display: flex;
   flex-wrap: wrap;
-  padding: .5rem;
+  padding: 0.5rem;
   position: relative;
 
   &_h1 {
@@ -16,8 +16,6 @@ $borders: .2rem;
       display: none;
     }
   }
-
-
 
   &_favListIcon {
     margin: auto;
@@ -47,14 +45,11 @@ $borders: .2rem;
 
     &:focus-within .header_searchBtn {
       border-right: $borders solid variables.$SecColor;
-
     }
-
-
 
     &_searchResults {
       list-style: none;
-      transition: .1s all ease;
+      transition: 0.1s all ease;
       opacity: 0;
       width: 0;
       background-color: variables.$SecColor;
@@ -64,37 +59,36 @@ $borders: .2rem;
       z-index: 1;
       text-wrap: nowrap;
       flex-direction: column;
-      gap: .2rem;
+      gap: 0.2rem;
       top: 100%;
       right: 0;
       border: $borders solid variables.$SecColor;
       border-top: 0;
-      border-bottom-left-radius: .5rem;
-      border-bottom-right-radius: .5rem;
+      border-bottom-left-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
       box-sizing: border-box;
       pointer-events: none;
 
       &_error {
         text-wrap: auto;
-        padding: .5rem;
+        padding: 0.5rem;
       }
 
       &_result {
         background-color: variables.$PrimaryColor;
-        padding: .5rem;
+        padding: 0.5rem;
 
         &--selected {
           background-color: variables.$SecColor;
-          padding: .5rem;
-
+          padding: 0.5rem;
         }
 
         &_author {
-          font-size: .5em;
+          font-size: 0.5em;
           text-overflow: ellipsis;
           overflow: hidden;
           display: block;
-          margin: .3rem 0;
+          margin: 0.3rem 0;
         }
 
         &_title {
@@ -103,21 +97,14 @@ $borders: .2rem;
           overflow: hidden;
           cursor: pointer;
         }
-
       }
-
     }
-
-
-
   }
 
   &_search {
     margin-left: auto;
     margin: auto 0 auto auto;
   }
-
-
 
   &_inputCont {
     display: flex;
@@ -129,34 +116,23 @@ $borders: .2rem;
       color: rgb(167, 167, 167);
       border: none;
       cursor: pointer;
-
     }
 
     &_input {
-      transition: .2s width ease;
+      transition: 0.2s width ease;
       width: 0;
       opacity: 0;
       visibility: hidden;
-
     }
-
   }
-
-
 
   &_LinkContainer {
     display: flex;
     text-decoration: none;
-    margin: 0 .5rem;
-
+    margin: 0 0.5rem;
   }
 
   &_aside {
-    margin: auto .5rem auto 1rem;
-
-
+    margin: auto 0.5rem auto 1rem;
   }
-
-
-
 }

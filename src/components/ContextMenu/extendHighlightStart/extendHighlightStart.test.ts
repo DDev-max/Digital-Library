@@ -1,37 +1,37 @@
-import { extendHighlightStart } from "./extendHighlightStart"
+import { extendHighlightStart } from './extendHighlightStart';
 
 const matchedOpeningSpan = {
-    0: 'the <span class="contextMenu_color--first">user',
-    index: 62,
-    input: 'The first property of "matchedOpeningSpan" its supposed to be the <span class="contextMenu_color--first">user selection</span> inside the html'
+  0: 'the <span class="contextMenu_color--first">user',
+  index: 62,
+  input:
+    'The first property of "matchedOpeningSpan" its supposed to be the <span class="contextMenu_color--first">user selection</span> inside the html',
+} as RegExpExecArray;
 
-} as RegExpExecArray
+it('should extend the end of the highlight of a selection of the same color', () => {
+  const spanOpenTag = '<span class="contextMenu_color--first">';
+  const returnedHtml = extendHighlightStart({ matchedOpeningSpan, spanOpenTag });
 
+  const extendedHighlight =
+    'The first property of "matchedOpeningSpan" its supposed to be <span class="contextMenu_color--first">the user selection</span> inside the html';
 
-it("should extend the end of the highlight of a selection of the same color", () => {
-    const spanOpenTag = '<span class="contextMenu_color--first">'
-    const returnedHtml = extendHighlightStart({ matchedOpeningSpan, spanOpenTag })
+  expect(returnedHtml).toBe(extendedHighlight);
+});
 
-    const extendedHighlight = 'The first property of "matchedOpeningSpan" its supposed to be <span class="contextMenu_color--first">the user selection</span> inside the html'
+it('should extend the end of the highlight of a selection of a different color', () => {
+  const spanOpenTag = '<span class="contextMenu_color--second">';
+  const returnedHtml = extendHighlightStart({ matchedOpeningSpan, spanOpenTag });
 
-    expect(returnedHtml).toBe(extendedHighlight)
+  const extendedHighlight =
+    'The first property of "matchedOpeningSpan" its supposed to be <span class="contextMenu_color--second">the user</span><span class="contextMenu_color--first"> selection</span> inside the html';
 
-})
+  expect(returnedHtml).toBe(extendedHighlight);
+});
 
-it("should extend the end of the highlight of a selection of a different color", () => {
-    const spanOpenTag = '<span class="contextMenu_color--second">'
-    const returnedHtml = extendHighlightStart({ matchedOpeningSpan, spanOpenTag })
+it('shouldnt return if theres no matchedOpeningSpan', () => {
+  const matchedOpeningSpan = null;
 
-    const extendedHighlight = 'The first property of "matchedOpeningSpan" its supposed to be <span class="contextMenu_color--second">the user</span><span class="contextMenu_color--first"> selection</span> inside the html'
+  const spanOpenTag = '<span class="contextMenu_color--first">';
+  const returnedHtml = extendHighlightStart({ matchedOpeningSpan, spanOpenTag });
 
-    expect(returnedHtml).toBe(extendedHighlight)
-})
-
-it("shouldnt return if theres no matchedOpeningSpan", ()=>{
-    const matchedOpeningSpan = null;
-
-    const spanOpenTag = '<span class="contextMenu_color--first">'
-    const returnedHtml = extendHighlightStart({matchedOpeningSpan,spanOpenTag})
-
-    expect(returnedHtml).toBeUndefined()
-})
+  expect(returnedHtml).toBeUndefined();
+});

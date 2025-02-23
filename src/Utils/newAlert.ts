@@ -1,17 +1,15 @@
-import type { AlertState } from "data/types"
+import type { AlertState } from 'data/types'
 
-interface NewAlertProps extends Pick<AlertState, "setAlert">{
-    string: string
+interface NewAlertProps extends Pick<AlertState, 'setAlert'> {
+  string: string
 }
 
-export function newAlert({setAlert,string}: NewAlertProps){
+export function newAlert({ setAlert, string }: NewAlertProps) {
+  setAlert(string)
 
-    setAlert(string)
-        
-    setTimeout(() => {
-        setAlert("")
-    }, 2000)
+  setTimeout(() => {
+    setAlert('')
+  }, 2000)
 
-    
-    return
+  return
 }

@@ -1,34 +1,32 @@
 @use "./variables";
 
-*{
-    padding: 0;
-    margin: 0;
-  }
-  
-  body{
-    background-color: variables.$PrimaryColor;
-    color:  variables.$TxtColor;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 100;
-    padding-bottom: 2rem;
-  }
-  
-  svg{
-    width: 3rem;
-    fill: currentColor;
-  }
+* {
+  padding: 0;
+  margin: 0;
+}
 
-  .svg--added{
-    fill: rgb(191, 42, 228);
-  }
+body {
+  background-color: variables.$PrimaryColor;
+  color: variables.$TxtColor;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 100;
+  padding-bottom: 2rem;
+}
 
-  a{
-    color: currentColor;
-  }
+svg {
+  width: 3rem;
+  fill: currentColor;
+}
 
-  p::selection{
-    color: white;
-    background-color: variables.$SecColor;
-  }
+.svg--added {
+  fill: rgb(191, 42, 228);
+}
 
+a {
+  color: currentColor;
+}
 
+p::selection {
+  color: white;
+  background-color: variables.$SecColor;
+}

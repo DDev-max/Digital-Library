@@ -1,44 +1,26 @@
-"use client"
+'use client'
 
-import { Alert } from "@/components/Alert/Alert";
-import { ContxtMenu } from "@/components/ContextMenu/ContxtMenu"
-import { useRef, useState } from "react"
-
+import { Alert } from '@/components/Alert/Alert'
+import { ContxtMenu } from '@/components/ContextMenu/ContxtMenu'
+import { useRef, useState } from 'react'
 
 export function ReadBook({ plainBookContent }: { plainBookContent: string[] }) {
+  const [bookContent, setBookContent] = useState(plainBookContent)
+  const [alert, setAlert] = useState('')
 
-    const [bookContent, setBookContent] = useState(plainBookContent)
-    const [alert, setAlert] = useState("")
+  const paragraphContainerRef = useRef<HTMLDivElement>(null)
 
-    const paragraphContainerRef = useRef<HTMLDivElement>(null)
+  return (
+    <>
+      <ContxtMenu paragraphContainer={paragraphContainerRef} setAlert={setAlert} bookContent={bookContent} setBookContent={setBookContent} />
 
-    return (
-        <>
-            <ContxtMenu
-                paragraphContainer={paragraphContainerRef}
-                setAlert={setAlert}
-                bookContent={bookContent}
-                setBookContent={setBookContent} />
+      <div ref={paragraphContainerRef} className='readBook_paragraphsContainer'>
+        {bookContent?.map((elmnt, pIndex) => {
+          return <p dangerouslySetInnerHTML={{ __html: elmnt }} key={pIndex}></p>
+        })}
 
-            <div
-                ref={paragraphContainerRef}
-                className="readBook_paragraphsContainer"
-                >
-
-
-
-                {bookContent?.map((elmnt, pIndex) => {
-
-                    return (
-                        <p
-                            dangerouslySetInnerHTML={{ __html: elmnt }} key={pIndex}>
-                        </p>
-                    )
-                })}
-
-                <Alert alert={alert} />
-
-            </div>
-        </>
-    )
+        <Alert alert={alert} />
+      </div>
+    </>
+  )
 }

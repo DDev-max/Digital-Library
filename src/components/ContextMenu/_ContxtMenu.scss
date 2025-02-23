@@ -2,54 +2,51 @@
 @use "sass:map";
 
 .contextMenu {
-    position: fixed;
+  position: fixed;
 
-    &_ColorsCont {
-        display: flex;
-        justify-content: space-around;
-        padding: 1rem;
-        gap: .3rem;
-        border-radius: 1rem;
-        background-color: rgb(30, 26, 73);
-        border: .1rem solid variables.$TxtColor;
+  &_ColorsCont {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    gap: 0.3rem;
+    border-radius: 1rem;
+    background-color: rgb(30, 26, 73);
+    border: 0.1rem solid variables.$TxtColor;
+  }
+
+  &_btnsCont {
+    margin-top: 0.5rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: rgb(30, 26, 73);
+    border: 0.1rem solid variables.$TxtColor;
+    display: flex;
+    justify-content: space-around;
+
+    & button {
+      @include variables.defaultBtn;
     }
+  }
 
-    &_btnsCont {
-        margin-top: .5rem;
-        padding: 1rem;
-        border-radius: 1rem;
-        background-color: rgb(30, 26, 73);
-        border: .1rem solid variables.$TxtColor;
-        display: flex;
-        justify-content: space-around;
+  &_color {
+    @include variables.colorBtn(1.5rem, transparent, 0);
+  }
 
-        & button {
-            @include variables.defaultBtn;
-    
-        }
+  &_unselectSVG {
+    @include variables.colorBtn(1.2rem, transparent, 0.1rem);
+    color: variables.$TxtColor;
+    border-color: variables.$TxtColor;
+  }
+
+  &_unselectBtn {
+    @include variables.colorBtn(1.65rem, transparent, 0);
+    border: none;
+  }
+
+  @each $modifier, $properties in variables.$highlightColors {
+    &_color--#{$modifier} {
+      background-color: map.get($properties, bgColor);
+      color: map.get($properties, txtColor);
     }
-
-
-    &_color {
-        @include variables.colorBtn(1.5rem, transparent, 0)
-    }
-
-    &_unselectSVG {
-        @include variables.colorBtn(1.2rem, transparent, .1rem);
-        color: variables.$TxtColor;
-        border-color: variables.$TxtColor;
-    }
-
-    &_unselectBtn {
-        @include variables.colorBtn(1.65rem, transparent, 0);
-        border: none;
-    }
-
-    @each $modifier, $properties in variables.$highlightColors {
-        &_color--#{$modifier} {
-            background-color: map.get($properties, bgColor);
-            color: map.get($properties, txtColor)
-        }
-    }
-
+  }
 }

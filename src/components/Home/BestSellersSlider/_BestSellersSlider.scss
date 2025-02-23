@@ -1,94 +1,76 @@
 @use "../../../Sass/variables";
 
-.slider{
-    position: relative;
+.slider {
+  position: relative;
+  padding: 1rem;
+  background-color: variables.$SectionBgClr;
+  border-radius: 1rem;
+  transform: variables.$defaultPosition;
+
+  &_h2 {
+    @include variables.shadedHeading;
+
+    margin: 1rem;
     padding: 1rem;
-    background-color:variables.$SectionBgClr;
-    border-radius: 1rem;
-    transform: variables.$defaultPosition;
+  }
 
+  &_btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 0.5rem;
+    border: 0.1rem solid black;
+    background-color: variables.$SecColor;
+    color: variables.$TxtColor;
+    font-size: 1.4rem;
+    font-weight: 900;
 
-    &_h2{
-        @include variables.shadedHeading;
+    &--der {
+      right: 0;
+    }
+  }
 
-        margin: 1rem;
-        padding: 1rem;
+  &_contImgs {
+    display: flex;
+    gap: 0.6rem;
+    max-height: 20rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  &_bookContainer {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    border-bottom: 0.2rem solid variables.$SecColor;
+    width: clamp(10rem, 15vw, 11rem);
+
+    &--skeleton {
+      height: 15rem;
+      @include variables.defaultSkeleton;
     }
 
-
-
-    &_btn{
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 2.2rem;
-        height: 2.2rem;
-        border-radius: .5rem;
-        border: .1rem solid black;
-        background-color: variables.$SecColor;
-        color: variables.$TxtColor;
-        font-size: 1.4rem;
-        font-weight: 900;
-
-        &--der{
-            right: 0;
-        }
-
-    }
-
-    
-    &_contImgs {
+    &_link {
+      &_img {
+        height: 14rem;
+        width: auto;
         display: flex;
-        gap: .6rem;
-        max-height: 20rem;
-        overflow-x: auto;
-        scrollbar-width: none;
+        margin: auto;
+      }
+
+      &_title {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: variables.$bookTitleFntSize;
+        text-align: center;
+      }
     }
 
-
-
-    &_bookContainer{
-        display: flex;
-        flex-shrink: 0;
-        flex-direction: column;
-        border-bottom: .2rem solid variables.$SecColor;
-        width: clamp(10rem, 15vw,11rem); 
-
-        &--skeleton{
-            height: 15rem;
-            @include variables.defaultSkeleton;
-        }
-
-
-        &_link{
-
-            &_img {
-                height: 14rem;
-                width: auto;
-                display: flex;
-                margin: auto;
-        
-            }
-
-            &_title{
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-                font-size: variables.$bookTitleFntSize; 
-                text-align: center;
-            }
-
-            
-        }
-
-        
-        &_FavBtn{
-            @include variables.favBtn;
-        }
-    
+    &_FavBtn {
+      @include variables.favBtn;
     }
-    
-
-
+  }
 }
-

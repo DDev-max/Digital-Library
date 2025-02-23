@@ -1,23 +1,14 @@
-
 export function getPreviousContent(from: Node | null) {
-    
-    let fullPreviousPlainText = ""
-    let fullPreviousHtml = ""
-    let previousElmnt = from
+  let fullPreviousPlainText = ''
+  let fullPreviousHtml = ''
+  let previousElmnt = from
 
-    while (previousElmnt) {
+  while (previousElmnt) {
+    fullPreviousPlainText = previousElmnt.textContent + fullPreviousPlainText
 
-        fullPreviousPlainText = previousElmnt.textContent + fullPreviousPlainText;
+    fullPreviousHtml = (previousElmnt instanceof HTMLElement ? previousElmnt.outerHTML : previousElmnt.textContent || '') + fullPreviousHtml
+    previousElmnt = previousElmnt.previousSibling
+  }
 
-        fullPreviousHtml =
-            (previousElmnt instanceof HTMLElement ? previousElmnt.outerHTML : previousElmnt.textContent || "") +
-            fullPreviousHtml;            
-        previousElmnt = previousElmnt.previousSibling
-    }
-
-    
-    return { fullPreviousPlainText, fullPreviousHtml }
-
-
+  return { fullPreviousPlainText, fullPreviousHtml }
 }
-

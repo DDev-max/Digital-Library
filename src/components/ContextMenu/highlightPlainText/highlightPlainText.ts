@@ -1,68 +1,55 @@
-import { regexSpecialCharacters, spanCloseTag, spanOpenRegex } from "data/consts"
-import { getPreviousContent } from "Utils/getPreviousContent/getPreviousContent"
-
+import { regexSpecialCharacters, spanCloseTag, spanOpenRegex } from 'data/consts'
+import { getPreviousContent } from 'Utils/getPreviousContent/getPreviousContent'
 
 interface highlightPlainTextProps {
-    htmlContent: string,
-    spanOpenTag: string,
+  htmlContent: string
+  spanOpenTag: string
 }
 
 export function highlightPlainText({ htmlContent, spanOpenTag }: highlightPlainTextProps) {
+  const tempDiv = document.createElement('div')
+  tempDiv.innerHTML = htmlContent
 
-    const tempDiv = document.createElement("div")
-    tempDiv.innerHTML = htmlContent
+  const fullPlainTxt = tempDiv.textContent
 
-    const fullPlainTxt = tempDiv.textContent
+  const originalSelection = window.getSelection()?.toString()
 
-    const originalSelection = window.getSelection()?.toString()
+  const range = window.getSelection()?.getRangeAt(0)
 
-    const range = window.getSelection()?.getRangeAt(0)
+  if (!originalSelection || !fullPlainTxt || !range) return
 
-    if (!originalSelection || !fullPlainTxt || !range) return
+  //when the whole paragraph is selected by triple-clicking on it, some additional spaces are added in the selection
+  const userSeleccion = originalSelection.slice(0, -2) === fullPlainTxt ? originalSelection.slice(0, -2) : originalSelection
 
+  let rangeStart = range.startOffset
 
-    //when the whole paragraph is selected by triple-clicking on it, some additional spaces are added in the selection
-    const userSeleccion = originalSelection.slice(0, -2) === fullPlainTxt
-        ? originalSelection.slice(0, -2)
-        : originalSelection
+  const { fullPreviousPlainText, fullPreviousHtml } = getPreviousContent(range.startContainer.previousSibling)
 
-    let rangeStart = range.startOffset
+  const escapedHighlight = new RegExp(`${userSeleccion.replace(regexSpecialCharacters, '\\$&')}`, 'g')
 
-    const { fullPreviousPlainText, fullPreviousHtml } = getPreviousContent(range.startContainer.previousSibling)
+  if (fullPreviousPlainText) rangeStart += fullPreviousPlainText.length
 
-    const escapedHighlight = new RegExp(`${userSeleccion.replace(regexSpecialCharacters, '\\$&')}`, 'g')
+  const matchNumPlainTxt = Array.from(fullPlainTxt.matchAll(escapedHighlight)).findIndex(elmnt => elmnt.index === rangeStart)
 
+  let matchNumHtml = matchNumPlainTxt
 
-    if (fullPreviousPlainText) rangeStart += fullPreviousPlainText.length
+  const matchSpanTagHtml = Array.from(fullPreviousHtml.matchAll(spanOpenRegex))
 
+  matchSpanTagHtml.forEach(el => {
+    if (el[0].match(escapedHighlight)) {
+      matchNumHtml++
+    }
+  })
 
-    const matchNumPlainTxt = Array.from(fullPlainTxt.matchAll(escapedHighlight)).findIndex(elmnt=> elmnt.index === rangeStart)
-    
-    
-    let matchNumHtml =  matchNumPlainTxt
+  const idxHtml = Array.from(htmlContent.matchAll(escapedHighlight))[matchNumHtml]?.index ?? -1
 
+  if (idxHtml === -1) return
 
-    const matchSpanTagHtml = Array.from(fullPreviousHtml.matchAll(spanOpenRegex))
+  const firstPart = htmlContent.slice(0, idxHtml)
+  const highLightedSelection = spanOpenTag + userSeleccion + spanCloseTag
+  const lastPart = htmlContent.slice(idxHtml + userSeleccion.length)
 
-    matchSpanTagHtml.forEach((el) => {
-        if ((el[0].match(escapedHighlight))) {
-            matchNumHtml++
-        } 
-    })
+  const newHighlight = firstPart + highLightedSelection + lastPart
 
-
-    
-    const idxHtml = Array.from(htmlContent.matchAll(escapedHighlight))[matchNumHtml]?.index ?? -1
-    
-    if (idxHtml === -1) return
-
-
-    const firstPart = htmlContent.slice(0, idxHtml)
-    const highLightedSelection = spanOpenTag + userSeleccion + spanCloseTag
-    const lastPart = htmlContent.slice(idxHtml + userSeleccion.length)
-
-    const newHighlight = firstPart + highLightedSelection + lastPart
-
-    return newHighlight
-
+  return newHighlight
 }

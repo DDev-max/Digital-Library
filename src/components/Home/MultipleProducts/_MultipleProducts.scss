@@ -1,95 +1,78 @@
 @use "../../../Sass/variables";
 
+.MultipleProducts {
+  text-align: center;
+  overflow-x: hidden;
+  background-color: variables.$SectionBgClr;
+  border-radius: 2rem;
+  padding: 1.5rem;
+  transform: variables.$defaultPosition;
 
-
-.MultipleProducts{
-    text-align: center;
-    overflow-x: hidden;
-    background-color: variables.$SectionBgClr;
-    border-radius: 2rem;
+  &_h2 {
+    margin: 2rem auto;
     padding: 1.5rem;
-    transform: variables.$defaultPosition;
+    width: clamp(10rem, 80%, 30rem);
 
-    &_h2{
-        margin: 2rem auto ;
-        padding: 1.5rem;
-        width: clamp(10rem,80%,30rem);
-        
-        @include variables.shadedHeading;
+    @include variables.shadedHeading;
+  }
 
+  &_Grid {
+    @include variables.gridResponsive;
+    row-gap: 1.5rem;
 
+    @media (width < variables.$mediumBreakpoint) {
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    }
+  }
+
+  &_article {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+
+    background-color: variables.$PrimaryColor;
+    border-radius: 1rem;
+
+    &--skeleton {
+      @include variables.defaultSkeleton;
+      height: 20rem;
+      width: 12rem;
     }
 
-    &_Grid{
-        @include variables.gridResponsive;
-        row-gap: 1.5rem;
+    &_link {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.5rem;
 
-        @media (width < variables.$mediumBreakpoint) {
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-        }
-    }
+      @media (width < variables.$mediumBreakpoint) {
+        padding: 0;
+      }
 
-
-
-    &_article{
+      &_title {
+        padding: 0.8rem 0;
+        margin: auto;
         display: flex;
-        flex-direction: column;
-        position: relative;
-        font-size: clamp(.9rem, 1.8vw, 1rem); 
+        justify-content: center;
+        align-items: center;
 
-        background-color: variables.$PrimaryColor;
-        border-radius: 1rem;
+        width: 12rem;
+        height: 3rem;
+        font-size: variables.$bookTitleFntSize;
+      }
 
-        &--skeleton{
-            @include variables.defaultSkeleton;
-            height: 20rem;
-            width: 12rem;
-
-        }
-
-
-        &_link{
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: .5rem;
-    
-            @media (width < variables.$mediumBreakpoint) {
-                padding: 0;
-            }
-
-            &_title{
-                padding: .8rem 0;
-                margin: auto;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                
-                width: 12rem;
-                height: 3rem;
-                font-size: variables.$bookTitleFntSize;
-        
-                
-            }
-
-
-            &_Img{
-                height: 14rem; 
-                width: auto; 
-            }
-
-        }
-    
-
-        &_FavBtn{
-            @include variables.favBtn;
-            border-bottom: solid .2rem variables.$SecColor;
-            border-radius: 1rem;
-        }
-    
+      &_Img {
+        height: 14rem;
+        width: auto;
+      }
     }
 
-
+    &_FavBtn {
+      @include variables.favBtn;
+      border-bottom: solid 0.2rem variables.$SecColor;
+      border-radius: 1rem;
+    }
+  }
 }
-
