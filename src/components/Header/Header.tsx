@@ -20,7 +20,7 @@ export function Header() {
         <Search />
 
         <div className='header_aside'>
-          <Link href={'/Favorites'}>
+          <Link aria-label='Check your favorites list' title='Check your favorites list' href={'/Favorites'}>
             <FavoriteSVG className='header_favListIcon' />
           </Link>
         </div>

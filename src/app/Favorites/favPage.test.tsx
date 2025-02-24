@@ -1,16 +1,15 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import FavoriteListPage from './page';
-import { useFavoritesContext } from 'Context/useFavoritesContext';
 import type { Item } from 'data/types';
-import { removeAddFav } from '../../components/svg/Favorite/removeAddFav';
-
-jest.mock('../../components/svg/Favorite/removeAddFav');
-jest.mock('Context/useFavoritesContext');
+import { FavoritesContextProvider } from 'Context/FavoritesContextProvider';
 
 it('should display a message if there are no books in the favorite list', () => {
-  (useFavoritesContext as jest.MockedFunction<typeof useFavoritesContext>).mockReturnValue({ favorites: [], setFavorites: jest.fn() });
-  render(<FavoriteListPage />);
+  render(
+    <FavoritesContextProvider initialFavorites={[]}>
+      <FavoriteListPage />
+    </FavoritesContextProvider>
+  );
 
   const message = screen.getByText('Click on the heart to add a book');
 
@@ -45,9 +44,11 @@ it('should show all books added to the favorites list', () => {
     },
   ];
 
-  (useFavoritesContext as jest.MockedFunction<typeof useFavoritesContext>).mockReturnValue({ favorites, setFavorites: jest.fn() });
-  render(<FavoriteListPage />);
-
+  render(
+    <FavoritesContextProvider initialFavorites={favorites}>
+      <FavoriteListPage />
+    </FavoritesContextProvider>
+  );
   const firstBook = screen.getByText('The Little Prince');
   const secondBook = screen.getByText('1984');
 
@@ -72,12 +73,15 @@ it('should remove a book from the favorites list by clicking on the trash can ic
     },
   ];
 
-  (useFavoritesContext as jest.MockedFunction<typeof useFavoritesContext>).mockReturnValue({ favorites, setFavorites: jest.fn() });
-
-  render(<FavoriteListPage />);
-
+  render(
+    <FavoritesContextProvider initialFavorites={favorites}>
+      <FavoriteListPage />
+    </FavoritesContextProvider>
+  );
+  const book = screen.getByText(/The Little Prince/i);
   const trashCan = screen.getByLabelText('Remove from favorites list');
-  await user.click(trashCan);
 
-  expect(removeAddFav).toHaveBeenCalledTimes(1);
+  expect(book).toBeInTheDocument();
+  await user.click(trashCan);
+  expect(book).not.toBeInTheDocument();
 });

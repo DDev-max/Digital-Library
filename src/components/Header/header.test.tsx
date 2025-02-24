@@ -36,7 +36,7 @@ it("should call 'fetchFn' only once after user stops typing the search", async (
   render(<Header />);
   const inputSearch = screen.getByLabelText('Search for a book');
 
-  await user.type(inputSearch, 'Some book name');
+  await user.type(inputSearch, 'any book');
 
   await waitFor(() => {
     expect(fetchFn).toHaveBeenCalledTimes(1);
@@ -49,7 +49,7 @@ it('should render search results', async () => {
   render(<Header />);
   const inputSearch = screen.getByLabelText('Search for a book');
 
-  await user.type(inputSearch, 'Science');
+  await user.type(inputSearch, 'Sci');
 
   const firstBook = await screen.findByText('Mente Cuántica', {}, { timeout: 2 * 1000 });
   const secondBook = await screen.findByText('Evolución Estelar', {}, { timeout: 2 * 1000 });
@@ -64,7 +64,7 @@ it('should select a search result if arrow down is pressed', async () => {
   render(<Header />);
   const inputSearch = screen.getByLabelText('Search for a book');
 
-  await user.type(inputSearch, 'Science');
+  await user.type(inputSearch, 'Sci');
 
   const allResults = await screen.findAllByRole('option', {}, { timeout: 2 * 1000 });
   expect(allResults[0]).toHaveAttribute('aria-selected', 'false');
@@ -83,7 +83,7 @@ it('should select a search result if arrow up is pressed', async () => {
   render(<Header />);
   const inputSearch = screen.getByLabelText('Search for a book');
 
-  await user.type(inputSearch, 'Science');
+  await user.type(inputSearch, 'Sci');
 
   const allResults = await screen.findAllByRole('option', {}, { timeout: 2 * 1000 });
   expect(allResults[1]).toHaveAttribute('aria-selected', 'false');
@@ -101,7 +101,7 @@ it('shouldnt select a search result if another arrow is pressed', async () => {
   render(<Header />);
 
   const inputSearch = screen.getByLabelText('Search for a book');
-  await user.type(inputSearch, 'Science');
+  await user.type(inputSearch, 'Sci');
 
   const allResults = await screen.findAllByRole('option', {}, { timeout: 2 * 1000 });
 
@@ -118,7 +118,7 @@ it('should search an option after pressing enter', async () => {
   render(<Header />);
   const inputSearch = screen.getByLabelText('Search for a book');
 
-  await user.type(inputSearch, 'Science');
+  await user.type(inputSearch, 'Sci');
 
   await user.keyboard('[ArrowDown]');
   await user.keyboard('[Enter]');

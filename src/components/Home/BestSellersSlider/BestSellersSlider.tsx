@@ -54,8 +54,12 @@ export function BSellerSlider({ books, sectionRef, isVisible }: ObservedBookComp
                 </h3>
               </Link>
 
-              <button className='slider_FavBtn' onClick={() => removeAddFav({ alreadyAdded, selection: elmnt, setFavorites })}>
-                <FavoriteSVG title={alreadyAdded ? 'Remove from favorites list' : 'Add to favorites list'} added={alreadyAdded} />
+              <button
+                aria-label={alreadyAdded ? 'Remove from favorites list' : 'Add to favorites list'}
+                className='slider_FavBtn'
+                onClick={() => removeAddFav({ alreadyAdded, selection: elmnt, setFavorites })}
+              >
+                <FavoriteSVG added={alreadyAdded} />
               </button>
             </article>
           )
