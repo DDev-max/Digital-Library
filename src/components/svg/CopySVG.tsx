@@ -6,8 +6,9 @@ interface CopySVGProps {
 
 export function CopySVG({ classNameBtn, classNameSVG, onMouseDown }: CopySVGProps) {
   return (
-    <button className={classNameBtn}>
+    <button aria-label='Copy Text' className={classNameBtn}>
       <svg
+        aria-hidden
         className={classNameSVG}
         fill='#000000'
         onMouseDown={onMouseDown}
@@ -16,7 +17,6 @@ export function CopySVG({ classNameBtn, classNameSVG, onMouseDown }: CopySVGProp
         viewBox='0 0 352.804 352.804'
         xmlSpace='preserve'
       >
-        <title>Copy Text</title>
         <g></g>
         <g id='SVGRepo_tracerCarrier' strokeLinecap='round' strokeLinejoin='round'></g>
         <g>
