@@ -1,50 +1,56 @@
-# React + TypeScript + Vite
+# 📖 Digital Library
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive platform to search books, highlight text in various styles, and save your favorite books.
 
-Currently, two official plugins are available:
+🔗[View Live Site](github.com)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## **Tech Stack**
 
-## Expanding the ESLint configuration
+- **Next.js** – Modern React Framework
+- **Leaflet** - Interactive map
+- **React Query** - Asynchronous state management in client components
+- **TypeScript** – Strongly typed JavaScript
+- **SASS** – CSS extension language
+- **Jest & Testing Library** – Unit and integration testing
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
 
-- Configure the top-level `parserOptions` property like this:
+✔️ **Advanced Text Highlighting** - Highlight text in multiple ways.  
+✔️ **Google Books API** – Search and access a vast collection of books.  
+✔️ **Responsive design** – Works on all screen sizes  
+✔️ **BEM** – CSS methodology  
+✔️ **Accessibility for screen readers**
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+## **How to highlight a text**
+
+First, select the text you want to highlight, right-click on it and, if the selection is valid, the context menu will open and now just click on the color you want to use.
+
+![Web screenshot](highlightScreenshot.png)
+
+You can try extending highlighted text in different colors, combine plain text and highlighted text, remove highlighting and other options from the context menu.
+
+## **Installation & Setup**
+
+1️⃣ Clone this repository:
+
+```bash
+git clone https://github.com/DDev-max/Digital-Library.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2️⃣ Navigate into the project directory:
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
+```bash
+cd Digital-Library
+```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
+3️⃣ Install dependencies:
+
+```bash
+npm install
+```
+
+4️⃣ Run the project locally:
+
+```bash
+npm run dev
 ```
