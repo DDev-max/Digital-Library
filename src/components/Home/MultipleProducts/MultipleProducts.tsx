@@ -5,6 +5,7 @@ import { ellipsisText } from '../../../Utils/ellipsisText/ellipsisText'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useFavoritesContext } from 'Context/useFavoritesContext'
+import { ImageFallback } from '@/components/ImageFallback'
 
 export function MultipleProducts({ books, sectionRef, isVisible }: ObservedBookComponentProps) {
   const context = useFavoritesContext()
@@ -28,14 +29,18 @@ export function MultipleProducts({ books, sectionRef, isVisible }: ObservedBookC
                   {ellipsisText({ maxLength: 23, text: info.title })}
                 </h3>
 
-                <Image
-                  width={172}
-                  height={288}
-                  loading='lazy'
-                  className='bookElmnt_img'
-                  src={info.imageLinks.smallThumbnail}
-                  alt={`The book cover of "${info.title}"`}
-                />
+                {info.imageLinks?.smallThumbnail ? (
+                  <Image
+                    width={172}
+                    height={288}
+                    loading='lazy'
+                    className='bookElmnt_img'
+                    src={info.imageLinks.smallThumbnail}
+                    alt={`The book cover of "${info.title}"`}
+                  />
+                ) : (
+                  <ImageFallback />
+                )}
               </Link>
 
               <button className='MultipleProducts_FavBtn' onClick={() => removeAddFav({ alreadyAdded, selection: elmnt, setFavorites })}>

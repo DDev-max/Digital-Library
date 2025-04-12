@@ -19,13 +19,13 @@ interface VolumeInfo {
   readonly authors: readonly string[]
   readonly publishedDate?: string
   readonly categories?: readonly string[]
-  readonly imageLinks: ImageLinks
+  readonly imageLinks?: ImageLinks
   readonly description: string
 }
 
 interface ImageLinks {
-  readonly smallThumbnail: string
-  readonly thumbnail: string
+  readonly smallThumbnail?: string
+  readonly thumbnail?: string
 }
 
 export interface SearchBooksApi {

@@ -16,11 +16,11 @@ export async function getAllBooks() {
       volumeInfo: {
         title: elmnt.volumeInfo.title,
         authors: elmnt.volumeInfo.authors,
-        publishedDate: elmnt.volumeInfo.publishedDate,
-        categories: elmnt.volumeInfo.categories,
+        publishedDate: elmnt.volumeInfo.publishedDate || '',
+        categories: elmnt.volumeInfo.categories || [],
         imageLinks: {
-          smallThumbnail: elmnt.volumeInfo.imageLinks.smallThumbnail,
-          thumbnail: elmnt.volumeInfo.imageLinks.thumbnail,
+          smallThumbnail: elmnt.volumeInfo.imageLinks?.smallThumbnail || '',
+          thumbnail: elmnt.volumeInfo.imageLinks?.thumbnail || '',
         },
         description: elmnt.volumeInfo.description,
       },

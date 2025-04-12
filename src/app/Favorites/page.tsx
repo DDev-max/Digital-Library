@@ -1,5 +1,6 @@
 'use client'
 
+import { ImageFallback } from '@/components/ImageFallback'
 import { removeAddFav } from '@/components/svg/Favorite/removeAddFav'
 import { TrashSVG } from '@/components/svg/TrashSVG'
 import { useFavoritesContext } from 'Context/useFavoritesContext'
@@ -23,13 +24,17 @@ export default function FavoritePage() {
 
           return (
             <article key={elmnt.id} className='bookElmnt'>
-              <Image
-                className='bookElmnt_img'
-                width={150}
-                height={224}
-                src={elmnt.volumeInfo.imageLinks.smallThumbnail}
-                alt={elmnt.volumeInfo.title}
-              />
+              {elmnt.volumeInfo.imageLinks?.smallThumbnail ? (
+                <Image
+                  className='bookElmnt_img'
+                  width={150}
+                  height={224}
+                  src={elmnt.volumeInfo.imageLinks.smallThumbnail}
+                  alt={elmnt.volumeInfo.title}
+                />
+              ) : (
+                <ImageFallback />
+              )}
               <p className='bookElmnt_title'>{ellipsisText({ maxLength: 23, text: elmnt.volumeInfo.title })}</p>
 
               <TrashSVG classNameBtn='bookElmnt_trashBtn' onClick={() => removeAddFav({ alreadyAdded, selection: elmnt, setFavorites })} />

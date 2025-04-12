@@ -1,6 +1,7 @@
 import type { Item } from '../../../data/types'
 import Link from 'next/link'
 import Image from 'next/image'
+import { ImageFallback } from '@/components/ImageFallback'
 
 export function HorizontalProducts({ books }: { books: Item[] }) {
   return (
@@ -11,7 +12,11 @@ export function HorizontalProducts({ books }: { books: Item[] }) {
 
         return (
           <article key={info.title} className='horizontalSctn_Article'>
-            <Image className='horizontalSctn_Img' width={128} height={198} src={info.imageLinks.thumbnail} alt={info.title} />
+            {info.imageLinks?.thumbnail ? (
+              <Image className='horizontalSctn_Img' width={128} height={198} src={info.imageLinks.thumbnail} alt={info.title} />
+            ) : (
+              <ImageFallback />
+            )}
 
             <div className='horizontalSctn_infoDiv'>
               <h2 className='horizontalSctn_title'>{info.title}</h2>

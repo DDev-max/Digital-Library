@@ -7,6 +7,7 @@ import { scrollSlider } from '../../../Utils/scrollSlider'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useFavoritesContext } from 'Context/useFavoritesContext'
+import { ImageFallback } from '@/components/ImageFallback'
 
 export function BSellerSlider({ books, sectionRef, isVisible }: ObservedBookComponentProps) {
   const sliderRef = useRef<HTMLDivElement>(null)
@@ -40,14 +41,18 @@ export function BSellerSlider({ books, sectionRef, isVisible }: ObservedBookComp
           return (
             <article className='slider_bookContainer' key={idx}>
               <Link href={`/Read/${bookLink}`} key={info.title}>
-                <Image
-                  width={140}
-                  height={225}
-                  loading='lazy'
-                  className='slider_img'
-                  src={info.imageLinks.smallThumbnail}
-                  alt={`The book cover of "${info.title}"`}
-                />
+                {info.imageLinks?.smallThumbnail ? (
+                  <Image
+                    width={140}
+                    height={225}
+                    loading='lazy'
+                    className='slider_img'
+                    src={info.imageLinks.smallThumbnail}
+                    alt={`The book cover of "${info.title}"`}
+                  />
+                ) : (
+                  <ImageFallback />
+                )}
 
                 <h3 title={info.title} className='slider_title'>
                   {info.title}
