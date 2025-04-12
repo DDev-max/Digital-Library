@@ -52,6 +52,7 @@ $border: 0.2rem;
 
   &_title {
     font-size: variables.$bookTitleFntSize;
+    max-width: 9rem;
     margin: auto;
 
     &--skeleton {
