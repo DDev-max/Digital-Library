@@ -1,7 +1,7 @@
 import type { Item } from '../../../data/types'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ImageFallback } from '@/components/ImageFallback'
+import { ImageFallback } from '@/components/ImageFallback/ImageFallback'
 
 export function HorizontalProducts({ books }: { books: Item[] }) {
   return (

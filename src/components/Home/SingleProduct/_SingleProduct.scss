@@ -8,6 +8,10 @@
   padding: 0.5rem;
   transform: variables.$defaultPosition;
 
+  @media (width < variables.$mediumBreakpoint2) {
+    flex-direction: column;
+  }
+
   &_img {
     border-radius: 2rem;
     height: clamp(8rem, 53vw, 19rem);
@@ -50,6 +54,9 @@
 
   &_desc {
     font-size: variables.$secTxtFntSize;
+    width: 72%;
+    margin-right: auto;
+    margin-left: auto;
 
     &--skeleton {
       @include variables.defaultSkeleton;

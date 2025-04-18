@@ -68,5 +68,6 @@
 
   &_FavBtn {
     @include variables.favBtn;
+    @include variables.scaleBtn;
   }
 }

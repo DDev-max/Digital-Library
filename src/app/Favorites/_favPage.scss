@@ -14,12 +14,25 @@
 
   &_Grid {
     @include variables.gridResponsive;
+
+    @media (width < variables.$smallBreakPoint) {
+      column-gap: 0;
+      row-gap: 1rem;
+    }
   }
 }
 
 .bookElmnt {
   @extend .MultipleProducts_article;
   align-items: center;
+  border: 0.2rem solid variables.$SecColor;
+  padding: clamp(0.5rem, 2vw, 1rem);
+
+  & hr {
+    width: 100%;
+    border: 0.1rem solid variables.$SecColor;
+    margin: 1rem 0;
+  }
 
   &--skeleton {
     @include variables.defaultSkeleton;
@@ -28,8 +41,9 @@
   }
 
   &_img {
-    height: 14rem;
+    height: clamp(10rem, 50vw, 14rem);
     width: auto;
+    border-radius: 1rem;
   }
 
   &_title {
@@ -39,7 +53,7 @@
     justify-content: center;
     align-items: center;
 
-    width: 12rem;
+    width: clamp(8rem, 27vw, 12rem);
     height: 3rem;
     font-size: variables.$bookTitleFntSize;
   }

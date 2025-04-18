@@ -10,12 +10,16 @@ $border: 0.2rem;
   flex-wrap: wrap;
   gap: $border;
 
+  @media (width < variables.$smallBreakPoint) {
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
   &_Article {
     background-color: variables.$SectionBgClr;
     width: 100%;
     max-height: 100%;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     border-right: $border solid variables.$SecColor;
     border-radius: 3rem;
@@ -34,10 +38,6 @@ $border: 0.2rem;
 
     &--skeleton {
       @include variables.defaultSkeleton;
-    }
-
-    @media (width < variables.$smallBreakPoint) {
-      margin: auto;
     }
   }
 

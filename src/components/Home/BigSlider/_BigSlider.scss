@@ -20,8 +20,7 @@
     justify-content: center;
     align-items: center;
 
-    min-height: 45vh;
-    height: 28rem;
+    height: clamp(28rem,45vh,26rem);
 
     @media (width <= variables.$mediumBreakpoint) {
       height: auto;

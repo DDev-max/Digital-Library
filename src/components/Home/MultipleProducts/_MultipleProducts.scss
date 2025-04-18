@@ -17,11 +17,11 @@
   }
 
   &_Grid {
-    @include variables.gridResponsive;
     row-gap: 1.5rem;
+    @include variables.gridResponsive;
 
-    @media (width < variables.$mediumBreakpoint) {
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    @media (width < variables.$smallBreakPoint) {
+      gap: 1.8rem;
     }
   }
 
@@ -48,13 +48,14 @@
     align-items: center;
     padding: 0.5rem;
 
-    @media (width < variables.$mediumBreakpoint) {
+    @media (width < variables.$smallBreakPoint) {
       padding: 0;
     }
   }
 
   &_FavBtn {
     @include variables.favBtn;
+    @include variables.scaleBtn;
     border-bottom: solid 0.2rem variables.$SecColor;
     border-radius: 1rem;
   }

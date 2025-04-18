@@ -2,7 +2,7 @@ import type { ObservedBookComponentProps } from '../../../data/types'
 import { ellipsisText } from '../../../Utils/ellipsisText/ellipsisText'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ImageFallback } from '@/components/ImageFallback'
+import { ImageFallback } from '@/components/ImageFallback/ImageFallback'
 
 export function SingleProduct({ books, sectionRef, isVisible }: ObservedBookComponentProps) {
   if (!books) return

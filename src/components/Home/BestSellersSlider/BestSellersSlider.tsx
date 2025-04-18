@@ -7,7 +7,7 @@ import { scrollSlider } from '../../../Utils/scrollSlider'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useFavoritesContext } from 'Context/useFavoritesContext'
-import { ImageFallback } from '@/components/ImageFallback'
+import { ImageFallback } from '@/components/ImageFallback/ImageFallback'
 
 export function BSellerSlider({ books, sectionRef, isVisible }: ObservedBookComponentProps) {
   const sliderRef = useRef<HTMLDivElement>(null)

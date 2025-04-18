@@ -5,7 +5,7 @@ import { ellipsisText } from '../../../Utils/ellipsisText/ellipsisText'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useFavoritesContext } from 'Context/useFavoritesContext'
-import { ImageFallback } from '@/components/ImageFallback'
+import { ImageFallback } from '@/components/ImageFallback/ImageFallback'
 
 export function MultipleProducts({ books, sectionRef, isVisible }: ObservedBookComponentProps) {
   const context = useFavoritesContext()

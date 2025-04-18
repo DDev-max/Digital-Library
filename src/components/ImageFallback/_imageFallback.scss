@@ -1,0 +1,9 @@
+@use "../../app/Favorites/favPage";
+
+.imageFallback {
+  @extend .bookElmnt_img;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

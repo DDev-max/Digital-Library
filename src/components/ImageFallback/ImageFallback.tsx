@@ -1,6 +1,6 @@
 export function ImageFallback() {
   return (
-    <div style={{ height: '14rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div className='imageFallback'>
       <svg aria-hidden fill='#ffffff' viewBox='0 0 32 32' version='1.1' xmlns='http://www.w3.org/2000/svg'>
         <g strokeWidth='0'></g>
         <g strokeLinecap='round' strokeLinejoin='round'></g>
