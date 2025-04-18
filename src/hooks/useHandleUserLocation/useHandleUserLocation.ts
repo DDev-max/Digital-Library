@@ -5,9 +5,9 @@ import type { LatLngExpression } from 'leaflet'
 import { useMap } from 'react-leaflet'
 import type { AlertState, LocationMarkerState } from 'data/types'
 
-interface UseHandleUserLocationProps extends LocationMarkerState, Pick<AlertState, 'setAlert'> {}
+interface UseHandleUserLocationProps extends LocationMarkerState, Pick<AlertState, 'setFormAlert'> {}
 
-export function useHandleUserLocation({ markerPosition, setAlert, setMarkerPosition }: UseHandleUserLocationProps) {
+export function useHandleUserLocation({ markerPosition, setFormAlert, setMarkerPosition }: UseHandleUserLocationProps) {
   const map = useMap()
 
   useEffect(() => {
@@ -21,13 +21,13 @@ export function useHandleUserLocation({ markerPosition, setAlert, setMarkerPosit
       .catch((error: GeolocationPositionError) => {
         switch (error.code) {
           case error.PERMISSION_DENIED:
-            newAlert({ setAlert, string: 'Please allow location access for better accuracy.' })
+            newAlert({ setFormAlert, string: 'Please allow location access for better accuracy.', color: 'red' })
             break
 
           default:
-            newAlert({ setAlert, string: 'Unable to access location' })
+            newAlert({ setFormAlert, string: 'Unable to access location', color: 'red' })
             break
         }
       })
-  }, [map, markerPosition, setAlert, setMarkerPosition])
+  }, [map, markerPosition, setFormAlert, setMarkerPosition])
 }

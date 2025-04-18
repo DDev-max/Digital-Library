@@ -3,12 +3,12 @@ import L from 'leaflet'
 import { Marker, Popup, useMapEvents } from 'react-leaflet'
 import { useHandleUserLocation } from 'hooks/useHandleUserLocation/useHandleUserLocation'
 
-interface LocationMarkerProps extends LocationMarkerState, Pick<AlertState, 'setAlert'> {}
+interface LocationMarkerProps extends LocationMarkerState, Pick<AlertState, 'setFormAlert'> {}
 
-export function LocationMarker({ markerPosition, setAlert, setMarkerPosition }: LocationMarkerProps) {
+export function LocationMarker({ markerPosition, setFormAlert, setMarkerPosition }: LocationMarkerProps) {
   const icon = new L.Icon({ iconUrl: '/marker-icon.webp', iconSize: [40, 40] })
 
-  useHandleUserLocation({ markerPosition, setAlert, setMarkerPosition })
+  useHandleUserLocation({ markerPosition, setFormAlert, setMarkerPosition })
 
   useMapEvents({
     click(e) {

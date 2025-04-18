@@ -2,7 +2,7 @@ import { newAlert } from 'Utils/newAlert';
 import { copyTxt } from './copyTxt';
 import { waitFor } from '@testing-library/react';
 
-const setAlert = jest.fn();
+const setFormAlert = jest.fn();
 jest.mock('Utils/newAlert');
 
 Object.assign(navigator, {
@@ -19,7 +19,7 @@ it("should call 'newAlert' if theres selected text", async () => {
       }) as Selection
   );
 
-  copyTxt({ setAlert });
+  copyTxt({ setFormAlert });
 
   await waitFor(() => {
     expect(newAlert).toHaveBeenCalled();
@@ -34,7 +34,7 @@ it("shouldnt call 'newAlert' if theres no selected text", async () => {
       }) as Selection
   );
 
-  copyTxt({ setAlert });
+  copyTxt({ setFormAlert });
 
   await waitFor(() => {
     expect(newAlert).not.toHaveBeenCalled();

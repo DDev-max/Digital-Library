@@ -10,11 +10,11 @@ import { copyTxt } from 'Utils/copyText/copyTxt'
 import type { AlertState, BookContentState } from 'data/types'
 import { handleUnselectClick } from './handleUnselectClick'
 
-interface ContxtMenuProps extends BookContentState, Pick<AlertState, 'setAlert'> {
+interface ContxtMenuProps extends BookContentState, Pick<AlertState, 'setFormAlert'> {
   paragraphContainer: RefObject<HTMLDivElement>
 }
 
-export function ContxtMenu({ bookContent, setBookContent, setAlert, paragraphContainer }: ContxtMenuProps) {
+export function ContxtMenu({ bookContent, setBookContent, setFormAlert, paragraphContainer }: ContxtMenuProps) {
   const menuRef = useRef<HTMLDivElement | null>(null)
   const { position, setPosition } = useMenuPosition({ menuRef, paragraphContainer })
 
@@ -38,7 +38,7 @@ export function ContxtMenu({ bookContent, setBookContent, setAlert, paragraphCon
       >
         <ColorsMenu
           onClickColor={e => {
-            highlightParagraph({ e, bookContent, setAlert, setBookContent, setPosition, paragraphContainer })
+            highlightParagraph({ e, bookContent, setFormAlert, setBookContent, setPosition, paragraphContainer })
           }}
           onUnselectClick={() => {
             handleUnselectClick({ bookContent, paragraphContainer, setBookContent, setPosition })
@@ -48,7 +48,7 @@ export function ContxtMenu({ bookContent, setBookContent, setAlert, paragraphCon
         <div className={`contextMenu_btnsCont`}>
           <CopySVG
             onMouseDown={() => {
-              copyTxt({ setAlert })
+              copyTxt({ setFormAlert })
             }}
           />
 

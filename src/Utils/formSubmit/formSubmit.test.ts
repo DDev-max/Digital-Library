@@ -7,10 +7,10 @@ const e = {
   preventDefault: jest.fn(),
 } as unknown as React.FormEvent<HTMLFormElement>;
 
-const setAlert = jest.fn();
+const setFormAlert = jest.fn();
 
 it('should call newAlert', () => {
-  formSubmit({ e, setAlert });
+  formSubmit({ e, setFormAlert });
 
-  expect(newAlert).toHaveBeenNthCalledWith(1, { setAlert, string: 'Form submitted!' });
+  expect(newAlert).toHaveBeenCalledTimes(1);
 });

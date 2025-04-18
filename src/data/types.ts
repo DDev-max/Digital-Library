@@ -67,10 +67,14 @@ export interface LocationMarkerState {
   markerPosition: LatLngExpression | undefined
   setMarkerPosition: Dispatch<SetStateAction<LatLngExpression | undefined>>
 }
-
 export interface AlertState {
-  alert: string
-  setAlert: React.Dispatch<React.SetStateAction<string>>
+  formAlert: AlertValues
+  setFormAlert: Dispatch<SetStateAction<AlertValues>>
+}
+
+export interface AlertValues {
+  string: string
+  color: 'red' | 'green'
 }
 
 export interface BookContentState {

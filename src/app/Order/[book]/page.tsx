@@ -5,11 +5,12 @@ import { emailInputChange } from 'app/Order/[book]/emailInputChange'
 import { nameInputChange } from 'app/Order/[book]/nameInputChange'
 import { phoneInputChange } from 'app/Order/[book]/phoneInputChange'
 import { useRef, useState } from 'react'
-import { formSubmit } from 'Utils/formSubmit/formSubmit'
 import { useParams } from 'next/navigation'
 import { Alert } from '@/components/Alert/Alert'
 import type { LatLngExpression } from 'leaflet'
 import { DynamicMap } from '@/components/Map/DynamicMap'
+import type { AlertValues } from 'data/types'
+import { formSubmit } from 'Utils/formSubmit/formSubmit'
 
 export default function PreOrderPage() {
   const params = useParams<{ book: string }>()
@@ -17,12 +18,12 @@ export default function PreOrderPage() {
 
   const phoneRef = useRef<HTMLInputElement>(null)
 
-  const [formAlert, setFormAlert] = useState('')
+  const [formAlert, setFormAlert] = useState<AlertValues>({ string: '', color: 'red' })
   const [markerPosition, setMarkerPosition] = useState<LatLngExpression>()
 
   return (
     <main id='mainContent' className='orderMain'>
-      <form aria-labelledby='formName' id='orderForm' className='orderForm' onSubmit={e => formSubmit({ e, setAlert: setFormAlert })}>
+      <form aria-labelledby='formName' id='orderForm' className='orderForm' onSubmit={e => formSubmit({ e, setFormAlert })}>
         <h1 id='formName' className='orderForm_h1'>
           Pre-order a book
         </h1>
@@ -89,14 +90,19 @@ export default function PreOrderPage() {
           <input readOnly name='coordinates' hidden value={markerPosition ? markerPosition.toString() : ''} type='text' />
         </div>
 
-        <DynamicMap markerPosition={markerPosition} setMarkerPosition={setMarkerPosition} setAlert={setFormAlert} divClassName='orderForm_MapCont' />
+        <DynamicMap
+          markerPosition={markerPosition}
+          setMarkerPosition={setMarkerPosition}
+          setFormAlert={setFormAlert}
+          divClassName='orderForm_MapCont'
+        />
 
         <button className='orderForm_submitBtn' type='submit'>
           Send Form
         </button>
       </form>
 
-      <Alert alert={formAlert} />
+      <Alert alert={formAlert.string} brdrColor={formAlert.color} />
     </main>
   )
 }

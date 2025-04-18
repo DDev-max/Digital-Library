@@ -5,13 +5,13 @@ import type { CSSProperties, RefObject } from 'react'
 import { getParagraphIdx } from './getParagraphIdx'
 import { highlightAgain } from './highlightAgain'
 
-interface HighlightParagraphProps extends BookContentState, Pick<AlertState, 'setAlert'> {
+interface HighlightParagraphProps extends BookContentState, Pick<AlertState, 'setFormAlert'> {
   e: React.MouseEvent<HTMLButtonElement>
   setPosition: React.Dispatch<React.SetStateAction<CSSProperties | undefined>>
   paragraphContainer: RefObject<HTMLDivElement>
 }
 
-export function highlightParagraph({ e, setAlert, bookContent, setPosition, paragraphContainer, setBookContent }: HighlightParagraphProps) {
+export function highlightParagraph({ e, setFormAlert, bookContent, setPosition, paragraphContainer, setBookContent }: HighlightParagraphProps) {
   const eTarget = e.target as HTMLElement
   const wSelect = window.getSelection()
   if (!wSelect?.toString().trim()) return
@@ -20,7 +20,7 @@ export function highlightParagraph({ e, setAlert, bookContent, setPosition, para
 
   if (paragraphIdx < 0) {
     wSelect?.removeAllRanges()
-    newAlert({ setAlert, string: 'Please select one paragraph at a time' })
+    newAlert({ setFormAlert, color: 'red', string: 'Please select one paragraph at a time' })
     return
   }
 
@@ -34,7 +34,7 @@ export function highlightParagraph({ e, setAlert, bookContent, setPosition, para
 
   // when user tries to nest more than one highlighted text
   if (!newHtml) {
-    newAlert({ setAlert, string: 'First try removing some highlighting from the selection.' })
+    newAlert({ setFormAlert, string: 'First try removing some highlighting from the selection.', color: 'red' })
     return
   }
 

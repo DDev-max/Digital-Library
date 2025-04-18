@@ -4,7 +4,7 @@ import { getUserLocation } from 'Utils/getUserLocation';
 import { useMap } from 'react-leaflet';
 import { newAlert } from 'Utils/newAlert';
 
-const setAlert = jest.fn();
+const setFormAlert = jest.fn();
 const setMarkerPosition = jest.fn();
 
 jest.mock('Utils/getUserLocation');
@@ -14,7 +14,7 @@ describe('location accessed', () => {
   it("shouldnt call 'getUserLocation' if theres already a location", () => {
     const markerPosition: [number, number] = [222, 333];
 
-    renderHook(useHandleUserLocation, { initialProps: { markerPosition, setAlert, setMarkerPosition } });
+    renderHook(useHandleUserLocation, { initialProps: { markerPosition, setFormAlert, setMarkerPosition } });
 
     expect(getUserLocation).not.toHaveBeenCalled();
   });
@@ -24,7 +24,7 @@ describe('location accessed', () => {
 
     (getUserLocation as jest.Mock).mockResolvedValue(mockLocation);
 
-    renderHook(useHandleUserLocation, { initialProps: { markerPosition: undefined, setAlert, setMarkerPosition } });
+    renderHook(useHandleUserLocation, { initialProps: { markerPosition: undefined, setFormAlert, setMarkerPosition } });
 
     expect(getUserLocation).toHaveBeenCalled();
 
@@ -44,20 +44,20 @@ describe('location denied', () => {
   it("should call 'newAlert' if permission is denied", async () => {
     (getUserLocation as jest.Mock).mockRejectedValueOnce({ code: 1, PERMISSION_DENIED: 1 } as GeolocationPositionError);
 
-    renderHook(useHandleUserLocation, { initialProps: { markerPosition, setAlert, setMarkerPosition } });
+    renderHook(useHandleUserLocation, { initialProps: { markerPosition, setFormAlert, setMarkerPosition } });
 
     await waitFor(() => {
-      expect(newAlert).toHaveBeenCalledWith({ setAlert, string: 'Please allow location access for better accuracy.' });
+      expect(newAlert).toHaveBeenCalledWith({ setFormAlert, string: 'Please allow location access for better accuracy.', color: 'red' });
     });
   });
 
   it('should handle other errors', async () => {
     (getUserLocation as jest.Mock).mockRejectedValueOnce({ code: 3 } as GeolocationPositionError);
 
-    renderHook(useHandleUserLocation, { initialProps: { markerPosition, setAlert, setMarkerPosition } });
+    renderHook(useHandleUserLocation, { initialProps: { markerPosition, setFormAlert, setMarkerPosition } });
 
     await waitFor(() => {
-      expect(newAlert).toHaveBeenCalledWith({ setAlert, string: 'Unable to access location' });
+      expect(newAlert).toHaveBeenCalledWith({ setFormAlert, string: 'Unable to access location', color: 'red' });
     });
   });
 });
