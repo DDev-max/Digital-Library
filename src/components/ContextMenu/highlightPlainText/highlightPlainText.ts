@@ -1,5 +1,5 @@
 import { regexSpecialCharacters, spanCloseTag, spanOpenRegex } from 'data/consts'
-import { getPreviousContent } from 'Utils/getPreviousContent/getPreviousContent'
+import { getPreviousContent } from 'app/Read/[title]/getPreviousContent/getPreviousContent'
 
 interface highlightPlainTextProps {
   htmlContent: string

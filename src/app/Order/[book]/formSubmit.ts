@@ -1,5 +1,5 @@
 import type { AlertState } from 'data/types'
-import { newAlert } from '../newAlert'
+import { newAlert } from 'Utils/newAlert'
 
 interface FormSubmitProps extends Pick<AlertState, 'setFormAlert'> {
   e: React.FormEvent<HTMLFormElement>
@@ -9,7 +9,6 @@ export function formSubmit({ e, setFormAlert }: FormSubmitProps) {
   e.preventDefault()
 
   const userInfo = Object.fromEntries(new window.FormData(e.target as HTMLFormElement))
-  console.log(userInfo)
 
   if (userInfo.coordinates) {
     // Other fields have already been validated

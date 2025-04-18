@@ -1,16 +1,16 @@
 'use client'
 
 import { emailInputRegex, nameInputRegex } from 'data/consts'
-import { emailInputChange } from 'app/Order/[book]/emailInputChange'
-import { nameInputChange } from 'app/Order/[book]/nameInputChange'
-import { phoneInputChange } from 'app/Order/[book]/phoneInputChange'
+import { emailInputChange } from 'app/Order/[book]/inputChange/emailInputChange'
+import { nameInputChange } from 'app/Order/[book]/inputChange/nameInputChange'
+import { phoneInputChange } from 'app/Order/[book]/inputChange/phoneInputChange'
 import { useRef, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { Alert } from '@/components/Alert/Alert'
 import type { LatLngExpression } from 'leaflet'
 import { DynamicMap } from '@/components/Map/DynamicMap'
 import type { AlertValues } from 'data/types'
-import { formSubmit } from 'Utils/formSubmit/formSubmit'
+import { formSubmit } from './formSubmit'
 
 export default function PreOrderPage() {
   const params = useParams<{ book: string }>()

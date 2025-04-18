@@ -1,9 +1,9 @@
-import { getPreviousContent } from 'Utils/getPreviousContent/getPreviousContent';
+import { getPreviousContent } from '../../../app/Read/[title]/getPreviousContent/getPreviousContent';
 import { highlightPlainText } from './highlightPlainText';
 
 const spanOpenTag = '<span class="contextMenu_color--first">';
 
-jest.mock('Utils/getPreviousContent/getPreviousContent');
+jest.mock('../../../app/Read/[title]/getPreviousContent/getPreviousContent');
 
 it('should highlight a plain text', () => {
   jest.spyOn(window, 'getSelection').mockImplementation(

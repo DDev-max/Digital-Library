@@ -1,14 +1,16 @@
 import type { BooksAPI } from 'data/types'
-import { fetchFn } from 'Utils/fetchFn/fetchFn'
+// import { fetchFn } from 'Utils/fetchFn/fetchFn'
+import initialBooks from 'data/initalBooks.json'
 
 export async function getAllBooks() {
-  const items = 'id,volumeInfo'
-  const volumeInfoItems = 'title,description,publishedDate,imageLinks,authors,categories'
-  const baseApiUrl = 'https://www.googleapis.com/books/v1'
+  // const items = 'id,volumeInfo'
+  // const volumeInfoItems = 'title,description,publishedDate,imageLinks,authors,categories'
+  // const baseApiUrl = 'https://www.googleapis.com/books/v1'
 
-  const API_URL = `${baseApiUrl}/volumes?q=subject:fiction&fields=items(${items}(${volumeInfoItems}))&maxResults=35`
+  // const API_URL = `${baseApiUrl}/volumes?q=subject:fiction&fields=items(${items}(${volumeInfoItems}))&maxResults=35`
 
-  const books = await fetchFn<BooksAPI>(API_URL)
+  // const books = await fetchFn<BooksAPI>(API_URL)
+  const books = initialBooks
 
   const mappedBooks: BooksAPI = {
     items: books.items.map(elmnt => ({

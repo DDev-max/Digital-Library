@@ -1,4 +1,4 @@
-import { nameInputRegex } from '../../../data/consts'
+import { nameInputRegex } from '../../../../data/consts'
 
 export function nameInputChange(e: React.ChangeEvent<HTMLInputElement>) {
   if (!nameInputRegex.test(e.target.value)) {

@@ -1,4 +1,4 @@
-import { getPreviousContent } from 'Utils/getPreviousContent/getPreviousContent';
+import { getPreviousContent } from '../../../app/Read/[title]/getPreviousContent/getPreviousContent';
 import { removeHighlight } from './removeHighlight';
 
 const spanOpenHighlight = '<span class="contextMenu_color--first">';
@@ -16,7 +16,7 @@ jest.spyOn(window, 'getSelection').mockImplementation(
     }) as unknown as Selection
 );
 
-jest.mock('Utils/getPreviousContent/getPreviousContent');
+jest.mock('../../../app/Read/[title]/getPreviousContent/getPreviousContent');
 
 it('should remove a specific highlight from a text', () => {
   const htmlParagraph = `This is a simple ${spanOpenHighlight}highlighted text</span> :D`;

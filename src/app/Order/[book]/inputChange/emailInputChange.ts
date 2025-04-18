@@ -1,4 +1,4 @@
-import { emailInputRegex } from '../../../data/consts'
+import { emailInputRegex } from '../../../../data/consts'
 
 export function emailInputChange(e: React.ChangeEvent<HTMLInputElement>) {
   if (!emailInputRegex.test(e.target.value)) {
