@@ -1,8 +1,9 @@
 # 📖 Digital Library
 
 An interactive platform to search books, highlight text in various styles, and save your favorite books.
+The books on the landing page are being mocked. To pass all tests please uncomment the code in the getAllBooks.ts file.
 
-🔗[View Live Site](github.com)
+🔗[View Live Site](https://digital-library-lovat.vercel.app/)
 
 ## **Tech Stack**
 
