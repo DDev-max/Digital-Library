@@ -40,9 +40,10 @@
   }
 
   &_Img {
-    width: clamp(20rem, 100%, 37.5rem);
     height: auto;
     display: block;
+    margin-top: 1.2rem;
+    width: 34rem;
   }
 
   &_title {
