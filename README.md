@@ -1,4 +1,4 @@
-# 📖 Digital Library
+# 📖 Mark My Book
 
 An interactive platform to search books, highlight text in various styles, and save your favorite books.
 The books on the landing page are being mocked. To pass all tests please uncomment the code in the getAllBooks.ts file.

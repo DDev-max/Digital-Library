@@ -14,7 +14,7 @@ export function Header() {
 
         <Link title='Go to home page.' className='header_LinkContainer' href={'/'}>
           <Logo />
-          <h1 className='header_h1'>MarkMyBook</h1>
+          <h1 className='header_h1'>Mark My Book</h1>
         </Link>
 
         <Search />

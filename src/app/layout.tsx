@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css'
 import { FavoritesContextProvider } from 'Context/FavoritesContextProvider'
 
 export const metadata = {
-  title: 'Digital Library',
+  title: 'Mark My Book',
   description:
     'A fun digital library to store your favorite books, buy new ones, and highlight texts in a creative, interactive way. Perfect for book lovers and note takers!',
 }
