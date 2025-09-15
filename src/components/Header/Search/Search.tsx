@@ -107,6 +107,7 @@ export function Search() {
             aria-label='Search for a book'
             placeholder='Search books'
             type='search'
+            id='search'
           />
         </div>
       </form>

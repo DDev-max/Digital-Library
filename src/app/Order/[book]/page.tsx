@@ -42,6 +42,7 @@ export default function PreOrderPage({ initialMarkerPosition = '' }) {
                 type='text'
                 id='name'
                 name='name'
+                autoComplete='name'
               />
             </label>
           </p>
@@ -60,6 +61,7 @@ export default function PreOrderPage({ initialMarkerPosition = '' }) {
                 type='tel'
                 id='phone'
                 name='phone'
+                autoComplete='tel-country-code'
               />
             </label>
           </p>
@@ -68,6 +70,7 @@ export default function PreOrderPage({ initialMarkerPosition = '' }) {
             <label className='orderForm_label' htmlFor='email'>
               Email
               <input
+                autoComplete='email'
                 className='orderForm_input'
                 onChange={emailInputChange}
                 placeholder='example@gmail.com'
