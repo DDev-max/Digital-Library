@@ -13,6 +13,7 @@ The books on the landing page are being mocked. To pass all tests please uncomme
 - **TypeScript** – Strongly typed JavaScript
 - **SASS** – CSS extension language
 - **Jest & Testing Library** – Unit and integration testing
+- **Nodemailer** - Send secure emails.
 
 ## Features
 
@@ -44,13 +45,20 @@ git clone https://github.com/DDev-max/Digital-Library.git
 cd Digital-Library
 ```
 
-3️⃣ Install dependencies:
+3️⃣Create a .env.local file at the root of the folder with the following content (Replace XXXX with the actual content):
+
+```bash
+GMAIL_USERNAME=XXXX@XXXX.XXXX
+GMAIL_PASSWORD='XXXXXX'
+```
+
+4️⃣ Install dependencies:
 
 ```bash
 npm install
 ```
 
-4️⃣ Run the project locally:
+5️⃣ Run the project locally:
 
 ```bash
 npm run dev
