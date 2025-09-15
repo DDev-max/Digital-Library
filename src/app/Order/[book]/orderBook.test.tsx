@@ -1,42 +1,60 @@
 import userEvent from '@testing-library/user-event';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { sendEmail } from 'app/actions/sendEmail';
 import OrderPage from './page';
+import { fillRequiredInputs } from 'Utils/testUtils/fillRequiredInputs';
 
 jest.mock('next/navigation', () => ({
   useParams: () => ({ book: 'A book' }),
 }));
 
 jest.mock('../../../components/Map/DynamicMap');
+jest.mock('../../actions/sendEmail');
 
-it('should display an alert if the form has been submitted', async () => {
-  jest.useFakeTimers();
-  const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+it('should display an alert when the form is successfully submitted', async () => {
+  const user = userEvent.setup();
 
-  render(<OrderPage />);
+  render(<OrderPage initialMarkerPosition='123.4, -567.8' />);
 
-  const inputName = screen.getByLabelText(/name/i);
-  await user.type(inputName, 'Jose jose');
+  await fillRequiredInputs(user);
 
-  const inputPhone = screen.getByLabelText(/phone/i);
-  await user.type(inputPhone, '12345678');
-
-  const inputEmail = screen.getByLabelText(/Email/i);
-  await user.type(inputEmail, 'poveda.contacto@gmail.com');
+  (sendEmail as jest.MockedFunction<typeof sendEmail>).mockResolvedValue({ success: true });
 
   const submitBtn = screen.getByRole('button', { name: /Send Form/i });
   await user.click(submitBtn);
 
   const alert = screen.getByRole('alert');
-  expect(alert).toBeInTheDocument();
+  expect(alert).toHaveTextContent(/Form submitted/i);
+});
 
-  await act(async () => {
-    jest.advanceTimersByTime(2100);
-    jest.runOnlyPendingTimers();
-  });
+it('should display an alert when there are no coordinates', async () => {
+  const user = userEvent.setup();
 
-  await waitFor(() => {
-    expect(alert).not.toBeInTheDocument();
-  });
+  render(<OrderPage />);
 
-  jest.useRealTimers();
+  await fillRequiredInputs(user);
+
+  (sendEmail as jest.MockedFunction<typeof sendEmail>).mockResolvedValue({ success: true });
+
+  const submitBtn = screen.getByRole('button', { name: /Send Form/i });
+  await user.click(submitBtn);
+
+  const alert = screen.getByRole('alert');
+  expect(alert).toHaveTextContent(/Select Your Location/i);
+});
+
+it('should display an alert when the email is not sent', async () => {
+  const user = userEvent.setup();
+
+  render(<OrderPage initialMarkerPosition='123.4, -567.8' />);
+
+  await fillRequiredInputs(user);
+
+  (sendEmail as jest.MockedFunction<typeof sendEmail>).mockResolvedValue({ success: false });
+
+  const submitBtn = screen.getByRole('button', { name: /Send Form/i });
+  await user.click(submitBtn);
+
+  const alert = screen.getByRole('alert');
+  expect(alert).toHaveTextContent(/Error sending email/i);
 });

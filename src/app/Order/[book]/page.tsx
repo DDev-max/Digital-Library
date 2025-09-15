@@ -12,7 +12,7 @@ import { DynamicMap } from '@/components/Map/DynamicMap'
 import type { AlertValues } from 'data/types'
 import { formSubmit } from './formSubmit'
 
-export default function PreOrderPage() {
+export default function PreOrderPage({ initialMarkerPosition = '' }) {
   const params = useParams<{ book: string }>()
   const bookNameConv = decodeURIComponent(params.book)
 
@@ -87,7 +87,7 @@ export default function PreOrderPage() {
             </label>
           </p>
 
-          <input readOnly name='coordinates' hidden value={markerPosition ? markerPosition.toString() : ''} type='text' />
+          <input readOnly hidden name='coordinates' value={markerPosition ? markerPosition.toString() : initialMarkerPosition} type='text' />
         </div>
 
         <DynamicMap
