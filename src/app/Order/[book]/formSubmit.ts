@@ -20,7 +20,7 @@ export async function formSubmit({ e, setFormAlert }: FormSubmitProps) {
 
   const { book, coordinates, email, name } = userInfo
 
-  if (!coordinates) {
+  if (!coordinates || !coordinates.trim()) {
     newAlert({ setFormAlert, string: 'Please select your location on the map.', color: 'red' })
   } else {
     // The other fields were validated natively in HTML

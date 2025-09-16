@@ -14,9 +14,9 @@ jest.mock('../../actions/sendEmail');
 it('should display an alert when the form is successfully submitted', async () => {
   const user = userEvent.setup();
 
-  render(<OrderPage initialMarkerPosition='123.4, -567.8' />);
+  render(<OrderPage />);
 
-  await fillRequiredInputs(user);
+  await fillRequiredInputs({ user });
 
   (sendEmail as jest.MockedFunction<typeof sendEmail>).mockResolvedValue({ success: true });
 
@@ -32,7 +32,7 @@ it('should display an alert when there are no coordinates', async () => {
 
   render(<OrderPage />);
 
-  await fillRequiredInputs(user);
+  await fillRequiredInputs({ user, coordinates: ' ' });
 
   (sendEmail as jest.MockedFunction<typeof sendEmail>).mockResolvedValue({ success: true });
 
@@ -46,9 +46,9 @@ it('should display an alert when there are no coordinates', async () => {
 it('should display an alert when the email is not sent', async () => {
   const user = userEvent.setup();
 
-  render(<OrderPage initialMarkerPosition='123.4, -567.8' />);
+  render(<OrderPage />);
 
-  await fillRequiredInputs(user);
+  await fillRequiredInputs({ user });
 
   (sendEmail as jest.MockedFunction<typeof sendEmail>).mockResolvedValue({ success: false });
 

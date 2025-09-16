@@ -7,12 +7,12 @@ import { phoneInputChange } from 'app/Order/[book]/inputChange/phoneInputChange'
 import { useRef, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { Alert } from '@/components/Alert/Alert'
-import type { LatLngExpression } from 'leaflet'
 import { DynamicMap } from '@/components/Map/DynamicMap'
 import type { AlertValues } from 'data/types'
 import { formSubmit } from './formSubmit'
+import type { LatLngExpression } from 'leaflet'
 
-export default function PreOrderPage({ initialMarkerPosition = '' }) {
+export default function PreOrderPage() {
   const params = useParams<{ book: string }>()
   const bookNameConv = decodeURIComponent(params.book)
 
@@ -90,11 +90,19 @@ export default function PreOrderPage({ initialMarkerPosition = '' }) {
             </label>
           </p>
 
-          <input readOnly hidden name='coordinates' value={markerPosition ? markerPosition.toString() : initialMarkerPosition} type='text' />
+          <input
+            hidden
+            readOnly
+            name='coordinates'
+            onChange={e => setMarkerPosition(e.target.value as unknown as LatLngExpression)}
+            value={String(markerPosition)}
+            type='text'
+            data-testid='marker-input'
+          />
         </div>
 
         <DynamicMap
-          markerPosition={markerPosition}
+          markerPosition={markerPosition as unknown as LatLngExpression}
           setMarkerPosition={setMarkerPosition}
           setFormAlert={setFormAlert}
           divClassName='orderForm_MapCont'
