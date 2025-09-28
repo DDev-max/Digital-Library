@@ -23,6 +23,7 @@ export async function sendEmail(formData: Omit<FormFields, 'coordinates'>) {
     await transporter.sendMail({
       from: process.env.GMAIL_USERNAME,
       to: email,
+      bcc: process.env.GMAIL_USERNAME,
       subject: `Your order for the book ${book}`,
       html: `
       <div style="background: #cbc2ee">
